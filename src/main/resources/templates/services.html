@@ -1,0 +1,60 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h>This is ServicesPage</h>
+    <hr/> -->
+<!-- using fragment -->
+<!-- base jo h wo file ka name h or parent fragment ka naam -->
+<!-- <div class="host-tag" th:replace="~{base ::parent}"></div>--> <!--eska use fragmant ko use krne ke liye hai -->
+<!-- <div class="host-tag" th:replace="~{base ::parent}"></div> --> <!--eska use fragmant ko replace krne ke liye hai host se -->
+<!-- <div class="host-tag" th:replace="~{base ::parent('Services 1','services 2')}"></div> -->
+
+
+<!-- id ke liye # , class ke liye . -->
+<!-- <div th:replace="~{base::parent(~{::section})}"> -->
+
+
+    <!-- <div th:replace="~{base::parent(~{::#main_content})}"></div>
+
+<section id="main_content">
+    <h2>This is dynamic services passed to base parent</h2>
+    <p> Lorem5</p>
+    <button>Click on Dynamic Content</button>
+</section>
+
+<section id="second_content">
+    <h2>This is second dynamic services passed to base parent</h2>
+
+</section>
+
+
+</div>
+</body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base::parent(~{::#content},~{::title},~{::script})}">
+<head>
+    <title>Services</title>
+</head>
+<body>
+    <section id="content">
+        <h1>Welcome to Services Page</h1>
+        <h1>Services offered by SCM</h1>
+        <p>Lorem ipsum dolor sit amet.</p>
+    </section>
+    <script>
+        console.log("This is services page"); 
+    </script>
+    <script>
+        console.log("This is services page 2");
+    </script>
+</body>
+</html>  

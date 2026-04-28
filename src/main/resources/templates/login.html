@@ -1,0 +1,165 @@
+<!doctype html>
+<html
+  lang="en"
+  th:replace="~{base::parent(~{::#content},~{::title},~{::script})}"
+>
+  <head>
+    <title>Login Page</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="grid grid-cols-12">
+        <div class="col-span-4 md:col-span-2 lg:col-span-3 xl:col-span-4"></div>
+        <div class="col-span-12 md:col-span-8 lg:col-span-6 xl:col-span-4">
+          <!-- card -->
+          <div
+            href="#"
+            class="block p-6 border-t-[10px] border-green-700 bg-white rounded-xl shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-white dark:hover:bg-gray-700"
+          >
+            <!-- messaage here -->
+
+            <div data-th-replace="message :: messagebox"></div>
+
+            <h5
+              class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+            >
+              Login Here
+            </h5>
+            <p class="font-normal text-gray-400 dark:text-gray-400">
+              Start Managing contacts on Cloud......
+            </p>
+
+            <div
+              class="text-red-600 text-center my-2"
+              data-th-if="${param.error}"
+            >
+              Invalid username and password.
+            </div>
+            <div
+              class="text-green-600 text-center my-2"
+              data-th-if="${param.logout}"
+            >
+              You have been logged out.
+            </div>
+
+            <!-- form -->
+
+            <form
+              method="post"
+              data-th-action="@{'/authenticate'}"
+              class="mt-3"
+            >
+              <!-- username Field -->
+
+              <div class="mb-3">
+                <label
+                  for="email"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >Email</label
+                >
+                <input
+                  name="email"
+                  type="email"
+                  id="email"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder=" Enter Email Here"
+                  required
+                />
+
+                <!-- <p
+                  data-th-if="${#fields.hasErrors('email')}"
+                  data-th-errors="*{email}"
+                  class="text-red-600 dark:text-red-500 px-1 py-2"
+                ></p> -->
+              </div>
+
+              <!-- Password Field -->
+
+              <div class="mb-3">
+                <label
+                  for="password"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  New Password</label
+                >
+                <input
+                  name="password"
+                  type="password"
+                  id="password"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="Enter New Password"
+                  required
+                />
+                <!-- <p
+                  data-th-if="${#fields.hasErrors('password')}"
+                  data-th-errors="*{password}"
+                  class="text-red-600 dark:text-red-500 px-1 py-2"
+                ></p> -->
+              </div>
+
+              <div class="mt-5 mb-3 flex justify-center space-x-3">
+                <button
+                  type="submit"
+                  class="text-white bg-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-700 dark:hover:bg-blue-600 dark:focus:ring-blue-800"
+                >
+                  Login
+                </button>
+                <button
+                  type="reset"
+                  class="text-white bg-orange-700 hover:bg-orange-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-orange-700 dark:hover:bg-orange-450 dark:focus:ring-blue-800"
+                >
+                  Reset
+                </button>
+              </div>
+            </form>
+
+            <div class="flex flex-col w-full gap-3 mt-4">
+              <!-- <a
+                data-th-href="@{'/oauth2/authorization/facebook'}"
+                class="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-lg shadow font-medium"
+              >
+                <i class="fa-brands fa-facebook-f"></i>
+                <span>Sign in with Facebook</span>
+              </a> -->
+
+              <a
+                data-th-href="@{'/oauth2/authorization/google'}"
+                class="w-full flex items-center justify-center gap-3 bg-white border border-gray-300 hover:bg-gray-100 py-2.5 rounded-lg shadow font-medium"
+              >
+                <img
+                  src="https://www.svgrepo.com/show/475656/google-color.svg"
+                  width="20"
+                  alt="Google icon"
+                />
+                <span
+                  style="color: #374151 !important; display: inline !important"
+                  >Sign in with Google</span
+                >
+              </a>
+
+              <a
+                data-th-href="@{'/oauth2/authorization/github'}"
+                class="w-full flex items-center justify-center gap-3 bg-gray-800 hover:bg-gray-900 text-white py-2.5 rounded-lg shadow font-medium transition duration-200"
+              >
+                <i class="fa-brands fa-github text-xl"></i>
+                <span>Sign in with GitHub</span>
+              </a>
+            </div>
+
+            <!-- <div class="social-button-container flex justify-center mt-6">
+              <a
+                class="login-with-google-btn px-3 py-2"
+                data-th-href="@{'/oauth2/authorization/google'}"
+                >Login with Google</a
+              >
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      console.log("This is Login page");
+    </script>
+  </body>
+</html>

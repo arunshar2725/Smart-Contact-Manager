@@ -1,0 +1,71 @@
+<!-- 2 se 4 line aaegi host main
+  <div class="parent-fragment" th:fragment="parent(x,y)"> 
+<div class="parent-fragment" th:fragment="parent(content)">
+    <h1>This is parent fragment</h1>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni, ratione?</p>
+  
+    <h1>Value of x is : <span th:text="${x}"></span></h1>
+    <h1>Value of y is : <span th:text="${y}"></span></h1>
+    <div th:replace="${content}"></div>
+
+    <div th:fragment="test(content)">
+       <div  th:replace="${content}"> </div>
+    </div>
+</div>  -->
+
+<!doctype html>
+<html
+  class="light"
+  lang="en"
+  th:fragment="parent(content,title,script)"
+  xmlns:th="http://www.thymeleaf.org"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title th:replace="  ${title}">SCM</title>
+    <link rel="stylesheet" th:href="@{/css/output.css}" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Noto+Sans+Devanagari&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body class="text-black dark:bg-gray-900 dark:text-white bg-gray-100">
+    <!-- common header -->
+
+    <div data-th-if="${loggedInUser}">
+      <div data-th-replace="~{user/user_navbar::user_navbar}"></div>
+    </div>
+
+    <div data-th-unless="${loggedInUser}">
+      <div data-th-replace="~{navbar::navbar}"></div>
+    </div>
+
+    <!-- main content -->
+    <!-- main content lana h saari file se dynamic -->
+    <div class="p-4 pt-20 min-h-screen w-full dark:bg-gray-900 bg-gray-100">
+      <section data-th-replace="${content}"></section>
+    </div>
+
+    <!-- common footer -->
+
+    <!-- <footer class="p-4">Footer : Arun Sharma</footer> -->
+
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
+    <script data-th-src="@{/js/script.js}"></script>
+    <th:block data-th-replace="${script}"></th:block>
+  </body>
+</html>
