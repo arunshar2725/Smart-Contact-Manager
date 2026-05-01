@@ -46,17 +46,22 @@
   <body class="text-black dark:bg-gray-900 dark:text-white bg-gray-100">
     <!-- common header -->
 
+    <!-- if user islogged in  - navbar -->
     <div data-th-if="${loggedInUser}">
       <div data-th-replace="~{user/user_navbar::user_navbar}"></div>
     </div>
 
+    <!-- if user is not logged in - navbar  -->
     <div data-th-unless="${loggedInUser}">
       <div data-th-replace="~{navbar::navbar}"></div>
     </div>
 
     <!-- main content -->
     <!-- main content lana h saari file se dynamic -->
-    <div class="p-4 pt-20 min-h-screen w-full dark:bg-gray-900 bg-gray-100">
+    <div
+      th:classappend="${loggedInUser} ? 'sm:ml-64' : ''"
+      class="p-4 pt-28 min-h-screen dark:bg-gray-900 bg-gray-100"
+    >
       <section data-th-replace="${content}"></section>
     </div>
 

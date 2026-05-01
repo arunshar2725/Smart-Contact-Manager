@@ -68,8 +68,19 @@
   </head>
   <body>
     <div id="content">
-      <h1>Welcome to Profile Page</h1>
-      <h1>Lorem ipsum dolor sit amet.</h1>
+      <!-- if user islogged in  - sidebar -->
+      <div data-th-if="${loggedInUser}">
+        <div data-th-replace="~{user/sidebar::sidebar}"></div>
+      </div>
+
+      <div> <div class="flex flex-col h-lvh">
+        <h1 class="text-5xl font-semibold">Welcome to Profile Page</h1>
+        <p class="mt-2 text-xl text-gray-600 dark:text-gray-400">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque qua
+        </p>
+    </div>
+</div>
+      </div>
     </div>
 
     <script>

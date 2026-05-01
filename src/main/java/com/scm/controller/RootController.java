@@ -29,6 +29,7 @@ public class RootController {
         logger.info("User logged in:{}", username);
         // database me user ka data fetch krenge :get user from database
         User user = userService.getUserByEmail(username);
+
         System.out.println(user);
         System.out.println(user.getName());
         System.out.println(user.getEmail());
