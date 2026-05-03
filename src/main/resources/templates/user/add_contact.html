@@ -50,7 +50,7 @@
                     <div
                       class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none"
                     >
-                      <i class="fa-regular w-4 h-4 fa-user"></i>
+                      <i class="fa-regular fa-user"></i>
                     </div>
                     <input
                       data-th-field="*{name}"
@@ -59,6 +59,7 @@
                       placeholder="name"
                     />
                   </div>
+
                   <p
                     class="text-red-500"
                     data-th-if="${#fields.hasErrors('name')}"
@@ -79,7 +80,7 @@
                     <div
                       class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none"
                     >
-                      <i class="fa-regular w-4 h-4 fa-envelope"></i>
+                      <i class="fa-regular fa-envelope"></i>
                     </div>
                     <input
                       type="text"
@@ -93,7 +94,7 @@
                     data-th-if="${#fields.hasErrors('email')}"
                     data-th-errors="*{email}"
                   >
-                    Invalid Name
+                    Invalid Email Address
                   </p>
                 </div>
 
@@ -122,7 +123,7 @@
                     data-th-if="${#fields.hasErrors('phoneNumber')}"
                     data-th-errors="*{phoneNumber}"
                   >
-                    Invalid Name
+                    Invalid Phone Number
                   </p>
                 </div>
 
@@ -144,9 +145,7 @@
                     class="text-red-500"
                     data-th-if="${#fields.hasErrors('address')}"
                     data-th-errors="*{address}"
-                  >
-                    Invalid Name
-                  </p>
+                  ></p>
                 </div>
 
                 <!-- description -->
