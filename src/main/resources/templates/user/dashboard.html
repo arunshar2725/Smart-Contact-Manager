@@ -64,7 +64,9 @@
   th:replace="~{base::parent(~{::#content},~{::title},~{::script})}"
 >
   <head>
-    <title data-th-text="${loggedInUser.name +'| Dashboard'}">Dashboard Page</title>
+    <title data-th-text="${loggedInUser.name +'| Dashboard'}">
+      Dashboard Page
+    </title>
   </head>
   <body>
     <div id="content">
@@ -73,13 +75,11 @@
         <div data-th-replace="~{user/sidebar::sidebar}"></div>
       </div>
 
-      <div> <div class="flex flex-col ">
+      <div class="flex flex-col">
         <h1 class="text-5xl font-semibold">Welcome to Dashboard Page</h1>
         <p class="mt-2 text-xl text-gray-600 dark:text-gray-400">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque qua
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque qua
         </p>
-    </div>
-</div>
       </div>
     </div>
 

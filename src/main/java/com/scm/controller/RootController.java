@@ -12,6 +12,8 @@ import com.scm.Services.UserService;
 import com.scm.entities.User;
 import com.scm.helpers.Helper;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 @ControllerAdvice
 public class RootController {
     @Autowired
@@ -20,6 +22,7 @@ public class RootController {
 
     @ModelAttribute
     public void addLoggedInUserInformationToModel(Model model, Authentication authentication) {
+
         if (authentication == null) {
             return;
         }

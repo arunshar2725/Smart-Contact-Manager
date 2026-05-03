@@ -10,7 +10,7 @@
 //   darkMode: 'selector', // selector se hum apne dark mode ko control kar sakte hain, jaise ki .dark class ke through
 // };
 
-import flowbitePlugin from 'flowbite/plugin';
+import flowbitePlugin from "flowbite/plugin";
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -21,6 +21,9 @@ export default {
   ],
   theme: {
     extend: {
+      screens: {
+        nav: "1080px", // custom breakpoint
+      },
       // Custom Colors ki pehchan
       colors: {
         brand: {
