@@ -49,7 +49,7 @@ public class ImageServiceImpl implements ImageService {
                 .transformation(
                         new Transformation<>().width(AppConstants.CONTACT_IMAGE_WIDTH)
                                 .height(AppConstants.CONTACT_IMAGE_HEIGHT).crop(AppConstants.CONTACT_IMAGE_CROP)
-                                .gravity("face").radius("max"))
+                                .gravity("face"))
                 .generate(publicId);
     }
 
