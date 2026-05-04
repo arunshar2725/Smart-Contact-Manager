@@ -1,5 +1,9 @@
 package com.scm.controller;
 
+import java.util.UUID;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -11,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.scm.Services.ContactService;
+import com.scm.Services.ImageService;
 import com.scm.Services.UserService;
 import com.scm.entities.Contact;
 import com.scm.entities.User;
@@ -25,11 +30,17 @@ import jakarta.validation.Valid;
 @Controller
 @RequestMapping("/user/contacts")
 public class ContactController {
+
+    private Logger logger = LoggerFactory.getLogger(ContactController.class);
+
     @Autowired
     private ContactService contactService;
 
     @Autowired
-    public UserService userService;
+    private UserService userService;
+
+    @Autowired
+    private ImageService imageService;
 
     // add contact page
     @GetMapping("/add")
@@ -62,8 +73,14 @@ public class ContactController {
 
         // process the contact picture
 
-        // save to database
+        // image process
 
+        // upload krne ka code
+
+        String filename = UUID.randomUUID().toString();
+        String fileURl = imageService.uploadImage(contactForm.getContactImage(), filename);
+
+        // save to database
         Contact contact = new Contact();
         contact.setName(contactForm.getName());
         contact.setEmail(contactForm.getEmail());
@@ -75,6 +92,8 @@ public class ContactController {
         contact.setWebsiteLink(contactForm.getWebsiteLink());
         contact.setLinkedinLink(contactForm.getLinkedInLink());
         contact.setUser(user);
+        contact.setPicture(fileURl);
+        contact.setCloudinaryImagePublicId(filename);
         contactService.save(contact);
 
         System.out.println(contactForm);
