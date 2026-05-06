@@ -84,12 +84,16 @@
         <div class="contact_container">
           <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             <div
-              class="flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900"
+              class="flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 bg-white dark:bg-gray-900"
             >
+              <!-- FIX: outer wrapper added for spacing -->
+              <div class="ml-4 mt-2">
+                <div data-th-replace="~{message::messagebox}"></div>
+              </div>
               <label for="table-search" class="sr-only">Search</label>
-              <div class="relative">
+              <div class="relative ml-auto">
                 <div
-                  class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none"
+                  class="absolute px-4 inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none"
                 >
                   <svg
                     class="w-4 h-4 text-gray-500 dark:text-gray-400"
@@ -115,6 +119,7 @@
                 />
               </div>
             </div>
+
             <table
               class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
             >
@@ -166,15 +171,27 @@
                     <span data-th-text="*{phoneNumber}"></span>
                   </td>
                   <td class="px-6 py-4">
-                    <div class="flex items-center">
-                      <div data-th-if="*{favourite}">
-                        <i
-                          class="fa-solid fa-star pr-6"
-                          style="color: rgb(33, 220, 20)"
-                        ></i>
+                    <div class="flex items-center space-x-2">
+                      <!-- Favourite = TRUE → filled star → click to UNFAVOURITE -->
+                      <div data-th-if="${c.favourite}">
+                        <a
+                          data-th-href="@{/user/contacts/favourite(id=${c.id},favourite=false)}"
+                        >
+                          <i
+                            class="fa-solid fa-star text-yellow-400 cursor-pointer hover:text-gray-400 transition-colors"
+                          ></i>
+                        </a>
                       </div>
-                      <div data-th-unless="*{favourite}" class="pr-2">
-                        <i class="fa-regular fa-star"></i>
+
+                      <!-- Favourite = FALSE → empty star → click to FAVOURITE -->
+                      <div data-th-unless="${c.favourite}">
+                        <a
+                          data-th-href="@{/user/contacts/favourite(id=${c.id},favourite=true)}"
+                        >
+                          <i
+                            class="fa-regular fa-star text-gray-400 cursor-pointer hover:text-yellow-400 transition-colors"
+                          ></i>
+                        </a>
                       </div>
 
                       <a data-th-href="@{*{websiteLink}}" target="_blank"
@@ -187,11 +204,17 @@
                     </div>
                   </td>
                   <td class="px-6 py-4">
-                    <a
-                      href="#"
-                      class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                      >Edit user</a
-                    >
+                    <div class="gap-3 flex items-center">
+                      <a href="">
+                        <i class="fa-solid fa-trash"></i>
+                      </a>
+                      <a href="">
+                        <i class="fa-solid fa-pen"></i>
+                      </a>
+                      <a href="">
+                        <i class="fa-solid fa-eye"></i>
+                      </a>
+                    </div>
                   </td>
                 </tr>
               </tbody>

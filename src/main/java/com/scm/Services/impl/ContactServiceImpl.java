@@ -20,11 +20,16 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public Contact save(Contact contact) {
+        // Check karo ki agar contact naya hai (ID null ya khali hai), tabhi nayi UUID
+        // generate ho
+        if (contact.getId() == null || contact.getId().isEmpty()) {
+            String contactId = UUID.randomUUID().toString();
+            contact.setId(contactId);
+        }
 
-        String contactId = UUID.randomUUID().toString();
-        contact.setId(contactId);
+        // Agar ID pehle se hai, toh Spring Data JPA apne aap samajh jayega ki UPDATE
+        // karna hai
         return contactRepo.save(contact);
-
     }
 
     @Override

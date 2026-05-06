@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.scm.Services.ContactService;
 import com.scm.Services.ImageService;
@@ -114,6 +115,7 @@ public class ContactController {
         contact.setUser(user);
         contact.setPicture(fileURl);
         contact.setCloudinaryImagePublicId(filename);
+        System.out.println("Contact ID before saving: " + contact.getId());
         contactService.save(contact);
 
         System.out.println(contactForm);
@@ -146,6 +148,25 @@ public class ContactController {
 
         return "user/contacts";
 
+    }
+
+    @GetMapping("/favourite")
+    public String markFavourite(
+            @RequestParam("id") String contactId,
+            @RequestParam("favourite") boolean favourite,
+            HttpSession session) {
+
+        Contact contact = contactService.getById(contactId);
+        contact.setFavourite(favourite);
+        contactService.save(contact);
+
+        session.setAttribute("message",
+                Message.builder()
+                        .content(favourite ? "⭐ Added to favourites!" : "Removed from favourites!")
+                        .type(favourite ? MessageType.green : MessageType.red)
+                        .build());
+
+        return "redirect:/user/contacts";
     }
 
 }
