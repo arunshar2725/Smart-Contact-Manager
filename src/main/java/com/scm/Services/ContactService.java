@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.scm.entities.Contact;
+import com.scm.entities.User;
 
 public interface ContactService {
     // save contacts
@@ -26,5 +27,7 @@ public interface ContactService {
 
     // get contacts by userId
     List<Contact> getByUserId(String userId);
+
+    List<Contact> getByUser(User user);
 
 }

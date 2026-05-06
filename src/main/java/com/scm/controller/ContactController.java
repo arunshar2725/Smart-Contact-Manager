@@ -1,5 +1,6 @@
 package com.scm.controller;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.slf4j.Logger;
@@ -78,7 +79,26 @@ public class ContactController {
         // upload krne ka code
 
         String filename = UUID.randomUUID().toString();
-        String fileURl = imageService.uploadImage(contactForm.getContactImage(), filename);
+        String fileURl = "";
+
+        /// file url main imageService.uploadImage(contactForm.getContactImage(),
+        /// filename)
+
+        /// ye bahar ka h
+
+        if (contactForm.getContactImage() != null
+                && !contactForm.getContactImage().isEmpty()) {
+            // ✅ Image selected - upload it
+            fileURl = imageService.uploadImage(contactForm.getContactImage(), filename);
+            logger.info("Image uploaded: {}", fileURl);
+        } else {
+            // ✅ No image - use default
+            fileURl = null; // or set a default image URL
+            filename = null;
+            logger.info("No image selected");
+        }
+
+        /// yaha tak
 
         // save to database
         Contact contact = new Contact();
@@ -110,4 +130,22 @@ public class ContactController {
 
         return "redirect:/user/contacts/add";
     }
+
+    // view contact
+    @RequestMapping
+    public String viewContact(Model model, Authentication authentication) {
+
+        // load all the user contacts
+
+        String username = Helper.getEmailOfLoggedInUser(authentication);
+        User user = userService.getUserByEmail(username);
+
+        List<Contact> contacts = contactService.getByUser(user);
+
+        model.addAttribute("contacts", contacts);
+
+        return "user/contacts";
+
+    }
+
 }

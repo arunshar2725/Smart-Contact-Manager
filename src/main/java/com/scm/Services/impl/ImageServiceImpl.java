@@ -26,6 +26,15 @@ public class ImageServiceImpl implements ImageService {
 
         // code likhna jo image ko server pe upload kr rha hoga
 
+        //////// ye bahaqr ka h
+
+        // ✅ Safety check
+        if (contactImage == null || contactImage.isEmpty()) {
+            return null;
+        }
+
+        //// yaha tak hatana ho to
+
         try {
             byte[] data = new byte[contactImage.getInputStream().available()];
             contactImage.getInputStream().read(data);
