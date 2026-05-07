@@ -16,10 +16,11 @@
           this.onerror = null;
           this.src = 'https://flowbite.com/docs/images/logo.svg';
         "
-        data-th-src="@{${loggedInUser.profilePic}}"
+        data-th-src="${loggedInUser.profilePic}"
         src="https://flowbite.com/docs/images/logo.svg"
-        class="h-16 me-3 sm:h-24 shadow-md rounded-full"
-        alt="Flowbite Logo"
+        class="h-16 me-3 sm:h-24 shadow-md rounded-full object-cover"
+        alt="User Profile"
+        referrerpolicy="no-referrer"
       />
 
       <span class="text-gray-500" data-th-text="${loggedInUser.name}"

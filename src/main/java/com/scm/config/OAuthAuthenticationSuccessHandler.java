@@ -37,116 +37,79 @@ public class OAuthAuthenticationSuccessHandler implements AuthenticationSuccessH
 
         logger.info("OAuthAuthenticationSuccessHandler");
 
-        // identify the provider
-
-        var OAuth2AuthenticationToken = (OAuth2AuthenticationToken) authentication;
-
-        String authorizedClientRegistrationId = OAuth2AuthenticationToken.getAuthorizedClientRegistrationId();
-
-        logger.info(authorizedClientRegistrationId);
+        var oAuth2AuthenticationToken = (OAuth2AuthenticationToken) authentication;
+        String authorizedClientRegistrationId = oAuth2AuthenticationToken.getAuthorizedClientRegistrationId();
+        logger.info("Provider: {}", authorizedClientRegistrationId);
 
         var oauthUser = (DefaultOAuth2User) authentication.getPrincipal();
-        oauthUser.getAttributes().forEach((key, value) -> {
-            logger.info(key + ":" + value);
-        });
 
         User user = new User();
         user.setUserId(UUID.randomUUID().toString());
-        // user.setName(oauthUser.getAttribute("name").toString());
-        // user.setEmail(oauthUser.getAttribute("email").toString());
-        // user.setProvider(Providers.valueOf(authorizedClientRegistrationId.toUpperCase()));
-        // user.setProviderUserId(oauthUser.getAttribute("id").toString());
         user.setEmailVerified(true);
         user.setEnabled(true);
-        List<String> authorities = List.of(AppConstants.ROLE_USER);
-        user.setRoleList(authorities);
+        user.setRoleList(List.of(AppConstants.ROLE_USER));
 
-        // google login
-
+        // ================================
+        // GOOGLE LOGIN
+        // ================================
         if (authorizedClientRegistrationId.equalsIgnoreCase("google")) {
 
-            user.setName(oauthUser.getAttribute("name").toString());
-            user.setEmail(oauthUser.getAttribute("email").toString());
-            // user.setProvider(Providers.GOOGLE);
-            user.setProviderUserId(oauthUser.getAttribute("name"));
-            user.setProfilePic(oauthUser.getAttribute("picture").toString());
-            user.setProvider(Providers.GOOGLE);
-            user.setPassword("password");
-            user.setAbout("This Account is created using Google");
+            String email = oauthUser.getAttribute("email").toString();
+            String name = oauthUser.getAttribute("name").toString();
+            String picture = oauthUser.getAttribute("picture").toString();
 
+            user.setEmail(email);
+            user.setName(name);
+            user.setProfilePic(picture);
+            user.setProvider(Providers.GOOGLE);
+            user.setProviderUserId(oauthUser.getAttribute("sub").toString()); // ✅ Google unique ID
+            user.setPassword("oauth2_google_" + UUID.randomUUID()); // ✅ random password
+            user.setAbout("This account is created using Google");
+
+            logger.info("Google login - email: {}", email);
         }
 
-        // github login
-
+        // ================================
+        // GITHUB LOGIN
+        // ================================
         else if (authorizedClientRegistrationId.equalsIgnoreCase("github")) {
-            String email = oauthUser.getAttribute("email") != null ? oauthUser.getAttribute("email").toString()
-                    : oauthUser.getAttribute("login").toString() + "@gmail.com";
+            // 🚨 Koyi email check nahi! Seedha ID nikal kar fake email banao
+            String githubId = oauthUser.getAttribute("id").toString();
+            String email = "github_" + githubId + "@github-oauth.com";
+
             String picture = oauthUser.getAttribute("avatar_url").toString();
             String name = oauthUser.getAttribute("login").toString();
-            String providerUserId = oauthUser.getAttribute("name").toString();
 
             user.setEmail(email);
             user.setProfilePic(picture);
             user.setName(name);
-            user.setProviderUserId(providerUserId);
+            user.setProviderUserId(githubId);
             user.setProvider(Providers.GITHUB);
-            user.setPassword("password");
+            user.setPassword("oauth2_github_" + UUID.randomUUID());
             user.setAbout("This account is created using GitHub");
-
+            logger.info("GitHub login - email forced to: {}", email);
         }
-        // facebook
+
+        // ================================
+        // FACEBOOK (future)
+        // ================================
         else if (authorizedClientRegistrationId.equalsIgnoreCase("facebook")) {
-
+            logger.info("Facebook login - not implemented yet");
         }
-        // linkedin
-        else if (authorizedClientRegistrationId.equalsIgnoreCase("linkedin")) {
 
-        }
-        // other
+        // ================================
+        // UNKNOWN PROVIDER
+        // ================================
         else {
-            logger.info("OAuthAuthenticationSuccessHandler: Unknown Provider");
+            logger.info("Unknown provider: {}", authorizedClientRegistrationId);
         }
 
-        // save the user
-        /*
-         * DefaultOAuth2User user = (DefaultOAuth2User) authentication.getPrincipal();
-         * logger.info(user.getName());
-         * 
-         * user.getAttributes().forEach((key, value) -> {
-         * logger.info("{} -> {}", key, value);
-         * 
-         * });>
-         * 
-         * logger.info(user.getAuthorities().toString());
-         * 
-         * // jo data aaya google se use save krna h
-         * 
-         * String email = user.getAttribute("email").toString();
-         * String name = user.getAttribute("name").toString();
-         * String picture = user.getAttribute("picture").toString();
-         * 
-         * // create user and save to database
-         * User user1 = new User();
-         * user1.setName(name);
-         * user1.setEmail(email);
-         * user1.setProfilePic(picture);
-         * user1.setPassword("password");
-         * user1.setUserId(UUID.randomUUID().toString());
-         * user1.setProvider(Providers.GOOGLE);
-         * user1.setEnabled(true);
-         * user1.setEmailVerified(true);
-         * user1.setPhoneVerified(true);
-         * user1.setProviderUserId(user.getName());
-         * user1.setRoleList(List.of(AppConstants.ROLE_USER));
-         * user1.setAbout("This user is crested using Google");
-         * userRepo.findByEmail(email).orElseGet(() -> userRepo.save(user1));
-         * 
-         * logger.info("User Saved;" + email);
-         */
-
-        userRepo.findByEmail(user.getEmail()).orElseGet(() -> userRepo.save(user));
+        // ✅ Save only if user doesn't exist
+        userRepo.findByEmail(user.getEmail()).orElseGet(() -> {
+            logger.info("New user saved: {}", user.getEmail());
+            return userRepo.save(user);
+        });
 
         new DefaultRedirectStrategy().sendRedirect(request, response, "/user/profile");
     }
-
 }

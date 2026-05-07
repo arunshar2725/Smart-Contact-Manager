@@ -221,7 +221,10 @@
             </table>
             <!-- pagination component -->
 
-            <div class="pagination_container p-5 flex justify-center">
+            <div
+              th:if="${pageContact.totalPages > 0}"
+              class="pagination_container p-5 flex justify-center"
+            >
               <nav aria-label="Page navigation example">
                 <ul class="flex items-center -space-x-px h-10 text-base">
                   <li data-th-unless="${pageContact.first}">
