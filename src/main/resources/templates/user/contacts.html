@@ -81,7 +81,7 @@
           List of All Contacts
         </p>
 
-        <div class="contact_container">
+        <div class="contact_container p-1">
           <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             <div
               class="flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 bg-white dark:bg-gray-900"
@@ -136,7 +136,7 @@
               <tbody>
                 <tr
                   data-th-object="${c}"
-                  data-th-each="c :${contacts}"
+                  data-th-each="c :${pageContact.content}"
                   class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600"
                 >
                   <th
@@ -175,7 +175,7 @@
                       <!-- Favourite = TRUE → filled star → click to UNFAVOURITE -->
                       <div data-th-if="${c.favourite}">
                         <a
-                          data-th-href="@{/user/contacts/favourite(id=${c.id},favourite=false)}"
+                          data-th-href="@{/user/contacts/favourite(id=${c.id},favourite=false,page=${pageContact.number},size=${pageContact.size})}"
                         >
                           <i
                             class="fa-solid fa-star text-yellow-400 cursor-pointer hover:text-gray-400 transition-colors"
@@ -186,7 +186,7 @@
                       <!-- Favourite = FALSE → empty star → click to FAVOURITE -->
                       <div data-th-unless="${c.favourite}">
                         <a
-                          data-th-href="@{/user/contacts/favourite(id=${c.id},favourite=true)}"
+                          data-th-href="@{/user/contacts/favourite(id=${c.id},favourite=true,page=${pageContact.number},size=${pageContact.size})}"
                         >
                           <i
                             class="fa-regular fa-star text-gray-400 cursor-pointer hover:text-yellow-400 transition-colors"
@@ -219,6 +219,43 @@
                 </tr>
               </tbody>
             </table>
+            <!-- pagination component -->
+
+            <div class="pagination_container p-5 flex justify-center">
+              <nav aria-label="Page navigation example">
+                <ul class="flex items-center -space-x-px h-10 text-base">
+                  <li data-th-unless="${pageContact.first}">
+                    <a
+                      th:href="@{'/user/contacts?page=' + ${pageContact.number - 1} + '&size=' + ${pageContact.size}}"
+                      class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                      >Previous</a
+                    >
+                  </li>
+                  <li
+                    data-th-each="index : ${#numbers.sequence(0, pageContact.totalPages-1)}"
+                  >
+                    <a
+                      data-th-href="@{'/user/contacts?size=' + ${pageSize} + '&page=' + ${index}}"
+                      href="#"
+                      class="flex items-center justify-center px-4 h-10 border border-gray-300 hover:bg-blue-100"
+                      th:classappend="${index == pageContact.number}?'bg-blue-gray text-gray-700 dark:text-white dark:bg-gray-400 ': ' bg-white text-gray-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'"
+                    >
+                      <span data-th-text="${index+1}"></span
+                    ></a>
+                  </li>
+
+                  <li data-th-unless="${pageContact.last}">
+                    <a
+                      th:href="@{'/user/contacts?page=' + ${pageContact.number + 1} + '&size=' + ${pageContact.size}}"
+                      href="#"
+                      class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                    >
+                      Next
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
           </div>
         </div>
       </div>

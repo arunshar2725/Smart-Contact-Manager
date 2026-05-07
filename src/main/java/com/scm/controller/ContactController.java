@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +23,7 @@ import com.scm.Services.UserService;
 import com.scm.entities.Contact;
 import com.scm.entities.User;
 import com.scm.forms.ContactForm;
+import com.scm.helpers.AppConstants;
 import com.scm.helpers.Helper;
 import com.scm.helpers.Message;
 import com.scm.helpers.MessageType;
@@ -135,16 +137,23 @@ public class ContactController {
 
     // view contact
     @RequestMapping
-    public String viewContact(Model model, Authentication authentication) {
+    public String viewContact(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = AppConstants.PAGE_SIZE + "") int size,
+            @RequestParam(value = "sortBy", defaultValue = "name") String sortBy,
+            @RequestParam(value = "direction", defaultValue = "asc") String direction,
+            Model model, Authentication authentication) {
 
         // load all the user contacts
 
         String username = Helper.getEmailOfLoggedInUser(authentication);
         User user = userService.getUserByEmail(username);
 
-        List<Contact> contacts = contactService.getByUser(user);
+        Page<Contact> pageContact = contactService.getByUser(user, page, size, sortBy, direction);
 
-        model.addAttribute("contacts", contacts);
+        model.addAttribute("pageContact", pageContact);
+
+        model.addAttribute("pageSize", AppConstants.PAGE_SIZE);
 
         return "user/contacts";
 
@@ -154,6 +163,10 @@ public class ContactController {
     public String markFavourite(
             @RequestParam("id") String contactId,
             @RequestParam("favourite") boolean favourite,
+
+            @RequestParam(value = "page", defaultValue = "0") int page,
+
+            @RequestParam(value = "size", defaultValue = AppConstants.PAGE_SIZE + "") int size,
             HttpSession session) {
 
         Contact contact = contactService.getById(contactId);
@@ -166,7 +179,9 @@ public class ContactController {
                         .type(favourite ? MessageType.green : MessageType.red)
                         .build());
 
-        return "redirect:/user/contacts";
+        // FIX: same page par redirect
+        return "redirect:/user/contacts?page=" + page + "&size=" + size;
+
     }
 
 }
