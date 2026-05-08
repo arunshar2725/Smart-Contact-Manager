@@ -31,4 +31,13 @@ public interface ContactService {
 
     Page<Contact> getByUser(User user, int page, int size, String sortBy, String direction);
 
+    // search contact
+
+    Page<Contact> searchByName(String namekeyword, int size, int page, String sortBy, String order, User user);
+
+    Page<Contact> searchByEmail(String emailkeyword, int size, int page, String sortBy, String order, User user);
+
+    Page<Contact> searchByPhoneNumber(String phoenNumberkeyword, int size, int page, String sortBy, String order,
+            User user);
+
 }

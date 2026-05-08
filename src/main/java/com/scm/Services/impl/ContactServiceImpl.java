@@ -91,4 +91,32 @@ public class ContactServiceImpl implements ContactService {
 
     }
 
+    @Override
+    public Page<Contact> searchByName(String namekeyword, int size, int page, String sortBy, String order, User user) {
+
+        Sort sort = order.equals("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+        var pageable = PageRequest.of(page, size, sort);
+        return contactRepo.findByUserAndNameContaining(user, namekeyword, pageable);
+    }
+
+    @Override
+    public Page<Contact> searchByEmail(String emailkeyword, int size, int page, String sortBy, String order,
+            User user) {
+
+        Sort sort = order.equals("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+        var pageable = PageRequest.of(page, size, sort);
+        return contactRepo.findByUserAndEmailContaining(user, emailkeyword, pageable);
+
+    }
+
+    @Override
+    public Page<Contact> searchByPhoneNumber(String phoenNumberkeyword, int size, int page, String sortBy,
+            String order, User user) {
+
+        Sort sort = order.equals("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+        var pageable = PageRequest.of(page, size, sort);
+        return contactRepo.findByUserAndPhoneNumberContaining(user, phoenNumberkeyword, pageable);
+
+    }
+
 }
