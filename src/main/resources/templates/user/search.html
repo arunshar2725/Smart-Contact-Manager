@@ -73,26 +73,58 @@
         <div data-th-replace="~{user/sidebar::sidebar}"></div>
       </div>
 
-      <div class="flex flex-col">
+      <div class="flex flex-col items-center">
         <h1 class="text-5xl font-semibold">Search Result</h1>
-        <p class="mt-2 text-xl text-gray-600 dark:text-gray-400">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque qua
+        <p
+          data-th-if="${pageContact.totalElements > 0}"
+          class="text-lg text-gray-600 dark:text-gray-300 bg-white dark:bg-gray-800 px-6 py-2 rounded-full shadow-sm border border-gray-200 dark:border-gray-700"
+        >
+          Found
+          <span
+            class="font-bold text-gray-900 dark:text-blue-400 text-xl"
+            data-th-text="${pageContact.totalElements}"
+          ></span>
+          results for
+          <span
+            class="font-semibold text-gray-900 dark:text-white"
+            data-th-text="${contactSearchForm.value}"
+            >"keyword"</span
+          >
+        </p>
+
+        <p
+          data-th-if="${pageContact.totalElements == 0}"
+          class="text-lg text-red-500 bg-red-50 dark:bg-gray-800 dark:text-red-400 px-6 py-2 rounded-full shadow-sm border border-red-200 dark:border-gray-700"
+        >
+          No contacts found for
+          <span
+            class="font-bold text-gray-900 dark:text-white"
+            data-th-text="${contactSearchForm.value}"
+            >"keyword"</span
+          >. Try a different search.
         </p>
       </div>
       <div class="contact_container px-4 py-1">
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-          <form action="" data-th-action="@{'/user/contacts/search'}">
+          <form
+            data-th-object="${contactSearchForm}"
+            data-th-action="@{'/user/contacts/search'}"
+          >
             <div
               class="flex items-end justify-between px-4 py-2 flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 bg-white dark:bg-gray-900"
             >
               <!-- select box -->
               <div>
                 <select
-                  name="field"
+                  data-th-field="*{field}"
                   id="countries"
                   class="mb-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 >
-                  <option class="dark:bg-gray-500 bg-gray-300">
+                  <option
+                    selected
+                    value=""
+                    class="dark:bg-gray-500 bg-gray-300"
+                  >
                     Select Field
                   </option>
                   <option value="name">Name</option>
@@ -127,7 +159,7 @@
                   </svg>
                 </div>
                 <input
-                  name="keyword"
+                  data-th-field="*{value}"
                   type="text"
                   id="table-search-users"
                   class="block mt-8 mb-3 p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-40 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -249,7 +281,7 @@
               <ul class="flex items-center -space-x-px h-10 text-base">
                 <li data-th-unless="${pageContact.first}">
                   <a
-                    th:href="@{'/user/contacts?page=' + ${pageContact.number - 1} + '&size=' + ${pageContact.size}}"
+                    data-th-href="@{'/user/contacts/search'(page=${pageContact.number - 1}, size=${pageContact.size}, field=${contactSearchForm.field}, value=${contactSearchForm.value})}"
                     class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                     >Previous</a
                   >
@@ -258,7 +290,7 @@
                   data-th-each="index : ${#numbers.sequence(0, pageContact.totalPages-1)}"
                 >
                   <a
-                    data-th-href="@{'/user/contacts?size=' + ${pageSize} + '&page=' + ${index}}"
+                    data-th-href="@{'/user/contacts/search'(page=${index}, size=${pageContact.size}, field=${contactSearchForm.field}, value=${contactSearchForm.value})}"
                     href="#"
                     class="flex items-center justify-center px-4 h-10 border border-gray-300 hover:bg-blue-100"
                     th:classappend="${index == pageContact.number}?'bg-blue-gray text-gray-700 dark:text-white dark:bg-gray-400 ': ' bg-white text-gray-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'"
@@ -269,7 +301,7 @@
 
                 <li data-th-unless="${pageContact.last}">
                   <a
-                    th:href="@{'/user/contacts?page=' + ${pageContact.number + 1} + '&size=' + ${pageContact.size}}"
+                    data-th-href="@{'/user/contacts/search'(page=${pageContact.number + 1}, size=${pageContact.size}, field=${contactSearchForm.field}, value=${contactSearchForm.value})}"
                     href="#"
                     class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                   >

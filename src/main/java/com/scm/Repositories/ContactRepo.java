@@ -1,6 +1,6 @@
 package com.scm.Repositories;
 
-import java.util.List;
+import java.util.*;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,20 +14,27 @@ import com.scm.entities.User;
 
 @Repository
 public interface ContactRepo extends JpaRepository<Contact, String> {
-
     // find the contact by user
     // custom finder method
     Page<Contact> findByUser(User user, Pageable pageable);
 
-    // find the contact by userid
     // custom query method
     @Query("SELECT c FROM Contact c WHERE c.user.id = :userId")
     List<Contact> findByUserId(@Param("userId") String userId);
 
-    Page<Contact> findByUserAndNameContaining(User user, String namekeyword, Pageable pageable);
+    @Query("SELECT c FROM Contact c WHERE c.user = :user AND LOWER(REPLACE(c.name, ' ', '')) LIKE LOWER(CONCAT('%', REPLACE(:namekeyword, ' ', ''), '%'))")
+    Page<Contact> findByUserAndNameContaining(@Param("user") User user, @Param("namekeyword") String namekeyword,
+            Pageable pageable);
 
-    Page<Contact> findByUserAndEmailContaining(User user, String namekeyword, Pageable pageable);
+    // 2. For Email
+    @Query("SELECT c FROM Contact c WHERE c.user = :user AND LOWER(REPLACE(c.email, ' ', '')) LIKE LOWER(CONCAT('%', REPLACE(:namekeyword, ' ', ''), '%'))")
+    Page<Contact> findByUserAndEmailContaining(@Param("user") User user, @Param("namekeyword") String namekeyword,
+            Pageable pageable);
 
-    Page<Contact> findByUserAndPhoneNumberContaining(User user, String namekeyword, Pageable pageable);
+    // 3. For Phone Number (Lower case not needed for numbers, but REPLACE handles
+    // the spaces)
+    @Query("SELECT c FROM Contact c WHERE c.user = :user AND REPLACE(c.phoneNumber, ' ', '') LIKE CONCAT('%', REPLACE(:namekeyword, ' ', ''), '%')")
+    Page<Contact> findByUserAndPhoneNumberContaining(@Param("user") User user, @Param("namekeyword") String namekeyword,
+            Pageable pageable);
 
 }

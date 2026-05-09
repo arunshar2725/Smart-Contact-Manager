@@ -83,18 +83,26 @@
 
         <div class="contact_container px-4 py-1">
           <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <form action="" data-th-action="@{'/user/contacts/search'}">
+            <form
+              data-th-object="${contactSearchForm}"
+              data-th-action="@{'/user/contacts/search'}"
+            >
               <div
                 class="flex items-end justify-between px-4 py-2 flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 bg-white dark:bg-gray-900"
               >
                 <!-- select box -->
                 <div>
                   <select
+                    data-th-field="*{field}"
                     name="field"
                     id="countries"
                     class="mb-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   >
-                    <option class="dark:bg-gray-500 bg-gray-300">
+                    <option
+                      selected
+                      value=""
+                      class="dark:bg-gray-500 bg-gray-300"
+                    >
                       Select Field
                     </option>
                     <option value="name">Name</option>
@@ -129,7 +137,7 @@
                     </svg>
                   </div>
                   <input
-                    name="keyword"
+                    data-th-field="*{value}"
                     type="text"
                     id="table-search-users"
                     class="block mt-8 mb-3 p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-40 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -284,6 +292,12 @@
                 </ul>
               </nav>
             </div>
+            <h1
+              class="text-3xl font-semibold text-center bg-white p-4"
+              data-th-if="${pageContact.totalElements<=0}"
+            >
+              No Result Found
+            </h1>
           </div>
         </div>
       </div>
