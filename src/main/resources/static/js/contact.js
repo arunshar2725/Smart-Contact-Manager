@@ -95,20 +95,20 @@ async function loadContactData(id) {
 
     // 4. Handle Links (Website & LinkedIn)
     const websiteEl = document.querySelector("#contact_website");
-    const linkedinEl = document.querySelector("#contact_linkedin");
+    const linkedInEl = document.querySelector("#contact_linkedin");
 
     // Reset visibility first
     websiteEl.classList.add("hidden");
-    linkedinEl.classList.add("hidden");
+    linkedInEl.classList.add("hidden");
 
     if (data.websiteLink) {
       websiteEl.href = data.websiteLink;
       websiteEl.classList.remove("hidden");
     }
 
-    if (data.linkedinLink) {
-      linkedinEl.href = data.linkedinLink;
-      linkedinEl.classList.remove("hidden");
+    if (data.linkedInLink) {
+      linkedInEl.href = data.linkedInLink;
+      linkedInEl.classList.remove("hidden");
     }
 
     // Finally, show the modal

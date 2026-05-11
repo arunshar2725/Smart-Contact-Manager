@@ -246,20 +246,55 @@
                       </a>
                     </div>
 
-                    <a data-th-href="@{*{websiteLink}}" target="_blank"
-                      ><i class="fa-solid fa-link pr-5"></i
-                    ></a>
+                    <!-- website link  -->
+                    <a
+                      data-th-if="${c.websiteLink != null and !c.websiteLink.isEmpty()}"
+                      data-th-href="@{*{websiteLink}}"
+                      target="_blank"
+                    >
+                      <i
+                        class="fa-solid fa-link text-blue-500 hover:text-blue-700"
+                      ></i>
+                    </a>
 
-                    <a data-th-href="@{*{linkedinLink}}" target="_blank"
-                      ><i class="fa-brands fa-linkedin"></i
-                    ></a>
+                    <a
+                      data-th-unless="${c.websiteLink != null and !c.websiteLink.isEmpty()}"
+                      class="cursor-not-allowed opacity-50"
+                      title="Website profile not provided"
+                    >
+                      <i class="fa-solid fa-link text-gray-400"></i>
+                    </a>
+
+                    <a
+                      data-th-if="${c.linkedInLink != null and !c.linkedInLink.isEmpty()}"
+                      data-th-href="@{*{linkedInLink}}"
+                      target="_blank"
+                    >
+                      <i
+                        class="fa-brands fa-linkedin text-blue-500 hover:text-blue-700 text-lg"
+                      ></i>
+                    </a>
+
+                    <a
+                      data-th-unless="${c.linkedInLink != null and !c.linkedInLink.isEmpty()}"
+                      class="cursor-not-allowed opacity-50"
+                      title="LinkedIn profile not provided"
+                    >
+                      <i
+                        class="fa-brands fa-linkedin text-gray-400 text-lg"
+                      ></i>
+                    </a>
                   </div>
                 </td>
                 <td class="px-6 py-4">
                   <div class="gap-3 flex items-center">
-                    <a href="">
-                      <i class="fa-solid fa-trash"></i>
-                    </a>
+                    <button
+                      th:onclick="deleteContact([[${c.id}]], [[${pageContact.number}]], [[${pageContact.size}]])"
+                    >
+                      <i
+                        class="fa-solid fa-trash text-red-500 hover:text-red-700 cursor-pointer"
+                      ></i>
+                    </button>
                     <a href="">
                       <i class="fa-solid fa-pen"></i>
                     </a>

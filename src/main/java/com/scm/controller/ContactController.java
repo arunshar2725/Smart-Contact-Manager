@@ -113,9 +113,9 @@ public class ContactController {
         contact.setAddress(contactForm.getAddress());
         contact.setDescription(contactForm.getDescription());
         contact.setPicture(contactForm.getPicture());
-        contact.setFavourite(contactForm.isFavorite());
+        contact.setFavourite(contactForm.isFavourite());
         contact.setWebsiteLink(contactForm.getWebsiteLink());
-        contact.setLinkedinLink(contactForm.getLinkedInLink());
+        contact.setLinkedInLink(contactForm.getLinkedInLink());
         contact.setUser(user);
         contact.setPicture(fileURl);
         contact.setCloudinaryImagePublicId(filename);
@@ -270,4 +270,22 @@ public class ContactController {
         return "redirect:/user/contacts?page=" + redirectPage + "&size=" + size;
     }
 
+    // update contact
+    @RequestMapping("/view/{id}")
+    public String updateContact(@PathVariable("id") String id, Model model) {
+        Contact contact = contactService.getById(id);
+
+        ContactForm contactForm = new ContactForm();
+
+        contactForm.setName(contact.getName());
+        contactForm.setEmail(contact.getEmail());
+        contactForm.setPhoneNumber(contact.getPhoneNumber());
+        contactForm.setAddress(contact.getAddress());
+        contactForm.setWebsiteLink(contact.getWebsiteLink());
+
+        contactForm.setLinkedInLink(contact.getLinkedInLink());
+
+        model.addAttribute("contact", contact);
+        return "user/update_contact";
+    }
 }

@@ -35,7 +35,7 @@ public class ContactForm {
 
     private String description;
 
-    private boolean favorite;
+    private boolean favourite;
 
     private String websiteLink;
 

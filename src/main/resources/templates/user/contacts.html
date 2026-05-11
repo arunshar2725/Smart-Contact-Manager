@@ -227,6 +227,7 @@
                         </a>
                       </div>
 
+                      <!-- website link  -->
                       <a
                         data-th-if="${c.websiteLink != null and !c.websiteLink.isEmpty()}"
                         data-th-href="@{*{websiteLink}}"
@@ -245,9 +246,10 @@
                         <i class="fa-solid fa-link text-gray-400"></i>
                       </a>
 
+                      <!-- linkedin link -->
                       <a
-                        data-th-if="${c.linkedinLink != null and !c.linkedinLink.isEmpty()}"
-                        data-th-href="@{*{linkedinLink}}"
+                        data-th-if="${c.linkedInLink != null and !c.linkedInLink.isEmpty()}"
+                        data-th-href="@{*{linkedInLink}}"
                         target="_blank"
                       >
                         <i
@@ -256,7 +258,7 @@
                       </a>
 
                       <a
-                        data-th-unless="${c.linkedinLink != null and !c.linkedinLink.isEmpty()}"
+                        data-th-unless="${c.linkedInLink != null and !c.linkedInLink.isEmpty()}"
                         class="cursor-not-allowed opacity-50"
                         title="LinkedIn profile not provided"
                       >
@@ -268,10 +270,7 @@
                   </td>
                   <td class="px-6 py-4">
                     <div class="gap-3 flex items-center">
-                      <!-- <a data-th-href="@{'/user/contacts/delete/' + *{id}}">
-                        <i class="fa-solid fa-trash"></i>
-                      </a> -->
-
+                      <!-- deleteContact -->
                       <button
                         th:onclick="deleteContact([[${c.id}]], [[${pageContact.number}]], [[${pageContact.size}]])"
                       >
@@ -279,9 +278,10 @@
                           class="fa-solid fa-trash text-red-500 hover:text-red-700 cursor-pointer"
                         ></i>
                       </button>
-                      <a href="">
-                        <i class="fa-solid fa-pen"></i>
-                      </a>
+                      <!-- update contact -->
+                      <a data-th-href="@{'/user/contacts/view/'+*{id}}">
+                        <i class="fa-solid w-6 h-6 fa-pen"></i
+                      ></a>
                       <button data-th-onclick="loadContactData([[${c.id}]])">
                         <i class="fa-solid fa-eye"></i>
                       </button>
