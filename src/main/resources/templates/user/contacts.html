@@ -268,9 +268,17 @@
                   </td>
                   <td class="px-6 py-4">
                     <div class="gap-3 flex items-center">
-                      <a href="">
+                      <!-- <a data-th-href="@{'/user/contacts/delete/' + *{id}}">
                         <i class="fa-solid fa-trash"></i>
-                      </a>
+                      </a> -->
+
+                      <button
+                        th:onclick="deleteContact([[${c.id}]], [[${pageContact.number}]], [[${pageContact.size}]])"
+                      >
+                        <i
+                          class="fa-solid fa-trash text-red-500 hover:text-red-700 cursor-pointer"
+                        ></i>
+                      </button>
                       <a href="">
                         <i class="fa-solid fa-pen"></i>
                       </a>

@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -191,6 +192,7 @@ public class ContactController {
 
     @RequestMapping("/search")
     public String searchhandler(
+
             @ModelAttribute ContactSearchForm contactSearchForm,
             @RequestParam(value = "size", defaultValue = AppConstants.PAGE_SIZE + "") int size,
             @RequestParam(value = "page", defaultValue = "0" + "") int page,
@@ -229,4 +231,43 @@ public class ContactController {
         return "user/search";
 
     }
+
+    // delete contact
+    @RequestMapping("/delete/{id}")
+    public String deleteContact(
+            @PathVariable("id") String id,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size,
+            Authentication authentication,
+            HttpSession session) {
+
+        System.out.println("Inside delete method");
+
+        // 1. Get the current page elements count from the service to check state
+        String username = Helper.getEmailOfLoggedInUser(authentication);
+        User user = userService.getUserByEmail(username);
+        Page<Contact> pageContact = contactService.getByUser(user, page, size, "name", "asc");
+
+        logger.info("Attempting to delete contact with ID: '{}'", id);
+        // 2. Perform the deletion
+        contactService.delete(id);
+
+        // 3. Logic: If only one contact was on the page and it's not the first page
+        // (index 0),
+        // redirect to the previous page index.
+        int redirectPage = page;
+        if (pageContact.getNumberOfElements() == 1 && page > 0) {
+            redirectPage = page - 1;
+        }
+
+        session.setAttribute("message",
+                Message.builder()
+                        .content("Contact deleted successfully")
+                        .type(MessageType.green)
+                        .build());
+
+        // Redirect with the corrected page index
+        return "redirect:/user/contacts?page=" + redirectPage + "&size=" + size;
+    }
+
 }

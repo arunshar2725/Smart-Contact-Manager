@@ -1,4 +1,19 @@
-console.log("This is contact page");
+const baseURl = "http://localhost:8081";
+
+console.log("This is contact Modal page");
+
+setTimeout(() => {
+  const messageBox = document.getElementById("message-box");
+
+  if (messageBox && messageBox.innerHTML.trim() !== "") {
+    messageBox.style.transition = "opacity 0.5s ease";
+    messageBox.style.opacity = "0";
+
+    setTimeout(() => {
+      messageBox.remove();
+    }, 500);
+  }
+}, 3000);
 
 const viewContactModal = document.getElementById("view_contact_modal");
 
@@ -10,6 +25,8 @@ const options = {
   closable: true,
   onHide: () => {
     console.log("modal is hidden");
+
+    document.activeElement?.blur();
   },
   onShow: () => {
     console.log("modal is shown");
@@ -38,7 +55,7 @@ function closeContactModal() {
 async function loadContactData(id) {
   console.log("Fetching data for ID: ", id);
   try {
-    const response = await fetch(`http://localhost:8081/api/contacts/${id}`);
+    const response = await fetch(`${baseURl}/api/contacts/${id}`);
     const data = await response.json();
     console.log(data);
 
@@ -99,4 +116,38 @@ async function loadContactData(id) {
   } catch (error) {
     console.log("Error fetching contact data: ", error);
   }
+}
+
+//delete contact
+function deleteContact(id, page, size) {
+  Swal.fire({
+    title: "Are you absolutely sure?",
+    text: "This contact will be permanently deleted!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#EF4444", // Tailwind red-500
+    cancelButtonColor: "#6B7280", // Tailwind gray-500
+    confirmButtonText: "Yes, delete it!",
+    cancelButtonText: "Cancel",
+    background: "#ffffff",
+    customClass: {
+      // Optional: You can inject Tailwind classes into the SweetAlert elements here if you want extra styling!
+      popup: "rounded-2xl shadow-xl",
+    },
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // Check if page and size are defined, otherwise default them
+      const targetPage = page !== undefined ? page : 0;
+      const targetSize = size !== undefined ? size : 10;
+
+      const cleanId = id.trim();
+      // Build the redirect URL WITH the query parameters
+      const redirectUrl = `/user/contacts/delete/${id}?page=${targetPage}&size=${targetSize}`;
+
+      // Log the URL to the console so you can verify it before the redirect happens!
+      console.log("Redirecting to:", redirectUrl);
+
+      window.location.href = redirectUrl;
+    }
+  });
 }
