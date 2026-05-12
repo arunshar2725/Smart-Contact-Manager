@@ -33,6 +33,9 @@ import jakarta.servlet.http.HttpServletResponse;
 public class SecurityConfig {
 
     @Autowired
+    private AuthFailureHandler authFailureHandler;
+
+    @Autowired
     private OAuthAuthenticationSuccessHandler handler;
 
     @Autowired
@@ -97,6 +100,8 @@ public class SecurityConfig {
             // }
 
             // });
+
+            formLogin.failureHandler(authFailureHandler);
 
         });
         httpSecurity.csrf(AbstractHttpConfigurer::disable);

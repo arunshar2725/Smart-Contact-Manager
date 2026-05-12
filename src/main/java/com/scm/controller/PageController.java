@@ -118,6 +118,7 @@ public class PageController {
         user.setPhoneNumber(userForm.getPhoneNumber());
         user.setAbout(userForm.getAbout());
         user.setProfilePic(profilePic);
+        user.setEnabled(false);
         user.setAbout(userForm.getAbout());
         user.setProvider(Providers.SELF);
 
