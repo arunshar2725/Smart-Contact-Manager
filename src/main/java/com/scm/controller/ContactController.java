@@ -59,18 +59,27 @@ public class ContactController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String saveContact(@Valid @ModelAttribute ContactForm contactForm, BindingResult result,
-            Authentication authentication, HttpSession session) {
+            Authentication authentication, HttpSession session, Model model) {
 
         // process the form data
 
         // validate form
 
         if (result.hasErrors()) {
-            session.setAttribute("message",
-                    Message.builder().content("Please Correct the following Errors").type(MessageType.red).build());
-            return "user/add_contact";
-        }
 
+            // FIX: clear broken multipart state
+            contactForm.setContactImage(null);
+
+            result.getAllErrors().forEach(error -> logger.info(error.toString()));
+
+            session.setAttribute("message",
+                    Message.builder()
+                            .content(result.getAllErrors().get(0).getDefaultMessage())
+                            .type(MessageType.red)
+                            .build());
+
+            return "redirect:/user/contacts/add";
+        }
         String username = Helper.getEmailOfLoggedInUser(authentication);
 
         // form ---> contact
@@ -83,25 +92,22 @@ public class ContactController {
 
         // upload krne ka code
 
-        String filename = UUID.randomUUID().toString();
-        String fileURl = "";
-
         /// file url main imageService.uploadImage(contactForm.getContactImage(),
         /// filename)
 
         /// ye bahar ka h
 
-        if (contactForm.getContactImage() != null
-                && !contactForm.getContactImage().isEmpty()) {
-            // ✅ Image selected - upload it
-            fileURl = imageService.uploadImage(contactForm.getContactImage(), filename);
-            logger.info("Image uploaded: {}", fileURl);
-        } else {
-            // ✅ No image - use default
-            fileURl = null; // or set a default image URL
-            filename = null;
-            logger.info("No image selected");
-        }
+        // if (contactForm.getContactImage() != null
+        // && !contactForm.getContactImage().isEmpty()) {
+        // // ✅ Image selected - upload it
+        // fileURl = imageService.uploadImage(contactForm.getContactImage(), filename);
+        // logger.info("Image uploaded: {}", fileURl);
+        // } else {
+        // // ✅ No image - use default
+        // fileURl = null; // or set a default image URL
+        // filename = null;
+        // logger.info("No image selected");
+        // }
 
         /// yaha tak
 
@@ -112,14 +118,23 @@ public class ContactController {
         contact.setPhoneNumber(contactForm.getPhoneNumber());
         contact.setAddress(contactForm.getAddress());
         contact.setDescription(contactForm.getDescription());
-        contact.setPicture(contactForm.getPicture());
         contact.setFavourite(contactForm.isFavourite());
+        contact.setUser(user);
         contact.setWebsiteLink(contactForm.getWebsiteLink());
         contact.setLinkedInLink(contactForm.getLinkedInLink());
-        contact.setUser(user);
-        contact.setPicture(fileURl);
-        contact.setCloudinaryImagePublicId(filename);
+
+        if (contactForm.getContactImage() != null && !contactForm.getContactImage().isEmpty()) {
+            String filename = UUID.randomUUID().toString();
+            String fileURl = imageService.uploadImage(contactForm.getContactImage(), filename);
+
+            contact.setPicture(fileURl);
+            contact.setCloudinaryImagePublicId(filename);
+        }
+
         System.out.println("Contact ID before saving: " + contact.getId());
+        System.out.println("CONTACT OBJECT = " + contact);
+
+        System.out.println("CONTACT ID = " + contact.getId());
         contactService.save(contact);
 
         System.out.println(contactForm);
@@ -273,7 +288,7 @@ public class ContactController {
     // update contact
     @RequestMapping("/view/{id}")
     public String updateContact(@PathVariable("id") String id, Model model) {
-        Contact contact = contactService.getById(id);
+        var contact = contactService.getById(id);
 
         ContactForm contactForm = new ContactForm();
 
@@ -282,10 +297,61 @@ public class ContactController {
         contactForm.setPhoneNumber(contact.getPhoneNumber());
         contactForm.setAddress(contact.getAddress());
         contactForm.setWebsiteLink(contact.getWebsiteLink());
-
+        contactForm.setFavourite(contact.isFavourite());
+        contactForm.setDescription(contact.getDescription());
         contactForm.setLinkedInLink(contact.getLinkedInLink());
+        contactForm.setPicture(contact.getPicture());
 
-        model.addAttribute("contact", contact);
-        return "user/update_contact";
+        model.addAttribute("contactForm", contactForm);
+        model.addAttribute("id", id);
+
+        return "user/update_contact_view";
+    }
+
+    @RequestMapping(value = "/update/{contactId}", method = RequestMethod.POST)
+    public String updateContact(@PathVariable("contactId") String contactId,
+            @Valid @ModelAttribute ContactForm contactForm,
+            BindingResult bindingResult,
+            Model model,
+            HttpSession session) {
+
+        // update the contact
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("id", contactId);
+            return "user/update_contact_view";
+        }
+
+        var con = contactService.getById(contactId);
+        con.setId(contactId);
+        con.setName(contactForm.getName());
+        con.setEmail(contactForm.getEmail());
+        con.setPhoneNumber(contactForm.getPhoneNumber());
+        con.setAddress(contactForm.getAddress());
+        con.setDescription(contactForm.getDescription());
+        con.setFavourite(contactForm.isFavourite());
+        con.setWebsiteLink(contactForm.getWebsiteLink());
+        con.setLinkedInLink(contactForm.getLinkedInLink());
+
+        // process image:
+
+        if (contactForm.getContactImage() != null && !contactForm.getContactImage().isEmpty()) {
+            logger.info("file is not empty");
+            String fileName = UUID.randomUUID().toString();
+            String imageUrl = imageService.uploadImage(contactForm.getContactImage(), fileName);
+            con.setCloudinaryImagePublicId(fileName);
+            con.setPicture(imageUrl);
+            contactForm.setPicture(imageUrl);
+
+        } else {
+            logger.info("file is empty");
+        }
+
+        var updateCon = contactService.update(con);
+        logger.info("updated contact {}", updateCon);
+
+        session.setAttribute("message",
+                Message.builder().content("Contact Updated !!").type(MessageType.green).build());
+
+        return "redirect:/user/contacts";
     }
 }

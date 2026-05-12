@@ -1,7 +1,5 @@
 package com.scm.entities;
 
-import java.util.ArrayList;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;

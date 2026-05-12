@@ -151,3 +151,65 @@ function deleteContact(id, page, size) {
     }
   });
 }
+
+function showAlert(message, icon = "⚠️") {
+  document.getElementById("alert-message").textContent = message;
+  document.getElementById("alert-icon").textContent = icon;
+  document.getElementById("custom-alert").classList.remove("hidden");
+}
+
+function closeAlert() {
+  document.getElementById("custom-alert").classList.add("hidden");
+}
+
+window.onload = function () {
+  const selectField = document.getElementById("countries");
+  const searchInput = document.getElementById("table-search-users");
+  const searchBtn = document.getElementById("search-btn");
+  const searchForm = document.querySelector("form");
+  searchInput.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+      e.preventDefault(); // form auto submit band karo
+      searchBtn.click(); // same button click logic chalega
+    }
+  });
+
+  function updateButtonStyle() {
+    if (selectField.value !== "" && searchInput.value.trim() !== "") {
+      searchBtn.classList.remove("bg-gray-400", "cursor-not-allowed");
+      searchBtn.classList.add(
+        "bg-blue-600",
+        "hover:bg-blue-700",
+        "cursor-pointer",
+      );
+    } else {
+      searchBtn.classList.add("bg-gray-400", "cursor-not-allowed");
+      searchBtn.classList.remove(
+        "bg-blue-600",
+        "hover:bg-blue-700",
+        "cursor-pointer",
+      );
+    }
+  }
+
+  searchBtn.addEventListener("click", function () {
+    if (selectField.value === "" && searchInput.value.trim() === "") {
+      showAlert("Please select a field and enter a search value!", "🔍");
+      return;
+    }
+    if (selectField.value === "") {
+      showAlert("Please select a field first!", "📋");
+      selectField.focus();
+      return;
+    }
+    if (searchInput.value.trim() === "") {
+      showAlert("Please enter a search value!", "✏️");
+      searchInput.focus();
+      return;
+    }
+    searchForm.submit();
+  });
+
+  selectField.addEventListener("change", updateButtonStyle);
+  searchInput.addEventListener("input", updateButtonStyle);
+};

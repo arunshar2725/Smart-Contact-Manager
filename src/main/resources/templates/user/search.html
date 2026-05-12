@@ -288,6 +288,7 @@
                 </td>
                 <td class="px-6 py-4">
                   <div class="gap-3 flex items-center">
+                    <!-- deleteContact -->
                     <button
                       th:onclick="deleteContact([[${c.id}]], [[${pageContact.number}]], [[${pageContact.size}]])"
                     >
@@ -295,9 +296,13 @@
                         class="fa-solid fa-trash text-red-500 hover:text-red-700 cursor-pointer"
                       ></i>
                     </button>
-                    <a href="">
-                      <i class="fa-solid fa-pen"></i>
-                    </a>
+
+                    <!-- update contact -->
+                    <a data-th-href="@{'/user/contacts/view/'+*{id}}">
+                      <i class="fa-solid fa-pen"></i
+                    ></a>
+
+                    <!-- view contact -->
                     <button data-th-onclick="loadContactData([[${c.id}]])">
                       <i class="fa-solid fa-eye"></i>
                     </button>
