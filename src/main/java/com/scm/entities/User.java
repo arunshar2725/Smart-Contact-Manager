@@ -64,6 +64,8 @@ public class User implements UserDetails {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roleList = new ArrayList<>();
 
+    private String emailToken;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // The Visual Flow

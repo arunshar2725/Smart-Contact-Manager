@@ -1,0 +1,75 @@
+<!doctype html>
+<html
+  lang="en"
+  th:replace="~{base::parent(~{::#content},~{::title},~{::script})}"
+>
+  <head>
+    <title>Email Verification Failed</title>
+  </head>
+
+  <body>
+    <div
+      id="content"
+      class="min-h-[80vh] flex items-center justify-center px-4"
+    >
+      <div
+        class="w-full max-w-lg bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-8 text-center border border-gray-200 dark:border-gray-700"
+      >
+        <!-- Error Icon -->
+        <div
+          class="w-24 h-24 mx-auto flex items-center justify-center rounded-full bg-red-100 dark:bg-red-900/30 mb-6"
+        >
+          <i
+            class="fa-solid fa-circle-xmark text-5xl text-red-600 dark:text-red-400"
+          ></i>
+        </div>
+
+        <!-- Heading -->
+        <h1
+          class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-4"
+        >
+          Verification Failed
+        </h1>
+
+        <!-- Description -->
+        <p
+          class="text-gray-600 dark:text-gray-300 text-lg leading-relaxed mb-8"
+        >
+          Your email could not be verified.
+          <br />
+          The verification link may be invalid, expired, or already used.
+        </p>
+
+        <!-- Buttons -->
+        <div
+          class="flex flex-col sm:flex-row items-center justify-center gap-4"
+        >
+          <!-- Login Button -->
+          <a
+            th:href="@{/login}"
+            class="w-full sm:w-auto px-6 py-3 rounded-xl bg-red-600 hover:bg-red-700 text-white font-semibold shadow-md transition duration-300"
+          >
+            Go to Login
+          </a>
+
+          <!-- Home Button -->
+          <a
+            th:href="@{/}"
+            class="w-full sm:w-auto px-6 py-3 rounded-xl border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition duration-300"
+          >
+            Back to Home
+          </a>
+        </div>
+
+        <!-- Extra Info -->
+        <div class="mt-8 text-sm text-gray-500 dark:text-gray-400">
+          Need help? Try requesting a new verification email.
+        </div>
+      </div>
+    </div>
+
+    <script>
+      console.log("Verification Failed Page");
+    </script>
+  </body>
+</html>

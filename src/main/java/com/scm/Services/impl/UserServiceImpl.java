@@ -7,10 +7,12 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.scm.Repositories.UserRepo;
+import com.scm.Services.EmailService;
 import com.scm.Services.UserService;
 import com.scm.entities.User;
 import com.scm.helpers.AppConstants;
@@ -23,11 +25,19 @@ public class UserServiceImpl implements UserService {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    @Value("${app.base-url}")
+    private String baseUrl;
+
+    @Autowired
+    private EmailService emailService;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
+
     public User saveUser(User user) {
+
         // userid : have to generate
         String userId = UUID.randomUUID().toString();
         user.setUserId(userId);
@@ -41,7 +51,29 @@ public class UserServiceImpl implements UserService {
 
         user.setRoleList(List.of(AppConstants.ROLE_USER));
 
-        return userRepo.save(user);
+        String emailToken = UUID
+                .randomUUID()
+                .toString();
+
+        user.setEmailToken(emailToken);
+
+        User savedUser = userRepo.save(user);
+
+        String verificationLink = baseUrl + "/auth/verify-email?token=" + emailToken;
+
+        String emailBody = "Hello " + savedUser.getName() +
+                ",\n\nClick on the link below to verify your email address:\n\n" +
+                verificationLink +
+                "\n\nSmart Contact Manager Team";
+
+        emailService.sendEmail(savedUser.getEmail(),
+
+                "Verify Your Account",
+
+                emailBody);
+
+        return savedUser;
+
     }
 
     @Override

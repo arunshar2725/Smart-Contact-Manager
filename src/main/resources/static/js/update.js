@@ -57,3 +57,19 @@ fields.forEach((field) => {
   field.addEventListener("input", checkChanges);
   field.addEventListener("change", checkChanges);
 });
+
+const imageInput = document.getElementById("image_file_input");
+
+const imagePreview = document.getElementById("upload_image_preview");
+
+imageInput.addEventListener("change", function (event) {
+  const file = event.target.files[0];
+
+  if (file) {
+    const imageURL = URL.createObjectURL(file);
+
+    imagePreview.src = imageURL;
+
+    imagePreview.classList.remove("hidden");
+  }
+});
