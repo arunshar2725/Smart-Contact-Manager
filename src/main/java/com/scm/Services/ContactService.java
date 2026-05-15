@@ -40,4 +40,10 @@ public interface ContactService {
     Page<Contact> searchByPhoneNumber(String phoenNumberkeyword, int size, int page, String sortBy, String order,
             User user);
 
+    List<Contact> getAllByUser(User user);
+
+    long countByUser(User user);
+
+    long countFavouriteByUser(User user);
+
 }

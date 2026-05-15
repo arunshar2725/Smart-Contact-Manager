@@ -64,22 +64,312 @@
   th:replace="~{base::parent(~{::#content},~{::title},~{::script})}"
 >
   <head>
-    <title data-th-text="${loggedInUser.name +'| SCM'}">Profile Page</title>
+    <title data-th-text="${loggedInUser.name +' | SCM'}">Profile Page</title>
   </head>
+
   <body>
     <div id="content">
-      <!-- if user islogged in  - sidebar -->
+      <!-- Sidebar -->
       <div data-th-if="${loggedInUser}">
         <div data-th-replace="~{user/sidebar::sidebar}"></div>
       </div>
 
-      <div> <div class="flex flex-col h-lvh">
-        <h1 class="text-5xl font-semibold">Welcome to Profile Page</h1>
-        <p class="mt-2 text-xl text-gray-600 dark:text-gray-400">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque qua
-        </p>
-    </div>
-</div>
+      <!-- Main Wrapper -->
+      <div
+        class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-gray-950 dark:to-gray-900 px-3 sm:px-6 py-8"
+      >
+        <div class="max-w-7xl mx-auto">
+          <!-- Hero Card -->
+          <div
+            class="relative overflow-hidden rounded-[2rem] bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl border border-white/20 dark:border-gray-700 shadow-2xl"
+          >
+            <!-- Background Gradient -->
+            <div
+              class="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-indigo-500/10 to-purple-500/10"
+            ></div>
+
+            <!-- Decorative Blur -->
+            <div
+              class="absolute -top-24 -right-24 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl"
+            ></div>
+
+            <div
+              class="absolute -bottom-24 -left-24 w-72 h-72 bg-purple-500/20 rounded-full blur-3xl"
+            ></div>
+
+            <!-- Content -->
+            <div class="relative z-10 p-6 sm:p-10 lg:p-14">
+              <!-- Top Section -->
+              <div
+                class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-10"
+              >
+                <!-- Left -->
+                <div class="flex flex-col sm:flex-row gap-8 items-center">
+                  <!-- Profile Image -->
+                  <div class="relative group">
+                    <img
+                      class="w-36 h-36 rounded-full object-cover border-[6px] border-white dark:border-gray-700 shadow-2xl"
+                      th:src="${loggedInUser.profilePic}"
+                      onerror="
+                        this.src =
+                          'https://imgs.search.brave.com/jHDp_R14w-tbRDiYsyiOCGDeCSPE4WqsVfFwiXVDyow/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzExLzY4LzUwLzU3/LzM2MF9GXzExNjg1/MDU3OTRfSUJDRWlh/ZnNJckhGSjA5ZTY1/UDJ2aDUxMTVDMVhJ/N2UuanBn'
+                      "
+                      alt="Profile"
+                    />
+
+                    <!-- Online Dot -->
+                    <div
+                      class="absolute bottom-3 right-3 w-5 h-5 bg-green-500 border-4 border-white dark:border-gray-800 rounded-full"
+                    ></div>
+                  </div>
+
+                  <!-- User Info -->
+                  <div class="text-center sm:text-left">
+                    <div
+                      class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-sm font-medium mb-4"
+                    >
+                      <i class="fa-solid fa-circle-check"></i>
+                      Verified Account
+                    </div>
+
+                    <h1
+                      class="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white leading-tight"
+                      data-th-text="${loggedInUser.name}"
+                    >
+                      Arun Sharma
+                    </h1>
+
+                    <p
+                      class="mt-3 text-lg text-gray-600 dark:text-gray-400"
+                      data-th-text="${loggedInUser.email}"
+                    >
+                      arun@example.com
+                    </p>
+
+                    <div
+                      class="mt-5 flex flex-wrap gap-3 justify-center sm:justify-start"
+                    >
+                      <span
+                        class="px-4 py-2 rounded-2xl bg-gray-100 dark:bg-gray-700 text-sm text-gray-700 dark:text-gray-300"
+                      >
+                        <i class="fa-solid fa-code mr-2"></i>
+                        Full Stack Developer
+                      </span>
+
+                      <span
+                        class="px-4 py-2 rounded-2xl bg-gray-100 dark:bg-gray-700 text-sm text-gray-700 dark:text-gray-300"
+                      >
+                        <i class="fa-solid fa-location-dot mr-2"></i>
+                        India
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Right Buttons -->
+                <div
+                  class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-end"
+                >
+                  <a
+                    data-th-href="@{'/user/edit_profile'}"
+                    class="px-6 py-3 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 font-semibold shadow-xl transition-all duration-300 hover:scale-[1.02]"
+                  >
+                    <i class="fa-solid fa-pen mr-2"></i>
+                    Edit Profile
+                  </a>
+                </div>
+              </div>
+
+              <!-- Stats -->
+              <div
+                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-12"
+              >
+                <!-- Card -->
+                <div
+                  class="bg-white/70 dark:bg-gray-700/50 backdrop-blur-lg border border-white/30 dark:border-gray-600 rounded-3xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
+                >
+                  <div
+                    class="w-14 h-14 rounded-2xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mb-4"
+                  >
+                    <i
+                      class="fa-solid fa-address-book text-blue-600 text-2xl"
+                    ></i>
+                  </div>
+
+                  <h2
+                    class="text-3xl font-bold text-gray-900 dark:text-white"
+                    data-th-text="${totalContacts}"
+                  >
+                    120+
+                  </h2>
+
+                  <p class="mt-2 text-gray-600 dark:text-gray-400">
+                    Total Contacts
+                  </p>
+                </div>
+
+                <!-- Card -->
+                <div
+                  class="bg-white/70 dark:bg-gray-700/50 backdrop-blur-lg border border-white/30 dark:border-gray-600 rounded-3xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
+                >
+                  <div
+                    class="w-14 h-14 rounded-2xl bg-green-100 dark:bg-green-900/30 flex items-center justify-center mb-4"
+                  >
+                    <i class="fa-solid fa-star text-green-600 text-2xl"></i>
+                  </div>
+
+                  <h2
+                    class="text-3xl font-bold text-gray-900 dark:text-white"
+                    data-th-text="${favouriteContacts}"
+                  >
+                    34
+                  </h2>
+
+                  <p class="mt-2 text-gray-600 dark:text-gray-400">
+                    Favourite Contacts
+                  </p>
+                </div>
+
+                <!-- Card -->
+                <div
+                  class="bg-white/70 dark:bg-gray-700/50 backdrop-blur-lg border border-white/30 dark:border-gray-600 rounded-3xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
+                >
+                  <div
+                    class="w-14 h-14 rounded-2xl bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center mb-4"
+                  >
+                    <i class="fa-solid fa-cloud text-purple-600 text-2xl"></i>
+                  </div>
+
+                  <h2 class="text-3xl font-bold text-gray-900 dark:text-white">
+                    Cloud
+                  </h2>
+
+                  <p class="mt-2 text-gray-600 dark:text-gray-400">
+                    Secure Storage
+                  </p>
+                </div>
+
+                <!-- Card -->
+                <div
+                  class="bg-white/70 dark:bg-gray-700/50 backdrop-blur-lg border border-white/30 dark:border-gray-600 rounded-3xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
+                >
+                  <div
+                    class="w-14 h-14 rounded-2xl bg-red-100 dark:bg-red-900/30 flex items-center justify-center mb-4"
+                  >
+                    <i
+                      class="fa-solid fa-shield-halved text-red-600 text-2xl"
+                    ></i>
+                  </div>
+
+                  <h2 class="text-3xl font-bold text-gray-900 dark:text-white">
+                    Secure
+                  </h2>
+
+                  <p class="mt-2 text-gray-600 dark:text-gray-400">
+                    Protected Account
+                  </p>
+                </div>
+              </div>
+
+              <!-- About Section -->
+              <div
+                class="mt-12 bg-white/70 dark:bg-gray-700/50 border border-white/30 dark:border-gray-600 rounded-3xl p-8 shadow-xl"
+              >
+                <div class="flex items-center gap-3 mb-6">
+                  <div
+                    class="w-12 h-12 rounded-2xl bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center"
+                  >
+                    <i class="fa-solid fa-user text-indigo-600 text-xl"></i>
+                  </div>
+
+                  <div>
+                    <h2
+                      class="text-2xl font-bold text-gray-900 dark:text-white"
+                    >
+                      About Profile
+                    </h2>
+
+                    <p class="text-gray-500 dark:text-gray-400">
+                      Smart Contact Manager User Information
+                    </p>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <!-- Email -->
+                  <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-5">
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">
+                      Email Address
+                    </p>
+
+                    <div class="flex items-center gap-3">
+                      <i class="fa-solid fa-envelope text-blue-500"></i>
+
+                      <p
+                        class="font-medium text-gray-900 dark:text-white"
+                        data-th-text="${loggedInUser.email}"
+                      >
+                        example@gmail.com
+                      </p>
+                    </div>
+                  </div>
+
+                  <!-- Role -->
+                  <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-5">
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">
+                      Account Type
+                    </p>
+
+                    <div class="flex items-center gap-3">
+                      <i class="fa-solid fa-user-shield text-green-500"></i>
+
+                      <p class="font-medium text-gray-900 dark:text-white">
+                        Premium User
+                      </p>
+                    </div>
+                  </div>
+
+                  <!-- Joined -->
+                  <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-5">
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">
+                      Joined
+                    </p>
+
+                    <div class="flex items-center gap-3">
+                      <i class="fa-solid fa-calendar text-purple-500"></i>
+
+                      <p class="font-medium text-gray-900 dark:text-white">
+                        2026
+                      </p>
+                    </div>
+                  </div>
+
+                  <!-- Status -->
+                  <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-5">
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">
+                      Status
+                    </p>
+
+                    <div class="flex items-center gap-3">
+                      <i class="fa-solid fa-circle text-green-500 text-sm"></i>
+
+                      <p class="font-medium text-gray-900 dark:text-white">
+                        Active
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bottom Quote -->
+              <div class="mt-10 text-center">
+                <p class="text-lg italic text-gray-600 dark:text-gray-400">
+                  “Build connections. Manage smarter. Stay organized.”
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 

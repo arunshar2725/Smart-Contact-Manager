@@ -1,8 +1,13 @@
 package com.scm.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +23,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.scm.Services.ContactService;
 import com.scm.Services.ImageService;
 import com.scm.Services.UserService;
@@ -30,6 +43,7 @@ import com.scm.helpers.Helper;
 import com.scm.helpers.Message;
 import com.scm.helpers.MessageType;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
@@ -353,5 +367,89 @@ public class ContactController {
                 Message.builder().content("Contact Updated !!").type(MessageType.green).build());
 
         return "redirect:/user/contacts";
+    }
+
+    @GetMapping("/export/excel")
+    public void exportToExcel(Authentication authentication,
+            HttpServletResponse response) throws IOException {
+
+        response.setContentType("application/octet-stream");
+        response.setHeader("Content-Disposition", "attachment; filename=contacts.xlsx");
+
+        String username = Helper.getEmailOfLoggedInUser(authentication);
+        User user = userService.getUserByEmail(username);
+        List<Contact> contacts = contactService.getAllByUser(user);
+
+        // Workbook banao
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Contacts");
+
+        // Header row
+        Row headerRow = sheet.createRow(0);
+        headerRow.createCell(0).setCellValue("Name");
+        headerRow.createCell(1).setCellValue("Email");
+        headerRow.createCell(2).setCellValue("Phone");
+        headerRow.createCell(3).setCellValue("Address");
+        headerRow.createCell(4).setCellValue("Website");
+        headerRow.createCell(5).setCellValue("LinkedIn");
+
+        // Data rows
+        int rowNum = 1;
+        for (Contact contact : contacts) {
+            Row row = sheet.createRow(rowNum++);
+            row.createCell(0).setCellValue(contact.getName());
+            row.createCell(1).setCellValue(contact.getEmail());
+            row.createCell(2).setCellValue(contact.getPhoneNumber());
+            row.createCell(3).setCellValue(contact.getAddress());
+            row.createCell(4).setCellValue(contact.getWebsiteLink());
+            row.createCell(5).setCellValue(contact.getLinkedInLink());
+        }
+
+        workbook.write(response.getOutputStream());
+        workbook.close();
+    }
+
+    @GetMapping("/export/pdf")
+    public void exportToPdf(Authentication authentication,
+            HttpServletResponse response) throws IOException, DocumentException {
+
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "attachment; filename=contacts.pdf");
+
+        String username = Helper.getEmailOfLoggedInUser(authentication);
+        User user = userService.getUserByEmail(username);
+        List<Contact> contacts = contactService.getAllByUser(user);
+
+        Document document = new Document();
+        PdfWriter.getInstance(document, response.getOutputStream());
+        document.open();
+
+        // Title
+        Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18);
+        Paragraph title = new Paragraph("My Contacts", titleFont);
+        title.setAlignment(Element.ALIGN_CENTER);
+        document.add(title);
+        document.add(new Paragraph(" "));
+
+        // Table
+        PdfPTable table = new PdfPTable(4); // 4 columns
+        table.setWidthPercentage(100);
+
+        // Header
+        table.addCell("Name");
+        table.addCell("Email");
+        table.addCell("Phone");
+        table.addCell("Address");
+
+        // Data
+        for (Contact contact : contacts) {
+            table.addCell(contact.getName() != null ? contact.getName() : "");
+            table.addCell(contact.getEmail() != null ? contact.getEmail() : "");
+            table.addCell(contact.getPhoneNumber() != null ? contact.getPhoneNumber() : "");
+            table.addCell(contact.getAddress() != null ? contact.getAddress() : "");
+        }
+
+        document.add(table);
+        document.close();
     }
 }

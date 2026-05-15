@@ -27,7 +27,7 @@ public class AuthFailureHandler implements AuthenticationFailureHandler {
             HttpSession session = request.getSession();
             session.setAttribute("message",
                     Message.builder().content(
-                            "Your account is disabled,  Email with verification link is sent to your email id. Please verify your account.")
+                            "Your email is not verified yet. A verification link has been sent to your email address. Please verify your account!!")
                             .type(MessageType.red).build());
 
             response.sendRedirect("/login");

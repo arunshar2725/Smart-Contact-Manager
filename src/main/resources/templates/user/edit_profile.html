@@ -1,0 +1,209 @@
+<!doctype html>
+<html
+  lang="en"
+  th:replace="~{base::parent(~{::#content},~{::title},~{::script})}"
+>
+  <head>
+    <title data-th-text="${loggedInUser.name +' | Edit Profile'}">
+      Edit Profile
+    </title>
+  </head>
+
+  <body>
+    <div id="content">
+      <!-- Sidebar -->
+      <div data-th-if="${loggedInUser}">
+        <div data-th-replace="~{user/sidebar::sidebar}"></div>
+      </div>
+
+      <!-- Main Wrapper -->
+      <div
+        class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-gray-950 dark:to-gray-900 px-3 sm:px-6 py-8"
+      >
+        <div class="max-w-3xl mx-auto">
+          <!-- Edit Card -->
+          <div
+            class="relative overflow-hidden rounded-[2rem] bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl border border-white/20 dark:border-gray-700 shadow-2xl p-8 sm:p-12"
+          >
+            <div class="mb-8 text-center sm:text-left">
+              <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
+                Edit Profile
+              </h1>
+              <p class="text-gray-500 dark:text-gray-400 mt-2">
+                Update your personal details below.
+              </p>
+            </div>
+
+            <!-- IMPORTANT: enctype="multipart/form-data" is required for file uploads -->
+            <form
+              th:action="@{/user/update_profile}"
+              method="POST"
+              enctype="multipart/form-data"
+              class="space-y-6"
+            >
+              <!-- Profile Picture Section (Clickable Circle) -->
+              <div class="flex flex-col items-center justify-center mb-8">
+                <div
+                  class="relative group cursor-pointer"
+                  onclick="document.getElementById('profileImageInput').click()"
+                >
+                  <!-- Current Image / Preview -->
+                  <img
+                    id="imagePreview"
+                    class="w-40 h-40 rounded-full object-cover border-[6px] border-white dark:border-gray-700 shadow-lg transition duration-300 group-hover:opacity-75"
+                    th:src="${user.profilePic}"
+                    onerror="
+                      this.src =
+                        'https://imgs.search.brave.com/jHDp_R14w-tbRDiYsyiOCGDeCSPE4WqsVfFwiXVDyow/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzExLzY4LzUwLzU3/LzM2MF9GXzExNjg1/MDU3OTRfSUJDRWlh/ZnNJckhGSjA5ZTY1/UDJ2aDUxMTVDMVhJ/N2UuanBn'
+                    "
+                    alt="Profile Preview"
+                  />
+
+                  <!-- Hover Overlay -->
+                  <div
+                    class="absolute inset-0 bg-black/40 hidden group-hover:flex rounded-full items-center justify-center transition duration-300"
+                  >
+                    <i class="fa-solid fa-camera text-white text-3xl"></i>
+                  </div>
+                </div>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-3">
+                  Click the image to change
+                </p>
+
+                <p
+                  id="file-size-error"
+                  class="hidden text-sm text-red-600 dark:text-red-400 font-medium mt-3 bg-red-50 dark:bg-red-900/30 px-4 py-2 rounded-xl border border-red-200 dark:border-red-800 transition-all duration-300"
+                >
+                  <i class="fa-solid fa-circle-exclamation mr-1"></i> Image must
+                  be smaller than 2MB
+                </p>
+
+                <!-- Hidden File Input -->
+                <input
+                  type="file"
+                  id="profileImageInput"
+                  name="profileImage"
+                  class="hidden"
+                  accept="image/*"
+                  onchange="previewImage(event)"
+                />
+              </div>
+
+              <div class="grid grid-cols-1 gap-6">
+                <!-- Name Input (Pre-filled using th:value) -->
+                <div>
+                  <label
+                    for="name"
+                    class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                    >Full Name</label
+                  >
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    th:value="${user.name}"
+                    required
+                    class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                  />
+                </div>
+
+                <!-- Phone Input (Pre-filled) -->
+                <div>
+                  <label
+                    for="phoneNumber"
+                    class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                    >Phone Number</label
+                  >
+                  <input
+                    type="text"
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    th:value="${user.phoneNumber}"
+                    required
+                    class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                  />
+                </div>
+
+                <!-- About Input (Pre-filled using text inside textarea) -->
+                <div>
+                  <label
+                    for="about"
+                    class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                    >About</label
+                  >
+                  <textarea
+                    id="about"
+                    name="about"
+                    rows="4"
+                    required
+                    class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                    th:text="${user.about}"
+                  ></textarea>
+                </div>
+              </div>
+
+              <!-- Buttons -->
+              <div class="flex gap-4 mt-8 justify-end">
+                <a
+                  th:href="@{/user/profile}"
+                  class="px-6 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-600 transition-all font-medium"
+                >
+                  Cancel
+                </a>
+                <button
+                  type="submit"
+                  class="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white shadow-lg transition-all font-medium"
+                >
+                  Save Changes
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- The only JS needed: This reads the selected file and updates the <img> tag instantly -->
+    <script>
+      function previewImage(event) {
+        const file = event.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            document.getElementById("imagePreview").src = e.target.result;
+          };
+          reader.readAsDataURL(file);
+        }
+      }
+
+      function previewImage(event) {
+        const file = event.target.files[0];
+        const errorMsg = document.getElementById("file-size-error");
+
+        if (file) {
+          // 2MB is calculated in bytes: 2 * 1024 * 1024 = 2097152 bytes
+          const maxFileSize = 2097152;
+
+          if (file.size > maxFileSize) {
+            // Show the error message
+            errorMsg.classList.remove("hidden");
+
+            // Clear the file input so the huge file doesn't submit to the server
+            event.target.value = "";
+            return; // Stop the function here
+          } else {
+            // Hide the error message if the file is valid
+            errorMsg.classList.add("hidden");
+
+            // Proceed with showing the preview
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              document.getElementById("imagePreview").src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

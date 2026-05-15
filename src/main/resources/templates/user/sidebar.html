@@ -23,9 +23,7 @@
         referrerpolicy="no-referrer"
       />
 
-      <span class="text-gray-500" data-th-text="${loggedInUser.name}"
-        >Durgesh Kumar Tiwari</span
-      >
+      <span class="text-gray-500" data-th-text="${loggedInUser.name}"></span>
       <span
         class="self-center text-xl font-semibold whitespace-nowrap text-gray-700 dark:text-white"
         >Welcome to SCM</span
@@ -120,7 +118,7 @@
       </li>
       <li>
         <a
-          href="#"
+          data-th-href="@{'/logout'}"
           class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
         >
           <svg

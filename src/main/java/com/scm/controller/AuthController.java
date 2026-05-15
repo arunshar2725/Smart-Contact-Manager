@@ -22,21 +22,19 @@ public class AuthController {
 
         User user = userRepo.findByEmailToken(token).orElse(null);
 
-        if (user != null) {
-            // user fetch hua h : process krna h
-
-            if (user.getEmailToken().equals(token)) {
-                user.setEmailVerified(true);
-                user.setEnabled(true);
-                userRepo.save(user);
-
-                return "success_page";
-            }
-            return "error_page";
-
-        } else {
+        if (user == null) {
             return "error_page";
         }
+
+        user.setEmailVerified(true);
+
+        user.setEnabled(true);
+
+        user.setEmailToken(null);
+
+        userRepo.save(user);
+
+        return "success_page";
     }
 
 }

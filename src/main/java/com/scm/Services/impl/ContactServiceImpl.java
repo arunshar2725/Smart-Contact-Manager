@@ -119,4 +119,18 @@ public class ContactServiceImpl implements ContactService {
 
     }
 
+    @Override
+    public List<Contact> getAllByUser(User user) {
+        return contactRepo.findByUser(user);
+    }
+
+    @Override
+    public long countByUser(User user) {
+        return contactRepo.countByUser(user);
+    }
+
+    @Override
+    public long countFavouriteByUser(User user) {
+        return contactRepo.countByUserAndFavouriteTrue(user);
+    }
 }

@@ -61,16 +61,26 @@ public class UserServiceImpl implements UserService {
 
         String verificationLink = baseUrl + "/auth/verify-email?token=" + emailToken;
 
-        String emailBody = "Hello " + savedUser.getName() +
-                ",\n\nClick on the link below to verify your email address:\n\n" +
-                verificationLink +
-                "\n\nSmart Contact Manager Team";
+        try {
 
-        emailService.sendEmail(savedUser.getEmail(),
+            System.out.println("Sending Verification Email to " + savedUser.getEmail());
+            String emailBody = "Hello " + savedUser.getName() +
+                    ",\n\nClick on the link below to verify your email address:\n\n" +
+                    verificationLink +
+                    "\n\nSmart Contact Manager Team";
 
-                "Verify Your Account",
+            emailService.sendEmail(savedUser.getEmail(),
 
-                emailBody);
+                    "Verify Your Account",
+
+                    emailBody);
+            System.out.println("Verification Email Sent to Succesfully" + savedUser.getEmail());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            System.out.println("Email sending failed");
+        }
 
         return savedUser;
 
@@ -90,6 +100,7 @@ public class UserServiceImpl implements UserService {
         user2.setName(user.getName());
         user2.setEmail(user.getEmail());
         user2.setPassword(user.getPassword());
+        user2.setPhoneNumber(user.getPhoneNumber());
         user2.setAbout(user.getAbout());
         user2.setProfilePic(user.getProfilePic());
         user2.setEnabled(user.isEnabled());

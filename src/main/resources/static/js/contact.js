@@ -177,6 +177,7 @@ window.onload = function () {
   function updateButtonStyle() {
     if (selectField.value !== "" && searchInput.value.trim() !== "") {
       searchBtn.classList.remove("bg-gray-400", "cursor-not-allowed");
+
       searchBtn.classList.add(
         "bg-blue-600",
         "hover:bg-blue-700",
@@ -184,6 +185,7 @@ window.onload = function () {
       );
     } else {
       searchBtn.classList.add("bg-gray-400", "cursor-not-allowed");
+
       searchBtn.classList.remove(
         "bg-blue-600",
         "hover:bg-blue-700",
