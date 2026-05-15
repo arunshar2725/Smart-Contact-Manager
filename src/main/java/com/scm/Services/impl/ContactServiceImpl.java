@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -132,5 +133,16 @@ public class ContactServiceImpl implements ContactService {
     @Override
     public long countFavouriteByUser(User user) {
         return contactRepo.countByUserAndFavouriteTrue(user);
+    }
+
+    @Override
+    public List<Contact> getFavouriteContactsByUser(User user) {
+        return contactRepo.findByUserAndFavouriteTrue(user);
+    }
+
+    @Override
+    public Page<Contact> getContactsByUserAndCategory(User user, String category, Pageable pageable) {
+        // Ye direct aapke ContactRepository wale method ko call karega
+        return contactRepo.findByUserAndCategory(user, category, pageable);
     }
 }

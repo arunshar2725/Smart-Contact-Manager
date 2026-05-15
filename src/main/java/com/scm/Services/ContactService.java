@@ -46,4 +46,8 @@ public interface ContactService {
 
     long countFavouriteByUser(User user);
 
+    List<Contact> getFavouriteContactsByUser(User user);
+
+    Page<Contact> getContactsByUserAndCategory(User user, String type, Pageable pageable);
+
 }

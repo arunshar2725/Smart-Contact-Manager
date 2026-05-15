@@ -12,12 +12,11 @@ import com.scm.Services.UserService;
 import com.scm.entities.User;
 import com.scm.helpers.Helper;
 
-import jakarta.servlet.http.HttpServletRequest;
-
 @ControllerAdvice
 public class RootController {
     @Autowired
     private UserService userService;
+
     private Logger logger = LoggerFactory.getLogger(RootController.class);
 
     @ModelAttribute
@@ -39,4 +38,5 @@ public class RootController {
         model.addAttribute("loggedInUser", user);
 
     }
+
 }

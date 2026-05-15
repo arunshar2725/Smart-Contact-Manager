@@ -68,9 +68,10 @@
 
     <!-- main content -->
     <!-- main content lana h saari file se dynamic -->
+    <!-- agar login to side bar ko show krna h  -->
     <div
       th:classappend="${loggedInUser} ? 'sm:ml-64' : ''"
-      class="p-4 pt-28 min-h-screen dark:bg-gray-900 bg-gray-100"
+      class="pt-18 min-h-screen dark:bg-gray-900 bg-gray-100"
     >
       <section data-th-replace="${content}"></section>
     </div>

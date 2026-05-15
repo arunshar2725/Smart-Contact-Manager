@@ -2,15 +2,21 @@ package com.scm.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.scm.Repositories.SendMessageRepo;
 import com.scm.Services.UserService;
 import com.scm.entities.Providers;
 import com.scm.entities.User;
+import com.scm.forms.SendMessage;
 import com.scm.forms.UserForm;
 import com.scm.helpers.Message;
 import com.scm.helpers.MessageType;
@@ -24,6 +30,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class PageController {
+
+    @Autowired
+    private SendMessageRepo SendMessageRepo;
 
     @Value("${scm.manager.upload-dir}")
     private String profilePic;
@@ -75,12 +84,16 @@ public class PageController {
 
     // Registration page
     @GetMapping("/register")
-    public String register(Model model) {
-
+    public String registerPage(@RequestParam(value = "email", required = false) String email, Model model) {
         UserForm userForm = new UserForm();
-        model.addAttribute("userForm", userForm);
 
-        return ("register");
+        // Agar URL me email aaya hai, toh form me pehle se set kar do
+        if (email != null) {
+            userForm.setEmail(email);
+        }
+
+        model.addAttribute("userForm", userForm);
+        return "register";
     }
     // processing register
 
@@ -135,5 +148,38 @@ public class PageController {
         return "redirect:/login";
 
     }
+
+    @PostMapping("/contact_submit")
+    public String submitContactForm(
+            @RequestParam("name") String name,
+            @RequestParam("email") String email,
+            @RequestParam(value = "company", required = false) String company,
+            @RequestParam("topic") String topic,
+            @RequestParam("message") String message,
+            HttpSession session) {
+
+        // 1. Map data to the entity
+        SendMessage SendMessage = new SendMessage();
+        SendMessage.setName(name);
+        SendMessage.setEmail(email);
+        SendMessage.setCompany(company);
+        SendMessage.setTopic(topic);
+        SendMessage.setMessage(message);
+
+        // 2. Save to database
+        SendMessageRepo.save(SendMessage);
+
+        // 3. Set success message using your existing Message setup
+        session.setAttribute("message",
+                Message.builder()
+                        .content("Thank you! Your message has been sent successfully.")
+                        .type(MessageType.green)
+                        .build());
+
+        // 4. Redirect back to the contact page
+        return "redirect:/contact";
+    }
+
+    // Handles the form submission
 
 }

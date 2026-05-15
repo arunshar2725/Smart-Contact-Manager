@@ -4,7 +4,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.scm.validators.ValidFile;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -42,6 +41,8 @@ public class ContactForm {
     private String websiteLink;
 
     private String linkedInLink;
+
+    private String category;
 
     // annotation create karenge jo file validate
     // size

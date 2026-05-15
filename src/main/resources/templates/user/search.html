@@ -164,6 +164,10 @@
                   <th class="flex items-center px-6 py-4 whitespace-nowrap">
                     <img
                       class="w-12 h-12 rounded-full object-cover border"
+                      onerror="
+                        this.src =
+                          'https://imgs.search.brave.com/jHDp_R14w-tbRDiYsyiOCGDeCSPE4WqsVfFwiXVDyow/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzExLzY4LzUwLzU3/LzM2MF9GXzExNjg1/MDU3OTRfSUJDRWlh/ZnNJckhGSjA5ZTY1/UDJ2aDUxMTVDMVhJ/N2UuanBn'
+                      "
                       data-th-src="@{*{picture}}"
                       alt="Profile"
                     />
@@ -175,9 +179,16 @@
                       ></div>
 
                       <div
-                        class="text-sm text-gray-500"
+                        class="text-sm text-gray-500 mb-1"
                         data-th-text="*{email}"
                       ></div>
+
+                      <span
+                        class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-blue-100 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-400"
+                        data-th-text="*{category != null ? category : 'General'}"
+                      >
+                        General
+                      </span>
                     </div>
                   </th>
 

@@ -1,60 +1,1019 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h>This is ServicesPage</h>
-    <hr/> -->
-<!-- using fragment -->
-<!-- base jo h wo file ka name h or parent fragment ka naam -->
-<!-- <div class="host-tag" th:replace="~{base ::parent}"></div>--> <!--eska use fragmant ko use krne ke liye hai -->
-<!-- <div class="host-tag" th:replace="~{base ::parent}"></div> --> <!--eska use fragmant ko replace krne ke liye hai host se -->
-<!-- <div class="host-tag" th:replace="~{base ::parent('Services 1','services 2')}"></div> -->
+<!doctype html>
+<html
+  lang="en"
+  th:replace="~{base::parent(~{::#content},~{::title},~{::script})}"
+>
+  <head>
+    <title>Platform Services & Capabilities | SCM 2.0</title>
+  </head>
+  <body>
+    <div id="content">
+      <div data-th-if="${loggedInUser}">
+        <div data-th-replace="~{user/sidebar::sidebar}"></div>
+      </div>
 
+      <main>
+        <section
+          class="relative pt-32 pb-24 px-6 border-b border-gray-200 dark:border-gray-800/50 bg-[linear-gradient(to_right,rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.03)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px]"
+        >
+          <div
+            class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-blue-500/15 dark:bg-blue-600/15 blur-[100px] rounded-full pointer-events-none"
+          ></div>
 
-<!-- id ke liye # , class ke liye . -->
-<!-- <div th:replace="~{base::parent(~{::section})}"> -->
+          <div class="max-w-7xl mx-auto relative z-10">
+            <nav
+              class="flex items-center gap-2 text-sm text-gray-500 font-medium mb-10 reveal opacity-0 translate-y-4 transition-all duration-700"
+            >
+              <a
+                th:href="@{/}"
+                class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                >Platform</a
+              >
+              <i class="fa-solid fa-chevron-right text-[10px]"></i>
+              <span class="text-gray-900 dark:text-gray-300"
+                >Capabilities & Services</span
+              >
+            </nav>
 
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              <div
+                class="reveal opacity-0 translate-y-4 transition-all duration-700 delay-100"
+              >
+                <div
+                  class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-blue-200 dark:border-blue-900 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 text-xs font-bold uppercase tracking-wider mb-6"
+                >
+                  <i class="fa-solid fa-server"></i> System Architecture
+                </div>
+                <h1
+                  class="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 leading-[1.1]"
+                >
+                  Contact routing, <br />
+                  <span
+                    class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-cyan-500 dark:from-blue-400 dark:to-cyan-300"
+                    >engineered for scale.</span
+                  >
+                </h1>
+                <p
+                  class="text-lg text-gray-600 dark:text-gray-400 leading-relaxed mb-8"
+                >
+                  SCM 2.0 provides a robust suite of micro-services designed to
+                  handle complex data ingestion, secure storage, and real-time
+                  synchronization across your entire workspace.
+                </p>
+                <div class="flex flex-wrap items-center gap-4">
+                  <a
+                    href="#core-services"
+                    class="px-6 py-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-semibold rounded-xl hover:scale-105 transition-transform flex items-center gap-2 shadow-lg shadow-gray-900/20 dark:shadow-white/10"
+                  >
+                    Explore Services <i class="fa-solid fa-arrow-down"></i>
+                  </a>
+                  <a
+                    href="#security"
+                    class="px-6 py-3 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:border-blue-500 dark:hover:border-blue-500 text-gray-900 dark:text-white font-semibold rounded-xl transition-all flex items-center gap-2"
+                  >
+                    <i class="fa-solid fa-shield-check text-blue-500"></i> View
+                    Security
+                  </a>
+                </div>
+              </div>
 
-    <!-- <div th:replace="~{base::parent(~{::#main_content})}"></div>
+              <div
+                class="relative reveal opacity-0 translate-y-4 transition-all duration-700 delay-300"
+              >
+                <div
+                  class="w-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-6 shadow-2xl relative z-10"
+                >
+                  <div
+                    class="flex items-center justify-between mb-6 pb-4 border-b border-gray-100 dark:border-gray-800"
+                  >
+                    <div class="flex items-center gap-3">
+                      <div
+                        class="w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center"
+                      >
+                        <i class="fa-solid fa-database text-gray-500"></i>
+                      </div>
+                      <div>
+                        <div class="text-sm font-bold">Primary DB Cluster</div>
+                        <div
+                          class="text-xs text-green-500 flex items-center gap-1"
+                        >
+                          <span
+                            class="w-2 h-2 rounded-full bg-green-500 animate-pulse"
+                          ></span>
+                          Operational
+                        </div>
+                      </div>
+                    </div>
+                    <span
+                      class="text-xs font-mono bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-gray-500"
+                      >ms-central-1</span
+                    >
+                  </div>
+                  <div class="space-y-3">
+                    <div
+                      class="flex justify-between items-center p-3 rounded-lg bg-gray-50 dark:bg-gray-950 border border-gray-100 dark:border-gray-800"
+                    >
+                      <span class="text-xs font-mono text-gray-500"
+                        >I/O Throughput</span
+                      >
+                      <div
+                        class="w-1/2 bg-gray-200 dark:bg-gray-800 rounded-full h-1.5"
+                      >
+                        <div
+                          class="bg-blue-500 h-1.5 rounded-full"
+                          style="width: 78%"
+                        ></div>
+                      </div>
+                    </div>
+                    <div
+                      class="flex justify-between items-center p-3 rounded-lg bg-gray-50 dark:bg-gray-950 border border-gray-100 dark:border-gray-800"
+                    >
+                      <span class="text-xs font-mono text-gray-500"
+                        >Query Latency</span
+                      >
+                      <span
+                        class="text-xs font-mono font-bold text-gray-900 dark:text-gray-300"
+                        >12.4ms</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="absolute -right-6 -bottom-6 w-32 h-32 bg-[radial-gradient(circle,rgba(59,130,246,0.2)_1px,transparent_1px)] bg-[size:8px_8px] z-0"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-<section id="main_content">
-    <h2>This is dynamic services passed to base parent</h2>
-    <p> Lorem5</p>
-    <button>Click on Dynamic Content</button>
-</section>
+        <section id="core-services" class="py-24 px-6 relative">
+          <div class="max-w-7xl mx-auto">
+            <div
+              class="mb-16 reveal opacity-0 translate-y-4 transition-all duration-700"
+            >
+              <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight">
+                System Capabilities
+              </h2>
+              <p class="text-gray-500 mt-4 max-w-2xl text-lg">
+                Detailed breakdowns of the micro-systems powering your
+                relationship management.
+              </p>
+            </div>
 
-<section id="second_content">
-    <h2>This is second dynamic services passed to base parent</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div
+                class="group bg-white dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800 rounded-2xl p-8 shadow-sm hover:shadow-xl dark:hover:border-blue-500/50 transition-all duration-300 reveal opacity-0 translate-y-4"
+              >
+                <div class="flex justify-between items-start mb-6">
+                  <div
+                    class="w-12 h-12 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 group-hover:scale-110 transition-all"
+                  >
+                    <i class="fa-solid fa-magnifying-glass-chart text-xl"></i>
+                  </div>
+                  <span
+                    class="text-[10px] font-mono bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-2 py-1 rounded border border-blue-100 dark:border-blue-800"
+                    >Pagination Engine</span
+                  >
+                </div>
+                <h3 class="text-xl font-bold mb-3">Advanced Search Indexing</h3>
+                <p
+                  class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-6"
+                >
+                  Real-time search mapping across names, emails, and phone
+                  numbers. Utilizes optimized SQL `LIKE` clauses backed by
+                  Spring Data JPA pagination to prevent memory overflow on large
+                  datasets.
+                </p>
+                <div
+                  class="pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between text-xs"
+                >
+                  <span class="text-gray-500">Avg. Search Time</span>
+                  <span
+                    class="font-mono font-bold text-gray-900 dark:text-gray-200"
+                    >< 15ms</span
+                  >
+                </div>
+              </div>
 
-</section>
+              <div
+                class="group bg-white dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800 rounded-2xl p-8 shadow-sm hover:shadow-xl dark:hover:border-green-500/50 transition-all duration-300 reveal opacity-0 translate-y-4 delay-100"
+              >
+                <div class="flex justify-between items-start mb-6">
+                  <div
+                    class="w-12 h-12 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-400 group-hover:text-green-600 dark:group-hover:text-green-400 group-hover:scale-110 transition-all"
+                  >
+                    <i class="fa-solid fa-cloud-arrow-up text-xl"></i>
+                  </div>
+                  <span
+                    class="text-[10px] font-mono bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-400 px-2 py-1 rounded border border-green-100 dark:border-green-800"
+                    >CDN Connected</span
+                  >
+                </div>
+                <h3 class="text-xl font-bold mb-3">
+                  Cloudinary Image Processing
+                </h3>
+                <p
+                  class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-6"
+                >
+                  Decoupled media handling. Profile images are uploaded,
+                  compressed, and distributed globally via Cloudinary CDN,
+                  ensuring ultra-fast load times and reduced server bandwidth.
+                </p>
+                <div
+                  class="pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between text-xs"
+                >
+                  <span class="text-gray-500">Optimization</span>
+                  <span
+                    class="font-mono font-bold text-gray-900 dark:text-gray-200"
+                    >Auto-WebP</span
+                  >
+                </div>
+              </div>
 
+              <div
+                class="group bg-white dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800 rounded-2xl p-8 shadow-sm hover:shadow-xl dark:hover:border-purple-500/50 transition-all duration-300 reveal opacity-0 translate-y-4 delay-200"
+              >
+                <div class="flex justify-between items-start mb-6">
+                  <div
+                    class="w-12 h-12 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-400 group-hover:text-purple-600 dark:group-hover:text-purple-400 group-hover:scale-110 transition-all"
+                  >
+                    <i class="fa-solid fa-file-export text-xl"></i>
+                  </div>
+                  <span
+                    class="text-[10px] font-mono bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-2 py-1 rounded border border-purple-100 dark:border-purple-800"
+                    >I/O Stream</span
+                  >
+                </div>
+                <h3 class="text-xl font-bold mb-3">
+                  Data Serialization (Export)
+                </h3>
+                <p
+                  class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-6"
+                >
+                  Robust utility services that dynamically translate active
+                  database records into strictly formatted Microsoft Excel
+                  (.xlsx) and PDF documents for offline CRM usage.
+                </p>
+                <div
+                  class="pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between text-xs"
+                >
+                  <span class="text-gray-500">Formats</span>
+                  <span
+                    class="font-mono font-bold text-gray-900 dark:text-gray-200"
+                    >.XLSX, .PDF</span
+                  >
+                </div>
+              </div>
 
-</div>
-</body>
-</html> -->
+              <div
+                class="group bg-white dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800 rounded-2xl p-8 shadow-sm hover:shadow-xl dark:hover:border-yellow-500/50 transition-all duration-300 reveal opacity-0 translate-y-4"
+              >
+                <div class="flex justify-between items-start mb-6">
+                  <div
+                    class="w-12 h-12 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-400 group-hover:text-yellow-500 dark:group-hover:text-yellow-400 group-hover:scale-110 transition-all"
+                  >
+                    <i class="fa-solid fa-star text-xl"></i>
+                  </div>
+                  <span
+                    class="text-[10px] font-mono bg-yellow-50 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400 px-2 py-1 rounded border border-yellow-100 dark:border-yellow-800"
+                    >Caching</span
+                  >
+                </div>
+                <h3 class="text-xl font-bold mb-3">Priority Pinning Logic</h3>
+                <p
+                  class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-6"
+                >
+                  A dedicated boolean indexing system that segregates 'Favorite'
+                  contacts into priority views, ensuring your most critical
+                  relationships load instantly upon dashboard access.
+                </p>
+                <div
+                  class="pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between text-xs"
+                >
+                  <span class="text-gray-500">Data Access</span>
+                  <span
+                    class="font-mono font-bold text-gray-900 dark:text-gray-200"
+                    >O(1) Indexed</span
+                  >
+                </div>
+              </div>
 
+              <div
+                class="group bg-white dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800 rounded-2xl p-8 shadow-sm hover:shadow-xl dark:hover:border-rose-500/50 transition-all duration-300 reveal opacity-0 translate-y-4 delay-100"
+              >
+                <div class="flex justify-between items-start mb-6">
+                  <div
+                    class="w-12 h-12 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-400 group-hover:text-rose-600 dark:group-hover:text-rose-400 group-hover:scale-110 transition-all"
+                  >
+                    <i class="fa-solid fa-link text-xl"></i>
+                  </div>
+                  <span
+                    class="text-[10px] font-mono bg-rose-50 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 px-2 py-1 rounded border border-rose-100 dark:border-rose-800"
+                    >Validation</span
+                  >
+                </div>
+                <h3 class="text-xl font-bold mb-3">
+                  Entity Relationship Tracking
+                </h3>
+                <p
+                  class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-6"
+                >
+                  Smart storage and validation of deep social links (LinkedIn,
+                  Portfolios, Twitter) directly bound to specific contact UUIDs,
+                  ensuring data integrity and zero orphaned records.
+                </p>
+                <div
+                  class="pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between text-xs"
+                >
+                  <span class="text-gray-500">Constraint</span>
+                  <span
+                    class="font-mono font-bold text-gray-900 dark:text-gray-200"
+                    >Regex Checked</span
+                  >
+                </div>
+              </div>
 
+              <div
+                class="group bg-white dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800 rounded-2xl p-8 shadow-sm hover:shadow-xl dark:hover:border-indigo-500/50 transition-all duration-300 reveal opacity-0 translate-y-4 delay-200"
+              >
+                <div class="flex justify-between items-start mb-6">
+                  <div
+                    class="w-12 h-12 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 group-hover:scale-110 transition-all"
+                  >
+                    <i class="fa-solid fa-users-viewfinder text-xl"></i>
+                  </div>
+                  <span
+                    class="text-[10px] font-mono bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 px-2 py-1 rounded border border-indigo-100 dark:border-indigo-800"
+                    >Auth Bound</span
+                  >
+                </div>
+                <h3 class="text-xl font-bold mb-3">Multi-Tenant Isolation</h3>
+                <p
+                  class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-6"
+                >
+                  Every contact is strictly mapped to the authenticated user's
+                  ID at the database level. Horizontal data bleeding is
+                  architecturally impossible by design.
+                </p>
+                <div
+                  class="pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between text-xs"
+                >
+                  <span class="text-gray-500">Isolation</span>
+                  <span
+                    class="font-mono font-bold text-gray-900 dark:text-gray-200"
+                    >100% Strict</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-<!DOCTYPE html>
-<html lang="en" th:replace="~{base::parent(~{::#content},~{::title},~{::script})}">
-<head>
-    <title>Services</title>
-</head>
-<body>
-    <section id="content">
-        <h1>Welcome to Services Page</h1>
-        <h1>Services offered by SCM</h1>
-        <p>Lorem ipsum dolor sit amet.</p>
-    </section>
+        <section
+          class="py-24 px-6 bg-gray-100/50 dark:bg-gray-900/30 border-y border-gray-200 dark:border-gray-800"
+        >
+          <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              <div
+                class="reveal opacity-0 translate-y-4 transition-all duration-700"
+              >
+                <h2 class="text-3xl md:text-4xl font-extrabold mb-6">
+                  Built for diverse workflows.
+                </h2>
+                <p
+                  class="text-gray-600 dark:text-gray-400 text-lg leading-relaxed mb-10"
+                >
+                  SCM isn't just an address book; it operates as a lightweight
+                  CRM. Whether managing a freelance network or tracking
+                  enterprise leads, the architecture scales to your business
+                  logic.
+                </p>
+
+                <div class="space-y-8">
+                  <div class="flex gap-5 group">
+                    <div
+                      class="w-12 h-12 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center text-blue-500 shadow-sm group-hover:scale-110 transition-transform shrink-0"
+                    >
+                      <i class="fa-solid fa-briefcase"></i>
+                    </div>
+                    <div>
+                      <h4
+                        class="text-lg font-bold text-gray-900 dark:text-white mb-1"
+                      >
+                        Freelancers & Consultants
+                      </h4>
+                      <p class="text-sm text-gray-500 leading-relaxed">
+                        Centralize client details, project links, and direct
+                        numbers. Utilize the export features for rapid invoicing
+                        or marketing campaign generation.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="flex gap-5 group">
+                    <div
+                      class="w-12 h-12 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center text-indigo-500 shadow-sm group-hover:scale-110 transition-transform shrink-0"
+                    >
+                      <i class="fa-solid fa-building"></i>
+                    </div>
+                    <div>
+                      <h4
+                        class="text-lg font-bold text-gray-900 dark:text-white mb-1"
+                      >
+                        Growing Startups & Teams
+                      </h4>
+                      <p class="text-sm text-gray-500 leading-relaxed">
+                        Maintain a single source of truth for vendor and lead
+                        information. Secure authentication ensures data remains
+                        strictly within company accounts.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="relative w-full h-[400px] rounded-2xl bg-gray-950 border border-gray-800 shadow-2xl p-6 overflow-hidden reveal opacity-0 translate-y-4 transition-all duration-700 delay-200"
+              >
+                <div
+                  class="flex items-center gap-2 mb-6 pb-4 border-b border-gray-800"
+                >
+                  <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                  <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                  <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                  <span class="ml-4 text-xs font-mono text-gray-500"
+                    >ContactController.java</span
+                  >
+                </div>
+                <div class="font-mono text-sm text-gray-400 space-y-2">
+                  <p>
+                    <span class="text-purple-400">@PostMapping</span>(<span
+                      class="text-green-300"
+                      >"/search"</span
+                    >)
+                  </p>
+                  <p>
+                    <span class="text-blue-400">public</span> String
+                    <span class="text-yellow-200">searchContacts</span>(
+                  </p>
+                  <p class="pl-8">
+                    <span class="text-purple-400">@ModelAttribute</span>
+                    SearchForm form,
+                  </p>
+                  <p class="pl-8">Authentication auth, Model model) {</p>
+                  <p class="pl-4 mt-2 text-gray-500">
+                    /* Retrieve strictly isolated user data */
+                  </p>
+                  <p class="pl-4">
+                    User user = userService.<span class="text-yellow-200"
+                      >getUser</span
+                    >(auth);
+                  </p>
+                  <p class="pl-4">
+                    Page&lt;Contact&gt; results = contactService
+                  </p>
+                  <p class="pl-8">
+                    .<span class="text-yellow-200">search</span>(user,
+                    form.<span class="text-yellow-200">getField</span>(),
+                    form.<span class="text-yellow-200">getVal</span>());
+                  </p>
+                  <p class="pl-4 mt-2">
+                    model.<span class="text-yellow-200">addAttribute</span
+                    >(<span class="text-green-300">"contacts"</span>, results);
+                  </p>
+                  <p class="pl-4">
+                    <span class="text-blue-400">return</span>
+                    <span class="text-green-300">"user/contacts"</span>;
+                  </p>
+                  <p>}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="py-24 px-6">
+          <div class="max-w-4xl mx-auto">
+            <div
+              class="text-center mb-16 reveal opacity-0 translate-y-4 transition-all duration-700"
+            >
+              <h2 class="text-3xl font-extrabold mb-4">
+                Lifecycle & Data Flow
+              </h2>
+              <p class="text-gray-500">
+                Understanding how SCM processes your data from input to
+                extraction.
+              </p>
+            </div>
+
+            <div
+              class="relative border-l border-gray-200 dark:border-gray-800 ml-4 md:ml-0 md:pl-0 space-y-12"
+            >
+              <div
+                class="relative pl-8 md:pl-0 md:flex md:items-center md:justify-between group reveal opacity-0 translate-y-4 transition-all duration-700"
+              >
+                <div class="hidden md:block md:w-5/12 text-right pr-8">
+                  <h4 class="text-lg font-bold">1. Secure Ingestion</h4>
+                  <p class="text-sm text-gray-500 mt-1">
+                    Data is captured via CSRF-protected forms. Inputs are
+                    sanitized and bound to DTOs using Hibernate Validator.
+                  </p>
+                </div>
+                <div
+                  class="absolute left-[-5px] md:left-1/2 md:-translate-x-1/2 w-3 h-3 rounded-full bg-blue-500 ring-4 ring-white dark:ring-gray-950 transition-transform duration-300 group-hover:scale-150"
+                ></div>
+                <div class="md:hidden">
+                  <h4 class="text-lg font-bold">1. Secure Ingestion</h4>
+                  <p class="text-sm text-gray-500 mt-1">
+                    Data is captured via CSRF-protected forms. Inputs are
+                    sanitized and bound to DTOs using Hibernate Validator.
+                  </p>
+                </div>
+                <div class="hidden md:flex md:w-5/12 pl-8">
+                  <div
+                    class="px-4 py-3 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg text-xs font-mono w-full text-center shadow-sm"
+                  >
+                    Form &rarr; @Valid DTO
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="relative pl-8 md:pl-0 md:flex md:items-center md:justify-between group reveal opacity-0 translate-y-4 transition-all duration-700"
+              >
+                <div class="hidden md:flex md:w-5/12 pr-8 justify-end">
+                  <div
+                    class="px-4 py-3 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg text-xs font-mono w-full text-center shadow-sm"
+                  >
+                    ImageService &rarr; CDN
+                  </div>
+                </div>
+                <div
+                  class="absolute left-[-5px] md:left-1/2 md:-translate-x-1/2 w-3 h-3 rounded-full bg-purple-500 ring-4 ring-white dark:ring-gray-950 transition-transform duration-300 group-hover:scale-150"
+                ></div>
+                <div class="md:w-5/12 md:pl-8">
+                  <h4 class="text-lg font-bold">2. Media Decoupling</h4>
+                  <p class="text-sm text-gray-500 mt-1">
+                    Uploaded images are intercepted, assigned UUIDs, and pushed
+                    to Cloudinary. Only the secure URL is returned to the
+                    persistence layer.
+                  </p>
+                </div>
+              </div>
+
+              <div
+                class="relative pl-8 md:pl-0 md:flex md:items-center md:justify-between group reveal opacity-0 translate-y-4 transition-all duration-700"
+              >
+                <div class="hidden md:block md:w-5/12 text-right pr-8">
+                  <h4 class="text-lg font-bold">3. Persistence & Indexing</h4>
+                  <p class="text-sm text-gray-500 mt-1">
+                    The entity is committed to MySQL, strictly mapped to the
+                    authenticated user's ID. Data is immediately available for
+                    pagination queries.
+                  </p>
+                </div>
+                <div
+                  class="absolute left-[-5px] md:left-1/2 md:-translate-x-1/2 w-3 h-3 rounded-full bg-green-500 ring-4 ring-white dark:ring-gray-950 transition-transform duration-300 group-hover:scale-150"
+                ></div>
+                <div class="md:hidden">
+                  <h4 class="text-lg font-bold">3. Persistence & Indexing</h4>
+                  <p class="text-sm text-gray-500 mt-1">
+                    The entity is committed to MySQL, strictly mapped to the
+                    authenticated user's ID. Data is immediately available for
+                    pagination queries.
+                  </p>
+                </div>
+                <div class="hidden md:flex md:w-5/12 pl-8">
+                  <div
+                    class="px-4 py-3 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg text-xs font-mono w-full text-center shadow-sm"
+                  >
+                    JPA.save(Entity)
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section
+          class="py-24 px-6 bg-gray-100/50 dark:bg-gray-900/30 border-t border-gray-200 dark:border-gray-800"
+        >
+          <div class="max-w-7xl mx-auto">
+            <div
+              class="text-center mb-16 reveal opacity-0 translate-y-4 transition-all duration-700"
+            >
+              <h2 class="text-3xl font-extrabold mb-4">
+                Productivity Engineering
+              </h2>
+              <p class="text-gray-500">
+                UI/UX decisions engineered to reduce friction and save time.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div
+                class="md:col-span-2 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-3xl p-8 shadow-sm reveal opacity-0 translate-y-4 transition-all duration-700"
+              >
+                <h3 class="text-2xl font-bold mb-2">Non-blocking Operations</h3>
+                <p class="text-gray-500 mb-8 max-w-md text-sm">
+                  Action states like favoriting or deleting contacts utilize
+                  localized alerts and optimized redirects to prevent full
+                  application reloads, maintaining your scroll state.
+                </p>
+                <div
+                  class="flex items-center gap-3 bg-gray-50 dark:bg-gray-950 border border-gray-200 dark:border-gray-800 p-4 rounded-xl w-max shadow-sm"
+                >
+                  <i class="fa-solid fa-circle-check text-green-500"></i>
+                  <span class="text-sm font-medium"
+                    >Contact exported to PDF successfully.</span
+                  >
+                </div>
+              </div>
+
+              <div
+                class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-3xl p-8 shadow-sm flex flex-col justify-center reveal opacity-0 translate-y-4 transition-all duration-700 delay-100"
+              >
+                <div
+                  class="w-12 h-12 rounded-xl bg-orange-100 dark:bg-orange-500/10 text-orange-500 flex items-center justify-center mb-6"
+                >
+                  <i class="fa-solid fa-moon text-xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Native Dark Mode</h3>
+                <p class="text-sm text-gray-500">
+                  Tailwind's `dark:` variant implemented globally to reduce eye
+                  strain during prolonged use.
+                </p>
+              </div>
+
+              <div
+                class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-3xl p-8 shadow-sm flex flex-col justify-center reveal opacity-0 translate-y-4 transition-all duration-700"
+              >
+                <div
+                  class="w-12 h-12 rounded-xl bg-indigo-100 dark:bg-indigo-500/10 text-indigo-500 flex items-center justify-center mb-6"
+                >
+                  <i class="fa-solid fa-mobile-screen text-xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Responsive By Design</h3>
+                <p class="text-sm text-gray-500">
+                  Mobile-first CSS architecture ensures the dashboard is fully
+                  operable from any smartphone.
+                </p>
+              </div>
+
+              <div
+                class="md:col-span-2 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-3xl p-8 shadow-sm flex items-center justify-between reveal opacity-0 translate-y-4 transition-all duration-700 delay-100"
+              >
+                <div>
+                  <h3 class="text-2xl font-bold mb-2">Automated Formatting</h3>
+                  <p class="text-gray-500 text-sm max-w-sm">
+                    System automatically parses URLs and social handles into
+                    clickable icons, maintaining a clean table UI without
+                    breaking bounds.
+                  </p>
+                </div>
+                <div
+                  class="hidden sm:flex gap-3 text-2xl text-gray-300 dark:text-gray-700"
+                >
+                  <i
+                    class="fa-brands fa-linkedin hover:text-blue-500 transition-colors cursor-pointer"
+                  ></i>
+                  <i
+                    class="fa-solid fa-link hover:text-blue-500 transition-colors cursor-pointer"
+                  ></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="security"
+          class="py-24 px-6 bg-gray-900 text-white relative overflow-hidden"
+        >
+          <div
+            class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-400 via-transparent to-transparent bg-[size:20px_20px]"
+          ></div>
+
+          <div
+            class="max-w-6xl mx-auto relative z-10 flex flex-col lg:flex-row items-center gap-16"
+          >
+            <div
+              class="lg:w-1/2 reveal opacity-0 translate-y-4 transition-all duration-700"
+            >
+              <h2 class="text-3xl md:text-4xl font-extrabold mb-6">
+                Security as a foundation.
+              </h2>
+              <p class="text-gray-400 text-lg leading-relaxed mb-8">
+                Data privacy is not an afterthought. SCM integrates multiple
+                layers of protection, ensuring your address book remains
+                entirely inaccessible to unauthorized parties.
+              </p>
+              <div class="space-y-6">
+                <div class="flex gap-4">
+                  <div class="mt-1 text-blue-400">
+                    <i class="fa-solid fa-shield-check text-xl"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-white">
+                      Authentication & Authorization
+                    </h4>
+                    <p class="text-sm text-gray-400 mt-1">
+                      Powered by Spring Security. Passwords are never stored in
+                      plain text, utilizing BCrypt hashing algorithms.
+                    </p>
+                  </div>
+                </div>
+                <div class="flex gap-4">
+                  <div class="mt-1 text-blue-400">
+                    <i class="fa-solid fa-user-lock text-xl"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-white">Strict Isolation</h4>
+                    <p class="text-sm text-gray-400 mt-1">
+                      Queries are hardcoded to require the Principal user's ID,
+                      making horizontal data escalation impossible.
+                    </p>
+                  </div>
+                </div>
+                <div class="flex gap-4">
+                  <div class="mt-1 text-blue-400">
+                    <i class="fa-brands fa-google text-xl"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-white">OAuth2 Support</h4>
+                    <p class="text-sm text-gray-400 mt-1">
+                      Delegate credential management entirely by using Google or
+                      GitHub as your secure identity provider.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="lg:w-1/2 flex justify-center reveal opacity-0 translate-y-4 transition-all duration-700 delay-200"
+            >
+              <div
+                class="w-64 h-64 rounded-full border border-gray-800 flex items-center justify-center relative"
+              >
+                <div
+                  class="absolute inset-0 rounded-full border border-blue-500/30 animate-[spin_10s_linear_infinite]"
+                ></div>
+                <div
+                  class="absolute inset-4 rounded-full border border-blue-500/20 animate-[spin_15s_linear_infinite_reverse]"
+                ></div>
+                <div
+                  class="w-32 h-32 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-full flex items-center justify-center shadow-[0_0_50px_rgba(37,99,235,0.4)] z-10"
+                >
+                  <i class="fa-solid fa-lock text-4xl text-white"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section
+          class="py-24 px-6 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950"
+        >
+          <div class="max-w-7xl mx-auto">
+            <div
+              class="text-center mb-16 reveal opacity-0 translate-y-4 transition-all duration-700"
+            >
+              <h2 class="text-3xl font-bold mb-4">System Telemetry</h2>
+              <p class="text-gray-500">
+                Live operational metrics demonstrating platform capability.
+              </p>
+            </div>
+
+            <div
+              class="grid grid-cols-2 md:grid-cols-4 gap-8 divide-x-0 md:divide-x divide-gray-200 dark:divide-gray-800 text-center"
+            >
+              <div
+                class="reveal opacity-0 translate-y-4 transition-all duration-700"
+              >
+                <div
+                  class="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white mb-2"
+                >
+                  <span class="counter" data-target="99">0</span>.9%
+                </div>
+                <div
+                  class="text-sm text-gray-500 uppercase tracking-widest font-semibold"
+                >
+                  Uptime
+                </div>
+              </div>
+              <div
+                class="reveal opacity-0 translate-y-4 transition-all duration-700 delay-100"
+              >
+                <div
+                  class="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white mb-2"
+                >
+                  <span class="counter" data-target="15">0</span>ms
+                </div>
+                <div
+                  class="text-sm text-gray-500 uppercase tracking-widest font-semibold"
+                >
+                  Avg Query Speed
+                </div>
+              </div>
+              <div
+                class="reveal opacity-0 translate-y-4 transition-all duration-700 delay-200"
+              >
+                <div
+                  class="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white mb-2"
+                >
+                  <span class="counter" data-target="256">0</span>-bit
+                </div>
+                <div
+                  class="text-sm text-gray-500 uppercase tracking-widest font-semibold"
+                >
+                  Encryption
+                </div>
+              </div>
+              <div
+                class="reveal opacity-0 translate-y-4 transition-all duration-700 delay-300"
+              >
+                <div
+                  class="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white mb-2"
+                >
+                  <span class="counter" data-target="100">0</span>%
+                </div>
+                <div
+                  class="text-sm text-gray-500 uppercase tracking-widest font-semibold"
+                >
+                  Responsive
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="py-24 px-6 bg-gray-50 dark:bg-gray-900/30">
+          <div class="max-w-3xl mx-auto">
+            <h2
+              class="text-3xl font-bold mb-10 text-center reveal opacity-0 translate-y-4 transition-all duration-700"
+            >
+              Technical Specifications (FAQ)
+            </h2>
+            <div
+              class="space-y-4 reveal opacity-0 translate-y-4 transition-all duration-700 delay-100"
+            >
+              <details
+                class="group bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl [&_summary::-webkit-details-marker]:hidden overflow-hidden"
+              >
+                <summary
+                  class="flex items-center justify-between p-6 cursor-pointer font-bold text-gray-900 dark:text-white select-none outline-none hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
+                >
+                  How are the Excel and PDF exports generated?
+                  <span
+                    class="transition-transform duration-300 group-open:rotate-180 text-gray-400"
+                    ><i class="fa-solid fa-chevron-down"></i
+                  ></span>
+                </summary>
+                <div
+                  class="p-6 pt-0 text-sm text-gray-600 dark:text-gray-400 leading-relaxed border-t border-gray-100 dark:border-gray-800 mt-2"
+                >
+                  SCM utilizes server-side data serialization. When an export is
+                  requested, the backend queries the specific dataset, formats
+                  it using specialized Java libraries (like Apache POI for
+                  Excel), and streams the binary data directly to your browser
+                  for download.
+                </div>
+              </details>
+
+              <details
+                class="group bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl [&_summary::-webkit-details-marker]:hidden overflow-hidden"
+              >
+                <summary
+                  class="flex items-center justify-between p-6 cursor-pointer font-bold text-gray-900 dark:text-white select-none outline-none hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
+                >
+                  Is there a limit to how many contacts I can store?
+                  <span
+                    class="transition-transform duration-300 group-open:rotate-180 text-gray-400"
+                    ><i class="fa-solid fa-chevron-down"></i
+                  ></span>
+                </summary>
+                <div
+                  class="p-6 pt-0 text-sm text-gray-600 dark:text-gray-400 leading-relaxed border-t border-gray-100 dark:border-gray-800 mt-2"
+                >
+                  Architecturally, MySQL and Spring Data JPA can handle millions
+                  of rows. The UI utilizes pagination (retrieving chunks of data
+                  at a time) rather than loading everything at once, ensuring
+                  the browser never crashes regardless of your contact count.
+                </div>
+              </details>
+
+              <details
+                class="group bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl [&_summary::-webkit-details-marker]:hidden overflow-hidden"
+              >
+                <summary
+                  class="flex items-center justify-between p-6 cursor-pointer font-bold text-gray-900 dark:text-white select-none outline-none hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
+                >
+                  What happens to my uploaded profile pictures?
+                  <span
+                    class="transition-transform duration-300 group-open:rotate-180 text-gray-400"
+                    ><i class="fa-solid fa-chevron-down"></i
+                  ></span>
+                </summary>
+                <div
+                  class="p-6 pt-0 text-sm text-gray-600 dark:text-gray-400 leading-relaxed border-t border-gray-100 dark:border-gray-800 mt-2"
+                >
+                  Images are not stored in our database. We utilize Cloudinary
+                  to host media. This ensures images are served via a global
+                  CDN, automatically optimized for web (e.g., converting to WebP
+                  format), which significantly speeds up page loading times.
+                </div>
+              </details>
+            </div>
+          </div>
+        </section>
+
+        <section
+          class="py-24 px-6 text-center border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950"
+        >
+          <div
+            class="max-w-3xl mx-auto reveal opacity-0 translate-y-4 transition-all duration-700"
+          >
+            <h2 class="text-4xl md:text-5xl font-extrabold mb-6">
+              Experience the platform.
+            </h2>
+            <p class="text-xl text-gray-500 dark:text-gray-400 mb-10">
+              Stop losing track of your network. Start organizing with SCM 2.0
+              today.
+            </p>
+            <div class="flex justify-center gap-4">
+              <a
+                th:href="${loggedInUser} ? @{/user/profile} : @{/login}"
+                class="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg hover:shadow-blue-500/25 transition-all hover:-translate-y-1 flex items-center gap-2"
+              >
+                Open Dashboard <i class="fa-solid fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <footer
+          class="py-8 text-center text-sm text-gray-500 dark:text-gray-600 border-t border-gray-200 dark:border-gray-900 bg-gray-50 dark:bg-gray-950"
+        >
+          &copy; 2026 Smart Contact Manager. Infrastructure & Services.
+        </footer>
+      </main>
+    </div>
+
     <script>
-        console.log("This is services page"); 
+      document.addEventListener("DOMContentLoaded", () => {
+        // 1. Scroll Reveal Logic (Replaces custom CSS classes with Tailwind utility manipulation)
+        const reveals = document.querySelectorAll(".reveal");
+        const observer = new IntersectionObserver(
+          (entries, obs) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                // Remove translation and opacity classes to trigger transition
+                entry.target.classList.remove("opacity-0", "translate-y-4");
+                entry.target.classList.add("opacity-100", "translate-y-0");
+                obs.unobserve(entry.target); // Only animate once
+              }
+            });
+          },
+          { threshold: 0.1, rootMargin: "0px 0px -50px 0px" },
+        );
+
+        reveals.forEach((el) => observer.observe(el));
+
+        // 2. Simple Counter Animation for Stats
+        const counters = document.querySelectorAll(".counter");
+        let hasCounted = false;
+
+        const counterObserver = new IntersectionObserver(
+          (entries) => {
+            if (entries[0].isIntersecting && !hasCounted) {
+              hasCounted = true;
+              counters.forEach((counter) => {
+                const target = +counter.getAttribute("data-target");
+                const duration = 2000; // ms
+                const increment = target / (duration / 16);
+                let current = 0;
+
+                const updateCounter = () => {
+                  current += increment;
+                  if (current < target) {
+                    counter.innerText = Math.ceil(current);
+                    requestAnimationFrame(updateCounter);
+                  } else {
+                    counter.innerText = target;
+                  }
+                };
+                updateCounter();
+              });
+            }
+          },
+          { threshold: 0.5 },
+        );
+
+        // Observe the parent section of the counters
+        const firstCounter = document.querySelector(".counter");
+        if (firstCounter)
+          counterObserver.observe(firstCounter.closest("section"));
+      });
     </script>
-    <script>
-        console.log("This is services page 2");
-    </script>
-</body>
-</html>  
+  </body>
+</html>

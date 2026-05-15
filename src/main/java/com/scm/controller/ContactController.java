@@ -12,6 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -136,6 +139,7 @@ public class ContactController {
         contact.setUser(user);
         contact.setWebsiteLink(contactForm.getWebsiteLink());
         contact.setLinkedInLink(contactForm.getLinkedInLink());
+        contact.setCategory(contactForm.getCategory());
 
         if (contactForm.getContactImage() != null && !contactForm.getContactImage().isEmpty()) {
             String filename = UUID.randomUUID().toString();
@@ -451,5 +455,35 @@ public class ContactController {
 
         document.add(table);
         document.close();
+    }
+
+    @GetMapping("/tag")
+    public String filterContactsByTag(
+            @RequestParam("type") String type,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size, Authentication authentication,
+            Model model) {
+
+        // Logged-in user nikaalein
+        String username = Helper.getEmailOfLoggedInUser(authentication);
+        User user = userService.getUserByEmail(username);
+
+        // Pageable Request banayein
+        Pageable pageable = PageRequest.of(page, size);
+
+        // Filtered data fetch karein
+        Page<Contact> pageContact = contactService.getContactsByUserAndCategory(user, type, pageable);
+
+        // Hum wahi purana all_contacts.html view use karenge taaki naya page na banana
+        // pade!
+        model.addAttribute("pageContact", pageContact);
+        model.addAttribute("pageSize", size);
+
+        // Custom header text set karne ke liye taaki list ke top par "Work Contacts"
+        // dikhe
+        model.addAttribute("customHeading", type + " Contacts Workspace");
+        model.addAttribute("contactSearchForm", new ContactSearchForm());
+
+        return "user/contacts";
     }
 }

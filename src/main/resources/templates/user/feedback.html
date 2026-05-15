@@ -1,0 +1,563 @@
+<!doctype html>
+<html
+  lang="en"
+  th:replace="~{base::parent(~{::#content},~{::title},~{::script})}"
+>
+  <head>
+    <title>Feedback & Support | SCM 2.0</title>
+  </head>
+  <body>
+    <div id="content">
+      <div data-th-if="${loggedInUser}">
+        <div data-th-replace="~{user/sidebar::sidebar}"></div>
+      </div>
+
+      <main>
+        <section
+          class="relative pt-32 pb-16 px-6 border-b border-gray-200 dark:border-gray-800/50 overflow-hidden"
+        >
+          <div
+            class="absolute top-0 right-1/4 w-[400px] h-[400px] bg-blue-500/10 dark:bg-blue-600/10 blur-[100px] rounded-full pointer-events-none -translate-y-1/2"
+          ></div>
+          <div
+            class="absolute top-20 left-1/4 w-[300px] h-[300px] bg-purple-500/10 dark:bg-purple-600/10 blur-[100px] rounded-full pointer-events-none -translate-y-1/2"
+          ></div>
+
+          <div class="max-w-7xl mx-auto relative z-10">
+            <nav
+              class="flex items-center gap-2 text-sm text-gray-500 font-medium mb-8"
+            >
+              <a
+                th:href="@{/}"
+                class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                >Platform</a
+              >
+              <i class="fa-solid fa-chevron-right text-[10px]"></i>
+              <span class="text-gray-900 dark:text-gray-300"
+                >Feedback & Support</span
+              >
+            </nav>
+
+            <div class="max-w-3xl">
+              <div
+                class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-purple-200 dark:border-purple-900 bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 text-xs font-bold uppercase tracking-wider mb-6"
+              >
+                <i class="fa-solid fa-bullhorn"></i> Product Feedback
+              </div>
+              <h1
+                class="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 leading-tight"
+              >
+                Help us shape
+                <span
+                  class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-500 dark:from-blue-400 dark:to-purple-400"
+                  >the future of SCM.</span
+                >
+              </h1>
+              <p
+                class="text-lg text-gray-600 dark:text-gray-400 leading-relaxed"
+              >
+                Whether you've found a bug, have a brilliant feature request, or
+                just want to share your experience, our product team is
+                listening. Your input directly drives our roadmap.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="py-12 px-6 relative z-10 -mt-8">
+          <div class="max-w-7xl mx-auto">
+            <div id="message-box" class="mb-6">
+              <div data-th-replace="~{message::messagebox}"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+              <div
+                class="lg:col-span-2 bg-white/70 dark:bg-gray-900/50 backdrop-blur-xl border border-gray-200 dark:border-gray-800 rounded-3xl p-6 md:p-10 shadow-xl shadow-gray-200/50 dark:shadow-none relative overflow-hidden"
+              >
+                <form
+                  th:action="@{/user/feedback}"
+                  method="POST"
+                  enctype="multipart/form-data"
+                  class="space-y-8"
+                >
+                  <div>
+                    <label
+                      class="block text-sm font-bold text-gray-900 dark:text-white mb-3"
+                      >Feedback Type <span class="text-red-500">*</span></label
+                    >
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                      <label class="relative cursor-pointer">
+                        <input
+                          type="radio"
+                          name="feedbackType"
+                          value="feature"
+                          class="peer sr-only"
+                          required
+                        />
+                        <div
+                          class="p-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-center peer-checked:bg-blue-50 dark:peer-checked:bg-blue-900/30 peer-checked:border-blue-500 peer-checked:text-blue-600 dark:peer-checked:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all shadow-sm"
+                        >
+                          <i
+                            class="fa-solid fa-wand-magic-sparkles mb-2 text-lg block"
+                          ></i>
+                          <span class="text-xs font-bold">Feature</span>
+                        </div>
+                      </label>
+
+                      <label class="relative cursor-pointer">
+                        <input
+                          type="radio"
+                          name="feedbackType"
+                          value="bug"
+                          class="peer sr-only"
+                        />
+                        <div
+                          class="p-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-center peer-checked:bg-red-50 dark:peer-checked:bg-red-900/30 peer-checked:border-red-500 peer-checked:text-red-600 dark:peer-checked:text-red-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all shadow-sm"
+                        >
+                          <i class="fa-solid fa-bug mb-2 text-lg block"></i>
+                          <span class="text-xs font-bold">Bug Report</span>
+                        </div>
+                      </label>
+
+                      <label class="relative cursor-pointer">
+                        <input
+                          type="radio"
+                          name="feedbackType"
+                          value="uiux"
+                          class="peer sr-only"
+                        />
+                        <div
+                          class="p-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-center peer-checked:bg-purple-50 dark:peer-checked:bg-purple-900/30 peer-checked:border-purple-500 peer-checked:text-purple-600 dark:peer-checked:text-purple-400 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all shadow-sm"
+                        >
+                          <i class="fa-solid fa-palette mb-2 text-lg block"></i>
+                          <span class="text-xs font-bold">UI / UX</span>
+                        </div>
+                      </label>
+
+                      <label class="relative cursor-pointer">
+                        <input
+                          type="radio"
+                          name="feedbackType"
+                          value="other"
+                          class="peer sr-only"
+                        />
+                        <div
+                          class="p-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-center peer-checked:bg-gray-100 dark:peer-checked:bg-gray-800 peer-checked:border-gray-500 peer-checked:text-gray-900 dark:peer-checked:text-white hover:bg-gray-50 dark:hover:bg-gray-800 transition-all shadow-sm"
+                        >
+                          <i
+                            class="fa-solid fa-comment-dots mb-2 text-lg block"
+                          ></i>
+                          <span class="text-xs font-bold">General</span>
+                        </div>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="md:col-span-2 space-y-2">
+                      <label
+                        class="text-sm font-semibold text-gray-700 dark:text-gray-300"
+                        >Subject <span class="text-red-500">*</span></label
+                      >
+                      <input
+                        type="text"
+                        name="subject"
+                        required
+                        placeholder="Brief summary of your feedback..."
+                        class="w-full px-4 py-3 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all placeholder-gray-400"
+                      />
+                    </div>
+                    <div class="space-y-2">
+                      <label
+                        class="text-sm font-semibold text-gray-700 dark:text-gray-300"
+                        >Priority</label
+                      >
+                      <select
+                        name="priority"
+                        required
+                        oninvalid="
+                          this.setCustomValidity(
+                            'Please select a priority level.',
+                          )
+                        "
+                        oninput="this.setCustomValidity('')"
+                        class="w-full px-4 py-3 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all appearance-none cursor-pointer invalid:text-gray-400"
+                      >
+                        <option value="" disabled selected hidden>
+                          Select Priority
+                        </option>
+
+                        <option value="low">🟢 Low Impact</option>
+
+                        <option value="normal">🟡 Normal</option>
+
+                        <option value="high">🔴 High (Blocker)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="space-y-2">
+                    <label
+                      class="text-sm font-semibold text-gray-700 dark:text-gray-300"
+                      >Detailed Description
+                      <span class="text-red-500">*</span></label
+                    >
+                    <textarea
+                      name="message"
+                      required
+                      rows="6"
+                      maxlength="1000"
+                      placeholder="What did you experience? What would you like to see improved?"
+                      class="w-full px-4 py-4 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all placeholder-gray-400 resize-none"
+                    ></textarea>
+                  </div>
+
+                  <div
+                    class="flex items-center justify-between pt-6 border-t border-gray-200 dark:border-gray-800"
+                  >
+                    <div class="text-xs text-gray-500 flex items-center gap-2">
+                      <i class="fa-solid fa-shield-halved text-green-500"></i>
+                      Secure transmission
+                    </div>
+                    <button
+                      type="submit"
+                      class="px-8 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg shadow-blue-500/25 transition-all hover:-translate-y-0.5 flex items-center gap-2"
+                    >
+                      <span>Submit Feedback</span>
+                      <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                  </div>
+                </form>
+              </div>
+
+              <div class="lg:col-span-1 space-y-6">
+                <div
+                  class="bg-white/70 dark:bg-gray-900/50 backdrop-blur-xl border border-gray-200 dark:border-gray-800 rounded-2xl p-6"
+                >
+                  <div
+                    class="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-4"
+                  >
+                    <i class="fa-solid fa-heart-pulse text-lg"></i>
+                  </div>
+                  <h3
+                    class="text-lg font-bold text-gray-900 dark:text-white mb-2"
+                  >
+                    User-First Approach
+                  </h3>
+                  <p
+                    class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed"
+                  >
+                    Every piece of feedback is directly reviewed by our core
+                    engineering team. Your suggestions dictate our development
+                    sprints.
+                  </p>
+                </div>
+
+                <div
+                  class="bg-white/70 dark:bg-gray-900/50 backdrop-blur-xl border border-gray-200 dark:border-gray-800 rounded-2xl p-6"
+                >
+                  <h3
+                    class="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider mb-4"
+                  >
+                    Support Channels
+                  </h3>
+                  <ul class="space-y-4">
+                    <li>
+                      <a
+                        href="mailto:support@scm.com"
+                        class="flex items-center gap-3 group"
+                      >
+                        <div
+                          class="w-8 h-8 rounded bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-500 group-hover:bg-blue-100 dark:group-hover:bg-blue-900/50 group-hover:text-blue-500 transition-colors"
+                        >
+                          <i class="fa-solid fa-envelope"></i>
+                        </div>
+                        <div>
+                          <p
+                            class="text-sm font-bold text-gray-900 dark:text-white group-hover:text-blue-500 transition-colors"
+                          >
+                            Direct Email
+                          </p>
+                          <p class="text-xs text-gray-500">support@scm2.com</p>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="https://github.com/arunshar2725"
+                        target="_blank"
+                        class="flex items-center gap-3 group"
+                      >
+                        <div
+                          class="w-8 h-8 rounded bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-500 group-hover:bg-gray-200 dark:group-hover:bg-gray-700 group-hover:text-gray-900 dark:group-hover:text-white transition-colors"
+                        >
+                          <i class="fa-brands fa-github"></i>
+                        </div>
+                        <div>
+                          <p
+                            class="text-sm font-bold text-gray-900 dark:text-white group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors"
+                          >
+                            GitHub Issues
+                          </p>
+                          <p class="text-xs text-gray-500">
+                            Open source tracking
+                          </p>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+                <div
+                  class="bg-white/70 dark:bg-gray-900/50 backdrop-blur-xl border border-gray-200 dark:border-gray-800 rounded-2xl p-6"
+                >
+                  <h3
+                    class="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider mb-4"
+                  >
+                    Your Submissions
+                  </h3>
+
+                  <div
+                    th:if="${loggedInUser}"
+                    class="space-y-4 relative border-l border-gray-200 dark:border-gray-700 ml-2"
+                  >
+                    <div class="relative pl-4">
+                      <div
+                        class="absolute w-2 h-2 bg-green-500 rounded-full -left-[4.5px] top-1.5 ring-4 ring-white dark:ring-gray-900"
+                      ></div>
+                      <p
+                        class="text-xs font-bold text-gray-900 dark:text-white"
+                      >
+                        Export to PDF feature
+                      </p>
+                      <p class="text-[10px] text-gray-500 mt-0.5">
+                        Status:
+                        <span class="text-green-500 font-semibold"
+                          >Resolved</span
+                        >
+                      </p>
+                    </div>
+                    <div class="relative pl-4">
+                      <div
+                        class="absolute w-2 h-2 bg-yellow-500 rounded-full -left-[4.5px] top-1.5 ring-4 ring-white dark:ring-gray-900"
+                      ></div>
+                      <p
+                        class="text-xs font-bold text-gray-900 dark:text-white"
+                      >
+                        Dark mode toggle bug
+                      </p>
+                      <p class="text-[10px] text-gray-500 mt-0.5">
+                        Status:
+                        <span class="text-yellow-500 font-semibold"
+                          >Under Review</span
+                        >
+                      </p>
+                    </div>
+                    <a
+                      th:href="@{/user/profile}"
+                      class="block mt-4 text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline pl-4"
+                      >View all tickets &rarr;</a
+                    >
+                  </div>
+
+                  <div th:unless="${loggedInUser}" class="text-center py-4">
+                    <div
+                      class="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-3 text-gray-400"
+                    >
+                      <i class="fa-solid fa-lock"></i>
+                    </div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                      Log in to track your feedback status and feature requests.
+                    </p>
+                    <a
+                      th:href="@{/login}"
+                      class="inline-block px-4 py-2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-xs font-bold rounded-lg hover:scale-105 transition-transform"
+                      >Sign In to Track</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section
+          class="py-20 px-6 border-y border-gray-200 dark:border-gray-800/50 bg-gray-100/50 dark:bg-gray-900/30"
+        >
+          <div class="max-w-3xl mx-auto">
+            <h2 class="text-2xl font-bold mb-8 text-center">
+              Understanding the Process
+            </h2>
+
+            <div class="space-y-3">
+              <details
+                class="group bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl [&_summary::-webkit-details-marker]:hidden overflow-hidden transition-all duration-300"
+              >
+                <summary
+                  class="flex items-center justify-between p-5 cursor-pointer font-bold text-gray-900 dark:text-white select-none outline-none hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
+                >
+                  What happens after I submit a feature request?
+                  <span
+                    class="transition-transform duration-300 group-open:rotate-180 text-blue-500"
+                    ><i class="fa-solid fa-plus"></i
+                  ></span>
+                </summary>
+                <div
+                  class="p-5 pt-0 text-sm text-gray-600 dark:text-gray-400 leading-relaxed border-t border-gray-100 dark:border-gray-800 mt-2"
+                >
+                  Feature requests are logged into our internal project tracker.
+                  The product team reviews them weekly during sprint planning.
+                  If your request aligns with the roadmap or receives high
+                  community demand, it gets scheduled for development.
+                </div>
+              </details>
+
+              <details
+                class="group bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl [&_summary::-webkit-details-marker]:hidden overflow-hidden transition-all duration-300"
+              >
+                <summary
+                  class="flex items-center justify-between p-5 cursor-pointer font-bold text-gray-900 dark:text-white select-none outline-none hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
+                >
+                  How are bug reports prioritized?
+                  <span
+                    class="transition-transform duration-300 group-open:rotate-180 text-blue-500"
+                    ><i class="fa-solid fa-plus"></i
+                  ></span>
+                </summary>
+                <div
+                  class="p-5 pt-0 text-sm text-gray-600 dark:text-gray-400 leading-relaxed border-t border-gray-100 dark:border-gray-800 mt-2"
+                >
+                  Bugs marked as "High (Blocker)" involving data loss or
+                  security vulnerabilities are escalated immediately to on-call
+                  engineers. UI/UX glitches are typically patched in the next
+                  minor release cycle.
+                </div>
+              </details>
+
+              <details
+                class="group bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl [&_summary::-webkit-details-marker]:hidden overflow-hidden transition-all duration-300"
+              >
+                <summary
+                  class="flex items-center justify-between p-5 cursor-pointer font-bold text-gray-900 dark:text-white select-none outline-none hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
+                >
+                  Will I receive an email response?
+                  <span
+                    class="transition-transform duration-300 group-open:rotate-180 text-blue-500"
+                    ><i class="fa-solid fa-plus"></i
+                  ></span>
+                </summary>
+                <div
+                  class="p-5 pt-0 text-sm text-gray-600 dark:text-gray-400 leading-relaxed border-t border-gray-100 dark:border-gray-800 mt-2"
+                >
+                  We send an automated confirmation receipt. A human response is
+                  sent only if the engineering team requires more specific steps
+                  to reproduce a bug, or to notify you when your requested
+                  feature is shipped.
+                </div>
+              </details>
+            </div>
+          </div>
+        </section>
+
+        <section class="py-24 px-6 text-center">
+          <div
+            class="max-w-4xl mx-auto bg-gradient-to-br from-indigo-600 to-purple-700 rounded-[2.5rem] p-12 md:p-16 shadow-2xl relative overflow-hidden"
+          >
+            <div
+              class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4xNSkiLz48L3N2Zz4=')] opacity-30"
+            ></div>
+
+            <div class="relative z-10">
+              <i class="fa-solid fa-comments text-5xl mb-6 text-indigo-300"></i>
+              <h2 class="text-3xl md:text-5xl font-extrabold mb-6">
+                Build alongside us.
+              </h2>
+              <p class="text-lg text-indigo-400 mb-10 max-w-xl mx-auto">
+                SCM 2.0 exists because of community feedback. Check out our
+                open-source repositories or join the developer discussion.
+              </p>
+              <a
+                href="https://github.com/arunshar2725"
+                target="_blank"
+                class="inline-flex items-center gap-3 px-8 py-4 bg-white text-indigo-900 font-bold rounded-xl shadow-lg hover:bg-gray-50 transition-all hover:-translate-y-1"
+              >
+                <i class="fa-brands fa-github text-xl"></i> View on GitHub
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <footer
+          class="py-8 text-center text-sm text-gray-500 dark:text-gray-600 border-t border-gray-200 dark:border-gray-900"
+        >
+          &copy; 2026 Smart Contact Manager. Feedback & Community Support.
+        </footer>
+      </main>
+    </div>
+    <script>
+      const form = document.querySelector("form");
+
+      const fields = [
+        {
+          element: document.getElementById("subject"),
+          message: "Please enter a subject.",
+        },
+        {
+          element: document.getElementById("priority"),
+          message: "Please select a priority level.",
+        },
+        {
+          element: document.getElementById("message"),
+          message: "Please describe your feedback.",
+        },
+      ];
+
+      form.addEventListener("submit", function (e) {
+        let valid = true;
+
+        fields.forEach((field) => {
+          const el = field.element;
+
+          if (!el.value.trim()) {
+            valid = false;
+
+            el.setCustomValidity(field.message);
+            el.reportValidity();
+
+            el.classList.add("border-red-500", "ring-2", "ring-red-500/20");
+          } else {
+            el.setCustomValidity("");
+
+            el.classList.remove("border-red-500", "ring-2", "ring-red-500/20");
+          }
+        });
+
+        const feedbackSelected = document.querySelector(
+          'input[name="feedbackType"]:checked',
+        );
+
+        if (!feedbackSelected) {
+          valid = false;
+
+          alert("Please select a feedback type.");
+        }
+
+        if (!valid) {
+          e.preventDefault();
+        }
+      });
+
+      fields.forEach((field) => {
+        field.element.addEventListener("input", () => {
+          field.element.setCustomValidity("");
+
+          field.element.classList.remove(
+            "border-red-500",
+            "ring-2",
+            "ring-red-500/20",
+          );
+        });
+      });
+    </script>
+  </body>
+</html>

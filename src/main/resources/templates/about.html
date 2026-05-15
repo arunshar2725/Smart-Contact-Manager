@@ -1,58 +1,364 @@
-<!-- <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <h>This is About Page</h>
-    <hr /> -->
-<!-- using fragment -->
-<!-- base jo h wo file ka name h or parent fragment ka naam -->
-<!-- <div class="host-tag" th:replace="~{base ::parent}"></div>-->
-<!--eska use fragmant ko use krne ke liye hai -->
-<!-- <div class="host-tag" th:replace="~{base ::parent}"></div> -->
-<!--eska use fragmant ko replace krne ke liye hai host se -->
-<!-- <div
-      class="host-tag"
-      th:replace="${isLogin} ? ~{base ::parent(~{::section})} : ~{base::test(~{::#not_login})}"
-    >
-      <section>
-        <h1>User is logged in</h1>
-        <h2>This is dynamic content</h2>
-        <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rem labore
-          voluptatum eveniet repellat perspiciatis ullam aspernatur earum
-          necessitatibus in illo!
-        </p>
-        <button>Click on Dynamic Content</button>
-      </section>
-
-      <section id="not_login">
-        <h1>User is not logged in</h1>
-      </section>
-    </div>
-  </body>
-</html> -->
-
 <!doctype html>
 <html
   lang="en"
-  th:replace="~{base::parent(~{::#content},~{::title},~{::script})}"
+  data-th-replace="~{base::parent(~{::#content},~{::title},~{::script})}"
 >
   <head>
-    <title>About us</title>
+    <title>About SCM | Intelligent Relationship Management</title>
   </head>
   <body>
     <div id="content">
-      <h1>Welcome to About Page</h1>
-      <h1>Lorem ipsum dolor sit amet.</h1>
+      <div data-th-if="${loggedInUser}">
+        <div data-th-replace="~{user/sidebar::sidebar}"></div>
+      </div>
+
+      <div
+        class="min-h-screen bg-gray-50 dark:bg-[#09090b] text-gray-900 dark:text-gray-100 transition-all duration-300 pb-12"
+      >
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 lg:pt-32">
+          <div
+            class="fixed top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-blue-400/10 dark:bg-blue-900/15 blur-[120px] pointer-events-none z-0"
+          ></div>
+
+          <header class="max-w-3xl mb-16 reveal-on-scroll relative z-10">
+            <nav class="flex mb-6" aria-label="Breadcrumb">
+              <ol
+                class="inline-flex items-center space-x-2 text-sm font-medium text-gray-500 dark:text-gray-400"
+              >
+                <li>
+                  <a
+                    data-th-href="@{'/'}"
+                    class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                    >Home</a
+                  >
+                </li>
+                <li>
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 5l7 7-7 7"
+                    ></path>
+                  </svg>
+                </li>
+                <li class="text-gray-800 dark:text-gray-300">About Platform</li>
+              </ol>
+            </nav>
+
+            <h1
+              class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 text-gray-900 dark:text-white"
+            >
+              Intelligence applied to <br />
+              human connections.
+            </h1>
+
+            <p
+              class="text-lg lg:text-xl text-gray-600 dark:text-gray-400 leading-relaxed mb-8"
+            >
+              SCM was born from a simple frustration: modern professionals have
+              thousands of contacts scattered across platforms, yet zero actual
+              context. We built this to turn digital chaos into organized,
+              actionable relationships.
+            </p>
+
+            <div class="flex flex-wrap gap-3">
+              <span
+                class="px-3 py-1.5 text-xs font-semibold uppercase tracking-wider bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 shadow-sm dark:shadow-none rounded-full text-gray-600 dark:text-gray-300"
+                >Cloud Native</span
+              >
+              <span
+                class="px-3 py-1.5 text-xs font-semibold uppercase tracking-wider bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 shadow-sm dark:shadow-none rounded-full text-gray-600 dark:text-gray-300"
+                >Privacy First</span
+              >
+              <span
+                class="px-3 py-1.5 text-xs font-semibold uppercase tracking-wider bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 shadow-sm dark:shadow-none rounded-full text-gray-600 dark:text-gray-300"
+                >Developer Built</span
+              >
+            </div>
+          </header>
+
+          <section
+            class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6 relative z-10"
+          >
+            <article
+              class="md:col-span-2 group relative p-8 rounded-3xl bg-white dark:bg-[#111113] border border-gray-200 dark:border-white/10 shadow-xl shadow-gray-200/40 dark:shadow-none hover:border-blue-500/30 transition-all duration-500 overflow-hidden reveal-on-scroll"
+            >
+              <div
+                class="w-12 h-12 mb-6 rounded-xl bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center border border-blue-100 dark:border-blue-500/20"
+              >
+                <svg
+                  class="w-6 h-6 text-blue-600 dark:text-blue-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"
+                  ></path>
+                </svg>
+              </div>
+              <h2 class="text-2xl font-bold mb-3 text-gray-900 dark:text-white">
+                The Mission
+              </h2>
+              <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                To simplify how the world manages relationships. We are building
+                the foundational operating system for your network, replacing
+                fragmented phonebooks with a centralized, intelligent, and
+                secure platform.
+              </p>
+            </article>
+
+            <article
+              class="group relative p-8 rounded-3xl bg-white dark:bg-[#111113] border border-gray-200 dark:border-white/10 shadow-xl shadow-gray-200/40 dark:shadow-none hover:border-gray-300 dark:hover:border-white/20 transition-all duration-500 reveal-on-scroll"
+            >
+              <div
+                class="w-12 h-12 mb-6 rounded-xl bg-gray-50 dark:bg-gray-800 flex items-center justify-center border border-gray-200 dark:border-gray-700"
+              >
+                <svg
+                  class="w-6 h-6 text-gray-600 dark:text-gray-300"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                  ></path>
+                </svg>
+              </div>
+              <h2 class="text-2xl font-bold mb-3 text-gray-900 dark:text-white">
+                Philosophy
+              </h2>
+              <p
+                class="text-gray-600 dark:text-gray-400 leading-relaxed text-sm"
+              >
+                Minimalism at the core. We subtract the obvious marketing bloat
+                found in enterprise CRMs and add the meaningful features that
+                actually save you time and cognitive load.
+              </p>
+            </article>
+
+            <article
+              class="md:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-0 rounded-3xl bg-white dark:bg-[#111113] border border-gray-200 dark:border-white/10 shadow-xl shadow-gray-200/40 dark:shadow-none overflow-hidden reveal-on-scroll"
+            >
+              <div
+                class="p-8 border-b md:border-b-0 md:border-r border-gray-200 dark:border-white/10"
+              >
+                <h3
+                  class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-6"
+                >
+                  Enterprise Architecture
+                </h3>
+                <p
+                  class="text-gray-600 dark:text-gray-400 mb-6 text-sm leading-relaxed"
+                >
+                  SCM isn't just a UI wrapper. It's powered by a robust, secure
+                  backend engineered to handle data at scale with zero
+                  compromise on user privacy.
+                </p>
+                <div class="flex flex-col gap-3">
+                  <div
+                    class="flex items-center justify-between p-3.5 rounded-xl bg-gray-50 dark:bg-[#09090b] border border-gray-200 dark:border-white/5"
+                  >
+                    <span
+                      class="text-sm font-semibold text-gray-800 dark:text-gray-300"
+                      >Spring Boot</span
+                    >
+                    <span
+                      class="text-xs text-green-600 dark:text-green-400 bg-green-100 dark:bg-green-400/10 px-2 py-1 rounded"
+                      >Core Engine</span
+                    >
+                  </div>
+                  <div
+                    class="flex items-center justify-between p-3.5 rounded-xl bg-gray-50 dark:bg-[#09090b] border border-gray-200 dark:border-white/5"
+                  >
+                    <span
+                      class="text-sm font-semibold text-gray-800 dark:text-gray-300"
+                      >OAuth2 Security</span
+                    >
+                    <span
+                      class="text-xs text-purple-600 dark:text-purple-400 bg-purple-100 dark:bg-purple-400/10 px-2 py-1 rounded"
+                      >Auth Layer</span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="p-8 flex flex-col justify-center bg-gray-50/50 dark:bg-gradient-to-br dark:from-transparent dark:to-blue-900/10"
+              >
+                <h3
+                  class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-6"
+                >
+                  Modern Frontend
+                </h3>
+                <div class="grid grid-cols-2 gap-4">
+                  <div
+                    class="p-5 rounded-xl border border-gray-200 dark:border-white/5 bg-white dark:bg-[#09090b] shadow-sm dark:shadow-none"
+                  >
+                    <div
+                      class="text-blue-600 dark:text-blue-400 font-bold mb-1"
+                    >
+                      Tailwind CSS
+                    </div>
+                    <div class="text-xs text-gray-500">
+                      Utility-first design
+                    </div>
+                  </div>
+                  <div
+                    class="p-5 rounded-xl border border-gray-200 dark:border-white/5 bg-white dark:bg-[#09090b] shadow-sm dark:shadow-none"
+                  >
+                    <div
+                      class="text-emerald-600 dark:text-emerald-400 font-bold mb-1"
+                    >
+                      Thymeleaf
+                    </div>
+                    <div class="text-xs text-gray-500">Dynamic rendering</div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </section>
+
+          <section
+            class="grid grid-cols-1 lg:grid-cols-5 gap-6 reveal-on-scroll relative z-10"
+          >
+            <article
+              class="lg:col-span-2 p-8 rounded-3xl bg-white dark:bg-[#111113] border border-gray-200 dark:border-white/10 shadow-xl shadow-gray-200/40 dark:shadow-none flex flex-col justify-between"
+            >
+              <div>
+                <h2
+                  class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-6"
+                >
+                  The Architect
+                </h2>
+                <div class="flex items-center gap-4 mb-6">
+                  <div
+                    class="w-16 h-16 rounded-full bg-gradient-to-tr from-blue-600 to-cyan-500 p-0.5"
+                  >
+                    <div
+                      class="w-full h-full bg-white dark:bg-[#09090b] rounded-full flex items-center justify-center text-xl font-bold text-gray-900 dark:text-white"
+                    >
+                      AS
+                    </div>
+                  </div>
+                  <div>
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white">
+                      Arun Sharma
+                    </h3>
+                    <p class="text-sm text-blue-600 dark:text-blue-400">
+                      Lead Developer
+                    </p>
+                  </div>
+                </div>
+                <p
+                  class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed"
+                >
+                  Final-year IT Engineer specializing in scalable backend
+                  systems. Arun architected SCM to solve the personal
+                  productivity roadblocks he faced while navigating the tech
+                  industry.
+                </p>
+              </div>
+              <div class="mt-8 flex gap-4">
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+                >
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                      d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                    />
+                  </svg>
+                </a>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-blue-600 transition-colors"
+                >
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                      d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </article>
+
+            <article
+              class="lg:col-span-3 p-8 md:p-12 rounded-3xl bg-blue-600 dark:bg-blue-600 shadow-xl shadow-blue-600/30 dark:shadow-none relative overflow-hidden flex flex-col justify-center items-start border border-blue-500"
+            >
+              <div
+                class="absolute -top-24 -right-24 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none"
+              ></div>
+              <h2
+                class="text-3xl md:text-4xl font-bold text-white mb-4 relative z-10"
+              >
+                Stop searching. <br />Start connecting.
+              </h2>
+              <p
+                class="text-blue-100 mb-8 max-w-md relative z-10 text-sm md:text-base"
+              >
+                Join the platform that treats your contacts like actual
+                relationships. Secure, fast, and entirely free for individual
+                use.
+              </p>
+              <div class="flex gap-4 relative z-10">
+                <a
+                  data-th-href="@{'/register'}"
+                  class="px-6 py-3 bg-white text-blue-900 text-sm font-bold rounded-xl hover:bg-gray-100 transition-colors shadow-lg"
+                >
+                  Get Started
+                </a>
+                <a
+                  data-th-href="@{'/contact'}"
+                  class="px-6 py-3 bg-transparent border border-white/30 text-white text-sm font-semibold rounded-xl hover:bg-white/10 transition-colors"
+                >
+                  Contact Us
+                </a>
+              </div>
+            </article>
+          </section>
+        </div>
+      </div>
     </div>
 
-    
-    <script>
-      console.log("This is about page");
+    <script data-th-fragment="script">
+      document.addEventListener("DOMContentLoaded", () => {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("opacity-100", "translate-y-0");
+                entry.target.classList.remove("opacity-0", "translate-y-4");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.1 },
+        );
+
+        document.querySelectorAll(".reveal-on-scroll").forEach((el) => {
+          el.classList.add(
+            "opacity-0",
+            "translate-y-4",
+            "transition-all",
+            "duration-700",
+            "ease-out",
+          );
+          observer.observe(el);
+        });
+      });
     </script>
   </body>
 </html>
