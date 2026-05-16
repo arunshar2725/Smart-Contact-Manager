@@ -40,6 +40,15 @@ public interface ContactService {
     Page<Contact> searchByPhoneNumber(String phoenNumberkeyword, int size, int page, String sortBy, String order,
             User user);
 
+    Page<Contact> searchByNameAndCategory(String namekeyword, String category, int size, int page, String sortBy,
+            String order, User user);
+
+    Page<Contact> searchByEmailAndCategory(String emailkeyword, String category, int size, int page, String sortBy,
+            String order, User user);
+
+    Page<Contact> searchByPhoneNumberAndCategory(String phoneNumberkeyword, String category, int size, int page,
+            String sortBy, String order, User user);
+
     List<Contact> getAllByUser(User user);
 
     long countByUser(User user);

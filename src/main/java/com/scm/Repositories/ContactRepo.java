@@ -38,6 +38,48 @@ public interface ContactRepo extends JpaRepository<Contact, String> {
                         @Param("namekeyword") String namekeyword,
                         Pageable pageable);
 
+        @Query("""
+                        SELECT c FROM Contact c
+                        WHERE c.user = :user
+                        AND (
+                                LOWER(TRIM(COALESCE(c.category, 'General'))) = LOWER(TRIM(:category))
+                                OR (LOWER(TRIM(:category)) = 'general' AND (c.category IS NULL OR TRIM(c.category) = ''))
+                        )
+                        AND LOWER(REPLACE(c.name, ' ', '')) LIKE LOWER(CONCAT('%', REPLACE(:namekeyword, ' ', ''), '%'))
+                        """)
+        Page<Contact> findByUserAndCategoryAndNameContaining(@Param("user") User user,
+                        @Param("category") String category,
+                        @Param("namekeyword") String namekeyword,
+                        Pageable pageable);
+
+        @Query("""
+                        SELECT c FROM Contact c
+                        WHERE c.user = :user
+                        AND (
+                                LOWER(TRIM(COALESCE(c.category, 'General'))) = LOWER(TRIM(:category))
+                                OR (LOWER(TRIM(:category)) = 'general' AND (c.category IS NULL OR TRIM(c.category) = ''))
+                        )
+                        AND LOWER(REPLACE(c.email, ' ', '')) LIKE LOWER(CONCAT('%', REPLACE(:namekeyword, ' ', ''), '%'))
+                        """)
+        Page<Contact> findByUserAndCategoryAndEmailContaining(@Param("user") User user,
+                        @Param("category") String category,
+                        @Param("namekeyword") String namekeyword,
+                        Pageable pageable);
+
+        @Query("""
+                        SELECT c FROM Contact c
+                        WHERE c.user = :user
+                        AND (
+                                LOWER(TRIM(COALESCE(c.category, 'General'))) = LOWER(TRIM(:category))
+                                OR (LOWER(TRIM(:category)) = 'general' AND (c.category IS NULL OR TRIM(c.category) = ''))
+                        )
+                        AND REPLACE(c.phoneNumber, ' ', '') LIKE CONCAT('%', REPLACE(:namekeyword, ' ', ''), '%')
+                        """)
+        Page<Contact> findByUserAndCategoryAndPhoneNumberContaining(@Param("user") User user,
+                        @Param("category") String category,
+                        @Param("namekeyword") String namekeyword,
+                        Pageable pageable);
+
         List<Contact> findByUser(User user);
 
         long countByUser(User user);
@@ -46,6 +88,15 @@ public interface ContactRepo extends JpaRepository<Contact, String> {
 
         List<Contact> findByUserAndFavouriteTrue(User user);
 
-        Page<Contact> findByUserAndCategory(User user, String category, Pageable pageable);
+        @Query("""
+                        SELECT c FROM Contact c
+                        WHERE c.user = :user
+                        AND (
+                                LOWER(TRIM(COALESCE(c.category, 'General'))) = LOWER(TRIM(:category))
+                                OR (LOWER(TRIM(:category)) = 'general' AND (c.category IS NULL OR TRIM(c.category) = ''))
+                        )
+                        """)
+        Page<Contact> findByUserAndCategory(@Param("user") User user, @Param("category") String category,
+                        Pageable pageable);
 
 }

@@ -1,17 +1,3 @@
-<!-- 2 se 4 line aaegi host main
-  <div class="parent-fragment" th:fragment="parent(x,y)"> 
-<div class="parent-fragment" th:fragment="parent(content)">
-    <h1>This is parent fragment</h1>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni, ratione?</p>
-  
-    <h1>Value of x is : <span th:text="${x}"></span></h1>
-    <h1>Value of y is : <span th:text="${y}"></span></h1>
-    <div th:replace="${content}"></div>
-
-    <div th:fragment="test(content)">
-       <div  th:replace="${content}"> </div>
-    </div>
-</div>  -->
 
 <!doctype html>
 <html
@@ -21,6 +7,11 @@
   xmlns:th="http://www.thymeleaf.org"
 >
   <head>
+    <script>
+      if (localStorage.getItem("theme") === "dark") {
+        document.documentElement.classList.add("dark");
+      }
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title th:replace="  ${title}">SCM</title>

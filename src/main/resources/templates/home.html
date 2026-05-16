@@ -144,6 +144,7 @@
               class="flex flex-col sm:flex-row items-center justify-center gap-5 reveal delay-300"
             >
               <a
+                      
                 th:href="${loggedInUser} ? @{/user/profile} : @{/register}"
                 class="w-full sm:w-auto px-8 py-4 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-semibold rounded-2xl hover:scale-105 transition-transform duration-300 shadow-xl shadow-gray-900/20 dark:shadow-white/10 flex items-center justify-center gap-3"
               >
@@ -812,7 +813,7 @@
                 class="absolute bottom-0 left-0 -mb-4 -ml-4 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl"
               ></div>
 
-              <div class="relative z-10">
+              <div  class="relative z-10">
                 <h2
                   class="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight mb-6"
                 >
@@ -827,6 +828,7 @@
                 </p>
 
                 <form
+                        data-th-unless="${loggedInUser}"
                   data-th-action="@{'/register'}"
                   method="get"
                   class="flex flex-col sm:flex-row justify-center items-center gap-3 max-w-lg mx-auto"
@@ -854,7 +856,8 @@
                   </button>
                 </form>
 
-                <p class="mt-5 text-sm text-gray-400 dark:text-gray-500">
+                <p data-th-unless="${loggedInUser}"
+                        class="mt-5 text-sm text-gray-400 dark:text-gray-500">
                   14-day free trial. No credit card required.
                 </p>
               </div>

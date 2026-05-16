@@ -1,4 +1,6 @@
 const baseURl = "http://localhost:8081";
+const defaultContactPicture =
+  "https://imgs.search.brave.com/jHDp_R14w-tbRDiYsyiOCGDeCSPE4WqsVfFwiXVDyow/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzExLzY4LzUwLzU3/LzM2MF9GXzExNjg1/MDU3OTRfSUJDRWlhZnNJckhGSjA5ZTY1UDJ2aDUxMTVDMVhJN2UuanBn";
 
 console.log("This is contact Modal page");
 
@@ -17,87 +19,62 @@ setTimeout(() => {
 
 const viewContactModal = document.getElementById("view_contact_modal");
 
-// options with default values
 const options = {
   placement: "bottom-right",
   backdrop: "dynamic",
   backdropClasses: "bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40",
   closable: true,
   onHide: () => {
-    console.log("modal is hidden");
-
     document.activeElement?.blur();
-  },
-  onShow: () => {
-    console.log("modal is shown");
-  },
-  onToggle: () => {
-    console.log("modal has been toggled");
   },
 };
 
-// instance options object
 const instanceOptions = {
   id: "view_contact_modal",
   override: true,
 };
 
-const contactModal = new Modal(viewContactModal, options, instanceOptions);
+const contactModal =
+  viewContactModal && typeof Modal !== "undefined"
+    ? new Modal(viewContactModal, options, instanceOptions)
+    : null;
 
 function openContactModal() {
-  contactModal.show();
+  contactModal?.show();
 }
 
 function closeContactModal() {
-  contactModal.hide();
+  contactModal?.hide();
 }
 
 async function loadContactData(id) {
-  console.log("Fetching data for ID: ", id);
   try {
     const response = await fetch(`${baseURl}/api/contacts/${id}`);
     const data = await response.json();
-    console.log(data);
 
-    // 1. Text Data Injection
     document.querySelector("#contact_name").textContent = data.name;
     document.querySelector("#contact_email").textContent = data.email;
     document.querySelector("#contact_phone").textContent = data.phoneNumber;
+    document.querySelector("#contact_address").textContent =
+      data.address || "Address not provided";
+    document.querySelector("#contact_about").textContent =
+      data.description || "No description available.";
 
-    // Check if address exists, otherwise show 'N/A'
-    document.querySelector("#contact_address").textContent = data.address
-      ? data.address
-      : "Address not provided";
-
-    // Check if description exists
-    document.querySelector("#contact_about").textContent = data.description
-      ? data.description
-      : "No description available.";
-
-    // 2. Handle Profile Picture
     const pictureEl = document.querySelector("#contact_picture");
-    if (data.picture) {
-      pictureEl.src = data.picture;
-    } else {
-      // Fallback image if null
-      pictureEl.src =
-        "https://imgs.search.brave.com/jHDp_R14w-tbRDiYsyiOCGDeCSPE4WqsVfFwiXVDyow/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzExLzY4LzUwLzU3/LzM2MF9GXzExNjg1/MDU3OTRfSUJDRWlh/ZnNJckhGSjA5ZTY1/UDJ2aDUxMTVDMVhJ/N2UuanBn";
-    }
+    pictureEl.onerror = () => {
+      pictureEl.onerror = null;
+      pictureEl.src = defaultContactPicture;
+    };
+    pictureEl.src = data.picture || defaultContactPicture;
 
-    // 3. Handle Favourite Star
     const favEl = document.querySelector("#contact_favourite");
-    if (data.favourite) {
-      favEl.innerHTML =
-        '<span class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-yellow-900 dark:text-yellow-300"><i class="fa-solid fa-star"></i> Favourite</span>';
-    } else {
-      favEl.innerHTML = ""; // Clear it if not favourite
-    }
+    favEl.innerHTML = data.favourite
+      ? '<span class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-yellow-900 dark:text-yellow-300"><i class="fa-solid fa-star"></i> Favourite</span>'
+      : "";
 
-    // 4. Handle Links (Website & LinkedIn)
     const websiteEl = document.querySelector("#contact_website");
     const linkedInEl = document.querySelector("#contact_linkedin");
 
-    // Reset visibility first
     websiteEl.classList.add("hidden");
     linkedInEl.classList.add("hidden");
 
@@ -111,107 +88,117 @@ async function loadContactData(id) {
       linkedInEl.classList.remove("hidden");
     }
 
-    // Finally, show the modal
     openContactModal();
   } catch (error) {
     console.log("Error fetching contact data: ", error);
   }
 }
 
-//delete contact
-function deleteContact(id, page, size) {
+function deleteContact(id, page, size, type) {
   Swal.fire({
     title: "Are you absolutely sure?",
     text: "This contact will be permanently deleted!",
     icon: "warning",
     showCancelButton: true,
-    confirmButtonColor: "#EF4444", // Tailwind red-500
-    cancelButtonColor: "#6B7280", // Tailwind gray-500
+    confirmButtonColor: "#EF4444",
+    cancelButtonColor: "#6B7280",
     confirmButtonText: "Yes, delete it!",
     cancelButtonText: "Cancel",
     background: "#ffffff",
     customClass: {
-      // Optional: You can inject Tailwind classes into the SweetAlert elements here if you want extra styling!
       popup: "rounded-2xl shadow-xl",
     },
   }).then((result) => {
     if (result.isConfirmed) {
-      // Check if page and size are defined, otherwise default them
       const targetPage = page !== undefined ? page : 0;
       const targetSize = size !== undefined ? size : 10;
-
-      const cleanId = id.trim();
-      // Build the redirect URL WITH the query parameters
-      const redirectUrl = `/user/contacts/delete/${id}?page=${targetPage}&size=${targetSize}`;
-
-      // Log the URL to the console so you can verify it before the redirect happens!
-      console.log("Redirecting to:", redirectUrl);
-
-      window.location.href = redirectUrl;
+      const tagQuery = type ? `&type=${encodeURIComponent(type)}` : "";
+      window.location.href = `/user/contacts/delete/${id}?page=${targetPage}&size=${targetSize}${tagQuery}`;
     }
   });
 }
 
-function showAlert(message, icon = "⚠️") {
-  document.getElementById("alert-message").textContent = message;
-  document.getElementById("alert-icon").textContent = icon;
-  document.getElementById("custom-alert").classList.remove("hidden");
+function showAlert(message, icon = "!") {
+  const alertMessage = document.getElementById("alert-message");
+  const alertIcon = document.getElementById("alert-icon");
+  const customAlert = document.getElementById("custom-alert");
+
+  if (!alertMessage || !alertIcon || !customAlert) {
+    alert(message);
+    return;
+  }
+
+  alertMessage.textContent = message;
+  alertIcon.textContent = icon;
+  customAlert.classList.remove("hidden");
 }
 
 function closeAlert() {
-  document.getElementById("custom-alert").classList.add("hidden");
+  document.getElementById("custom-alert")?.classList.add("hidden");
 }
 
-window.onload = function () {
-  const selectField = document.getElementById("countries");
-  const searchInput = document.getElementById("table-search-users");
-  const searchBtn = document.getElementById("search-btn");
-  const searchForm = document.querySelector("form");
-  searchInput.addEventListener("keydown", function (e) {
-    if (e.key === "Enter") {
-      e.preventDefault(); // form auto submit band karo
-      searchBtn.click(); // same button click logic chalega
+function setupContactSearchForm(searchForm) {
+  const searchBtn = searchForm.querySelector('button[type="submit"], #search-btn');
+  const selectField = searchForm.querySelector('select[name="field"]');
+  const searchInput = searchForm.querySelector('input[name="value"]');
+
+  if (!selectField || !searchInput || !searchBtn) {
+    return;
+  }
+
+  function isReady() {
+    return selectField.value !== "" && searchInput.value.trim() !== "";
+  }
+
+  function updateButtonStyle() {
+    if (isReady()) {
+      searchBtn.classList.remove("bg-gray-400");
+      searchBtn.classList.add("bg-blue-600", "hover:bg-blue-700");
+    } else {
+      searchBtn.classList.add("bg-gray-400");
+      searchBtn.classList.remove("bg-blue-600", "hover:bg-blue-700");
+    }
+    searchBtn.style.cursor = "pointer";
+  }
+
+  function validateSearchForm() {
+    if (selectField.value === "" && searchInput.value.trim() === "") {
+      showAlert("Please select a field and enter a search value!");
+      return false;
+    }
+    if (selectField.value === "") {
+      showAlert("Please select a field first!");
+      selectField.focus();
+      return false;
+    }
+    if (searchInput.value.trim() === "") {
+      showAlert("Please enter a search value!");
+      searchInput.focus();
+      return false;
+    }
+    return true;
+  }
+
+  searchForm.addEventListener("submit", (event) => {
+    if (!validateSearchForm()) {
+      event.preventDefault();
     }
   });
 
-  function updateButtonStyle() {
-    if (selectField.value !== "" && searchInput.value.trim() !== "") {
-      searchBtn.classList.remove("bg-gray-400", "cursor-not-allowed");
-
-      searchBtn.classList.add(
-        "bg-blue-600",
-        "hover:bg-blue-700",
-        "cursor-pointer",
-      );
-    } else {
-      searchBtn.classList.add("bg-gray-400", "cursor-not-allowed");
-
-      searchBtn.classList.remove(
-        "bg-blue-600",
-        "hover:bg-blue-700",
-        "cursor-pointer",
-      );
+  searchInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      searchForm.requestSubmit();
     }
-  }
-
-  searchBtn.addEventListener("click", function () {
-    if (selectField.value === "" && searchInput.value.trim() === "") {
-      showAlert("Please select a field and enter a search value!", "🔍");
-      return;
-    }
-    if (selectField.value === "") {
-      showAlert("Please select a field first!", "📋");
-      selectField.focus();
-      return;
-    }
-    if (searchInput.value.trim() === "") {
-      showAlert("Please enter a search value!", "✏️");
-      searchInput.focus();
-      return;
-    }
-    searchForm.submit();
   });
 
   selectField.addEventListener("change", updateButtonStyle);
   searchInput.addEventListener("input", updateButtonStyle);
-};
+  updateButtonStyle();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  document
+    .querySelectorAll("form[data-contact-search-form]")
+    .forEach(setupContactSearchForm);
+});

@@ -315,7 +315,9 @@
               </p>
               <div class="flex gap-4 relative z-10">
                 <a
-                  data-th-href="@{'/register'}"
+                        th:href="${loggedInUser} ? @{/user/profile} : @{/register}"
+                        
+
                   class="px-6 py-3 bg-white text-blue-900 text-sm font-bold rounded-xl hover:bg-gray-100 transition-colors shadow-lg"
                 >
                   Get Started

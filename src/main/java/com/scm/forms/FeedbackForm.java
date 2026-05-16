@@ -35,7 +35,7 @@ public class FeedbackForm {
     @Column(length = 2000)
     private String message;
 
-    // Optional: Kis user ne bheja (Agar logged in hai to)
+
     private String userEmail;
 
     private LocalDateTime submittedAt;

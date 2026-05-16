@@ -20,9 +20,6 @@ public class FileValidator implements ConstraintValidator<ValidFile, MultipartFi
 
         if (file == null || file.isEmpty()) {
 
-            // context.disableDefaultConstraintViolation();
-            // context.buildConstraintViolationWithTemplate("File cannot be
-            // empty").addConstraintViolation();
             return true;
 
         }
@@ -37,17 +34,6 @@ public class FileValidator implements ConstraintValidator<ValidFile, MultipartFi
             return false;
         }
 
-        // resolution
-
-        // try {
-        // BufferedImage bufferedImage = ImageIO.read(file.getInputStream());
-
-        // if(bufferedImage.getHe)
-
-        // } catch (IOException e) {
-        // // TODO Auto-generated catch block
-        // e.printStackTrace();
-        // }
         return true;
     }
 

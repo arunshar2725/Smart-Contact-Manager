@@ -38,8 +38,6 @@ public class Contact {
     @Column(length = 50)
     private String category = "General";
 
-    // Agar aap Lombok (@Data, @Getter, @Setter) use nahi kar rahe,
-    // toh iske Getter aur Setter zaroor banayein:
     public String getCategory() {
         return category;
     }

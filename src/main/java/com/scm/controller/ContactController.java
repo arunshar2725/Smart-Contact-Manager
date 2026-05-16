@@ -103,30 +103,6 @@ public class ContactController {
 
         User user = userService.getUserByEmail(username);
 
-        // process the contact picture
-
-        // image process
-
-        // upload krne ka code
-
-        /// file url main imageService.uploadImage(contactForm.getContactImage(),
-        /// filename)
-
-        /// ye bahar ka h
-
-        // if (contactForm.getContactImage() != null
-        // && !contactForm.getContactImage().isEmpty()) {
-        // // ✅ Image selected - upload it
-        // fileURl = imageService.uploadImage(contactForm.getContactImage(), filename);
-        // logger.info("Image uploaded: {}", fileURl);
-        // } else {
-        // // ✅ No image - use default
-        // fileURl = null; // or set a default image URL
-        // filename = null;
-        // logger.info("No image selected");
-        // }
-
-        /// yaha tak
 
         // save to database
         Contact contact = new Contact();
@@ -204,6 +180,7 @@ public class ContactController {
             @RequestParam(value = "page", defaultValue = "0") int page,
 
             @RequestParam(value = "size", defaultValue = AppConstants.PAGE_SIZE + "") int size,
+            @RequestParam(value = "type", required = false) String type,
             HttpSession session) {
 
         Contact contact = contactService.getById(contactId);
@@ -216,7 +193,10 @@ public class ContactController {
                         .type(favourite ? MessageType.green : MessageType.red)
                         .build());
 
-        // FIX: same page par redirect
+        if (type != null && !type.isBlank()) {
+            return "redirect:/user/contacts/tag?type=" + type + "&page=" + page + "&size=" + size;
+        }
+
         return "redirect:/user/contacts?page=" + page + "&size=" + size;
 
     }
@@ -231,6 +211,7 @@ public class ContactController {
             @RequestParam(value = "page", defaultValue = "0" + "") int page,
             @RequestParam(value = "sortBy", defaultValue = "name") String sortBy,
             @RequestParam(value = "direction", defaultValue = "asc") String direction,
+            @RequestParam(value = "type", required = false) String type,
             Model model,
             Authentication authentication) {
 
@@ -238,18 +219,38 @@ public class ContactController {
 
         logger.info("field {} keyword {} ", contactSearchForm.getField(), contactSearchForm.getValue());
 
+        boolean categorySearch = type != null && !type.isBlank();
+        boolean invalidSearch = contactSearchForm.getField() == null || contactSearchForm.getField().isBlank()
+                || contactSearchForm.getValue() == null || contactSearchForm.getValue().isBlank();
+
+        if (invalidSearch) {
+            return categorySearch
+                    ? "redirect:/user/contacts/tag?type=" + type
+                    : "redirect:/user/contacts";
+        }
+
         Page<Contact> pageContact = null;
+
         if (contactSearchForm.getField().equalsIgnoreCase("name")) {
-            pageContact = contactService.searchByName(
-                    contactSearchForm.getValue(), size, page, sortBy, direction, user);
+            pageContact = categorySearch
+                    ? contactService.searchByNameAndCategory(
+                            contactSearchForm.getValue(), type, size, page, sortBy, direction, user)
+                    : contactService.searchByName(
+                            contactSearchForm.getValue(), size, page, sortBy, direction, user);
         }
 
         else if (contactSearchForm.getField().equalsIgnoreCase("email")) {
-            pageContact = contactService.searchByEmail(
-                    contactSearchForm.getValue(), size, page, sortBy, direction, user);
+            pageContact = categorySearch
+                    ? contactService.searchByEmailAndCategory(
+                            contactSearchForm.getValue(), type, size, page, sortBy, direction, user)
+                    : contactService.searchByEmail(
+                            contactSearchForm.getValue(), size, page, sortBy, direction, user);
         } else if (contactSearchForm.getField().equalsIgnoreCase("phone")) {
-            pageContact = contactService.searchByPhoneNumber(
-                    contactSearchForm.getValue(), size, page, sortBy, direction, user);
+            pageContact = categorySearch
+                    ? contactService.searchByPhoneNumberAndCategory(
+                            contactSearchForm.getValue(), type, size, page, sortBy, direction, user)
+                    : contactService.searchByPhoneNumber(
+                            contactSearchForm.getValue(), size, page, sortBy, direction, user);
 
         }
 
@@ -260,6 +261,10 @@ public class ContactController {
         model.addAttribute("pageContact", pageContact);
 
         model.addAttribute("contactSearchForm", contactSearchForm);
+        if (categorySearch) {
+            model.addAttribute("selectedType", type);
+            model.addAttribute("customHeading", type + " Contacts Search Results");
+        }
 
         return "user/search";
 
@@ -271,6 +276,7 @@ public class ContactController {
             @PathVariable("id") String id,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size,
+            @RequestParam(value = "type", required = false) String type,
             Authentication authentication,
             HttpSession session) {
 
@@ -299,7 +305,10 @@ public class ContactController {
                         .type(MessageType.green)
                         .build());
 
-        // Redirect with the corrected page index
+        if (type != null && !type.isBlank()) {
+            return "redirect:/user/contacts/tag?type=" + type + "&page=" + redirectPage + "&size=" + size;
+        }
+
         return "redirect:/user/contacts?page=" + redirectPage + "&size=" + size;
     }
 
@@ -482,6 +491,7 @@ public class ContactController {
         // Custom header text set karne ke liye taaki list ke top par "Work Contacts"
         // dikhe
         model.addAttribute("customHeading", type + " Contacts Workspace");
+        model.addAttribute("selectedType", type);
         model.addAttribute("contactSearchForm", new ContactSearchForm());
 
         return "user/contacts";

@@ -34,7 +34,7 @@ public class PageController {
     @Autowired
     private SendMessageRepo SendMessageRepo;
 
-    @Value("${scm.manager.upload-dir}")
+    @Value("${scm.default-profile-image}")
     private String profilePic;
 
     @Autowired
@@ -111,17 +111,6 @@ public class PageController {
         // todo : Valdate userfoem(NexVideo)
 
         // send data to database
-
-        // userservice
-
-        // User user = User.builder()
-        // .name(userForm.getName())
-        // .email(userForm.getEmail())
-        // .password(userForm.getPassword())
-        // .phoneNumber(userForm.getPhoneNumber())
-        // .about(userForm.getAbout())
-        // .profilePic(profilePic)
-        // .build();
 
         User user = new User();
 

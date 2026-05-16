@@ -40,7 +40,16 @@
           <form
             data-th-object="${contactSearchForm}"
             data-th-action="@{'/user/contacts/search'}"
+            data-contact-search-form
+            method="get"
+            novalidate
           >
+            <input
+              data-th-if="${selectedType != null}"
+              type="hidden"
+              name="type"
+              data-th-value="${selectedType}"
+            />
             <div
               class="flex flex-col xl:flex-row xl:items-end xl:justify-between gap-5 px-5 pt-4 pb-2 bg-white dark:bg-gray-800"
             >
@@ -52,6 +61,7 @@
                     id="countries"
                     data-th-field="*{field}"
                     name="field"
+                    required
                     class="w-full h-14 px-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white transition-all duration-200"
                   >
                     <option selected value="">Select Field</option>
@@ -74,6 +84,7 @@
                       id="table-search-users"
                       data-th-field="*{value}"
                       type="text"
+                      required
                       placeholder="Search for users"
                       class="w-full h-14 pl-12 pr-4 text-sm border border-gray-300 rounded-2xl bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white transition-all duration-200"
                     />
@@ -82,8 +93,8 @@
                   <!-- Search Button -->
                   <button
                     id="search-btn"
-                    type="button"
-                    class="h-14 px-7 rounded-2xl bg-gray-400 cursor-not-allowed text-white font-semibold shadow-lg transition-all duration-200"
+                    type="submit"
+                    class="h-14 px-7 rounded-2xl bg-gray-400 cursor-pointer text-white font-semibold shadow-lg transition-all duration-200"
                   >
                     Search
                   </button>
@@ -130,7 +141,7 @@
               class="bg-white dark:bg-gray-800 border border-red-200 dark:border-red-700 shadow-2xl rounded-2xl p-4 flex items-start gap-3"
             >
               <!-- Icon -->
-              <div id="alert-icon" class="text-2xl">⚠️</div>
+              <div id="alert-icon" class="text-2xl">!</div>
 
               <!-- Message -->
               <div class="flex-1">
@@ -221,7 +232,7 @@
                       <!-- Favourite -->
                       <div data-th-if="${c.favourite}">
                         <a
-                          data-th-href="@{/user/contacts/favourite(id=${c.id},favourite=false,page=${pageContact.number},size=${pageContact.size})}"
+                          data-th-href="@{/user/contacts/favourite(id=${c.id},favourite=false,page=${pageContact.number},size=${pageContact.size},type=${selectedType})}"
                         >
                           <i
                             class="fa-solid fa-star text-yellow-400 hover:text-yellow-500"
@@ -231,7 +242,7 @@
 
                       <div data-th-unless="${c.favourite}">
                         <a
-                          data-th-href="@{/user/contacts/favourite(id=${c.id},favourite=true,page=${pageContact.number},size=${pageContact.size})}"
+                          data-th-href="@{/user/contacts/favourite(id=${c.id},favourite=true,page=${pageContact.number},size=${pageContact.size},type=${selectedType})}"
                         >
                           <i
                             class="fa-regular fa-star text-gray-400 hover:text-yellow-400"
@@ -283,7 +294,7 @@
                       <!-- Delete -->
                       <button
                         type="button"
-                        th:onclick="deleteContact([[*{id}]], [[${pageContact.number}]], [[${pageContact.size}]])"
+                        th:onclick="deleteContact([[*{id}]], [[${pageContact.number}]], [[${pageContact.size}]], [[${selectedType}]])"
                       >
                         <i
                           class="fa-solid fa-trash text-red-500 hover:text-red-700"
@@ -320,14 +331,14 @@
                 <li data-th-unless="${pageContact.first}">
                   <a
                     th:if="${customHeading != null}"
-                    th:href="@{'/user/contacts/tag?type=' + ${param.type} + '&page=' + ${pageContact.number - 1} + '&size=' + ${pageContact.size}}"
+                    th:href="@{/user/contacts/tag(type=${selectedType},page=${pageContact.number - 1},size=${pageContact.size})}"
                     class="px-4 py-2 rounded-xl border bg-white hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
                   >
                     Previous
                   </a>
                   <a
                     th:unless="${customHeading != null}"
-                    th:href="@{'/user/contacts?page=' + ${pageContact.number - 1} + '&size=' + ${pageContact.size}}"
+                    th:href="@{/user/contacts(page=${pageContact.number - 1},size=${pageContact.size})}"
                     class="px-4 py-2 rounded-xl border bg-white hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
                   >
                     Previous
@@ -339,7 +350,7 @@
                 >
                   <a
                     th:if="${customHeading != null}"
-                    data-th-href="@{'/user/contacts/tag?type=' + ${param.type} + '&size=' + ${pageSize} + '&page=' + ${index}}"
+                    data-th-href="@{/user/contacts/tag(type=${selectedType},size=${pageSize},page=${index})}"
                     class="px-4 py-2 rounded-xl border transition-all duration-200"
                     th:classappend="${index == pageContact.number} ? 'bg-blue-600 text-white border-blue-600' : 'bg-white dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700'"
                   >
@@ -348,7 +359,7 @@
 
                   <a
                     th:unless="${customHeading != null}"
-                    data-th-href="@{'/user/contacts?size=' + ${pageSize} + '&page=' + ${index}}"
+                    data-th-href="@{/user/contacts(size=${pageSize},page=${index})}"
                     class="px-4 py-2 rounded-xl border transition-all duration-200"
                     th:classappend="${index == pageContact.number} ? 'bg-blue-600 text-white border-blue-600' : 'bg-white dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700'"
                   >
@@ -359,14 +370,14 @@
                 <li data-th-unless="${pageContact.last}">
                   <a
                     th:if="${customHeading != null}"
-                    th:href="@{'/user/contacts/tag?type=' + ${param.type} + '&page=' + ${pageContact.number + 1} + '&size=' + ${pageContact.size}}"
+                    th:href="@{/user/contacts/tag(type=${selectedType},page=${pageContact.number + 1},size=${pageContact.size})}"
                     class="px-4 py-2 rounded-xl border bg-white hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
                   >
                     Next
                   </a>
                   <a
                     th:unless="${customHeading != null}"
-                    th:href="@{'/user/contacts?page=' + ${pageContact.number + 1} + '&size=' + ${pageContact.size}}"
+                    th:href="@{/user/contacts(page=${pageContact.number + 1},size=${pageContact.size})}"
                     class="px-4 py-2 rounded-xl border bg-white hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
                   >
                     Next
@@ -392,6 +403,6 @@
       </div>
     </div>
 
-    <script data-th-src="@{'/js/contact.js'}"></script>
+    <script data-th-src="@{/js/contact.js}"></script>
   </body>
 </html>

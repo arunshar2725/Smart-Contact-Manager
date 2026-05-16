@@ -1,168 +1,179 @@
 <!doctype html>
 <html
-  lang="en"
-  th:replace="~{base::parent(~{::#content},~{::title},~{::script})}"
+        lang="en"
+        th:replace="~{base::parent(~{::#content},~{::title},~{::script})}"
 >
-  <head>
-    <title>Search Contact</title>
-  </head>
+<head>
+  <title>Search Contact</title>
+</head>
 
-  <body>
-    <div id="content">
-      <!-- Sidebar -->
-      <div data-th-if="${loggedInUser}">
-        <div data-th-replace="~{user/sidebar::sidebar}"></div>
-      </div>
+<body>
+<div id="content">
+  <!-- Sidebar -->
+  <div data-th-if="${loggedInUser}">
+    <div data-th-replace="~{user/sidebar::sidebar}"></div>
+  </div>
 
-      <!-- Main Wrapper -->
-      <div
-        class="min-h-screen bg-gray-50 dark:bg-gray-900 px-2 sm:px-4 md:px-6 py-5"
+  <!-- Main Wrapper -->
+  <div
+          class="min-h-screen bg-gray-50 dark:bg-gray-900 px-2 sm:px-4 md:px-6 py-5"
+  >
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h1
+              class="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight text-gray-900 dark:text-white"
       >
-        <!-- Header -->
-        <div class="text-center mb-8">
-          <h1
-            class="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight text-gray-900 dark:text-white"
-          >
-            Search Result
-          </h1>
+        Search Result
+      </h1>
 
-          <!-- Results -->
-          <p
-            data-th-if="${pageContact.totalElements > 0}"
-            class="mt-4 inline-flex items-center gap-2 text-lg text-gray-600 dark:text-gray-300 bg-white dark:bg-gray-800 px-6 py-2 rounded-full shadow-sm border border-gray-200 dark:border-gray-700"
-          >
-            Found
+      <!-- Results -->
+      <p
+              data-th-if="${pageContact.totalElements > 0}"
+              class="mt-4 inline-flex items-center gap-2 text-lg text-gray-600 dark:text-gray-300 bg-white dark:bg-gray-800 px-6 py-2 rounded-full shadow-sm border border-gray-200 dark:border-gray-700"
+      >
+        Found
 
-            <span
-              class="font-bold text-gray-900 dark:text-blue-400 text-xl"
-              data-th-text="${pageContact.totalElements}"
-            ></span>
+        <span
+                class="font-bold text-gray-900 dark:text-blue-400 text-xl"
+                data-th-text="${pageContact.totalElements}"
+        ></span>
 
-            results for
+        results for
 
-            <span
-              class="font-semibold text-gray-900 dark:text-white"
-              data-th-text="${contactSearchForm.value}"
-            ></span>
-          </p>
+        <span
+                class="font-semibold text-gray-900 dark:text-white"
+                data-th-text="${contactSearchForm.value}"
+        ></span>
+      </p>
 
-          <!-- No Results -->
-          <p
-            data-th-if="${pageContact.totalElements == 0}"
-            class="mt-4 inline-flex items-center gap-2 text-lg text-red-500 bg-red-50 dark:bg-gray-800 dark:text-red-400 px-6 py-2 rounded-full shadow-sm border border-red-200 dark:border-gray-700"
-          >
-            No contacts found for
+      <!-- No Results -->
+      <p
+              data-th-if="${pageContact.totalElements == 0}"
+              class="mt-4 inline-flex items-center gap-2 text-lg text-red-500 bg-red-50 dark:bg-gray-800 dark:text-red-400 px-6 py-2 rounded-full shadow-sm border border-red-200 dark:border-gray-700"
+      >
+        No contacts found for
 
-            <span
-              class="font-bold text-gray-900 dark:text-white"
-              data-th-text="${contactSearchForm.value}"
-            ></span>
-          </p>
-        </div>
+        <span
+                class="font-bold text-gray-900 dark:text-white"
+                data-th-text="${contactSearchForm.value}"
+        ></span>
+      </p>
+    </div>
 
-        <!-- Main Card -->
+    <!-- Main Card -->
+    <div
+            class="max-w-7xl mx-auto bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-3xl shadow-2xl overflow-hidden"
+    >
+      <!-- Search Controls -->
+      <form
+              data-th-object="${contactSearchForm}"
+              data-th-action="@{'/user/contacts/search'}"
+              data-contact-search-form
+              method="get"
+              novalidate
+      >
+        <input
+                data-th-if="${selectedType != null}"
+                type="hidden"
+                name="type"
+                data-th-value="${selectedType}"
+        />
         <div
-          class="max-w-7xl mx-auto bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-3xl shadow-2xl overflow-hidden"
+                class="flex flex-col xl:flex-row xl:items-end xl:justify-between gap-5 px-5 pt-4 pb-4 bg-white dark:bg-gray-800"
         >
-          <!-- Search Controls -->
-          <form
-            data-th-object="${contactSearchForm}"
-            data-th-action="@{'/user/contacts/search'}"
-          >
-            <div
-              class="flex flex-col xl:flex-row xl:items-end xl:justify-between gap-5 px-5 pt-4 pb-4 bg-white dark:bg-gray-800"
-            >
-              <!-- Left -->
-              <div class="flex flex-col sm:flex-row gap-4 w-full xl:w-auto">
-                <!-- Select -->
-                <div class="w-full sm:w-52">
-                  <select
-                    data-th-field="*{field}"
-                    class="w-full h-14 px-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white transition-all duration-200"
-                  >
-                    <option value="">Select Field</option>
-                    <option value="name">Name</option>
-                    <option value="phone">Phone</option>
-                    <option value="email">Email</option>
-                  </select>
-                </div>
-
-                <!-- Search -->
-                <div class="flex gap-3 w-full">
-                  <div class="relative flex-1">
-                    <div
-                      class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none"
-                    >
-                      <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
-                    </div>
-
-                    <input
-                      data-th-field="*{value}"
-                      type="text"
-                      placeholder="Search for users"
-                      class="w-full h-14 pl-12 pr-4 text-sm border border-gray-300 rounded-2xl bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white transition-all duration-200"
-                    />
-                  </div>
-
-                  <!-- Search Btn -->
-                  <button
-                    type="submit"
-                    class="h-14 px-7 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-lg transition-all duration-200"
-                  >
-                    Search
-                  </button>
-                </div>
-              </div>
-
-              <!-- Export -->
-              <div
-                th:if="${pageContact.totalElements > 0}"
-                class="flex flex-col sm:flex-row gap-3 xl:justify-end"
+          <!-- Left -->
+          <div class="flex flex-col sm:flex-row gap-4 w-full xl:w-auto">
+            <!-- Select -->
+            <div class="w-full sm:w-52">
+              <select
+                      data-th-field="*{field}"
+                      required
+                      class="w-full h-14 px-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white transition-all duration-200"
               >
-                <a
-                  data-th-href="@{/user/contacts/export/excel}"
-                  class="px-5 py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl text-sm font-medium text-center transition-all duration-200"
-                >
-                  <i class="fa-solid fa-file-excel mr-2"></i>
-                  Export Excel
-                </a>
-
-                <a
-                  data-th-href="@{/user/contacts/export/pdf}"
-                  class="px-5 py-3 bg-red-600 hover:bg-red-700 text-white rounded-xl text-sm font-medium text-center transition-all duration-200"
-                >
-                  <i class="fa-solid fa-file-pdf mr-2"></i>
-                  Export PDF
-                </a>
-              </div>
+                <option value="">Select Field</option>
+                <option value="name">Name</option>
+                <option value="phone">Phone</option>
+                <option value="email">Email</option>
+              </select>
             </div>
-          </form>
 
-          <!-- Table -->
-          <div class="overflow-x-auto">
-            <table
-              class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
-            >
-              <thead
-                class="text-xs uppercase bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300"
+            <!-- Search -->
+            <div class="flex gap-3 w-full">
+              <div class="relative flex-1">
+                <div
+                        class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none"
+                >
+                  <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
+                </div>
+
+                <input
+                        data-th-field="*{value}"
+                        type="text"
+                        required
+                        placeholder="Search for users"
+                        class="w-full h-14 pl-12 pr-4 text-sm border border-gray-300 rounded-2xl bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white transition-all duration-200"
+                />
+              </div>
+
+              <!-- Search Btn -->
+              <button
+                      type="submit"
+                      class="h-14 px-7 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-lg transition-all duration-200"
               >
-                <tr>
-                  <th class="px-6 py-4">Name</th>
-                  <th class="px-6 py-4">Phone</th>
-                  <th class="px-6 py-4">Links</th>
-                  <th class="px-6 py-4">Action</th>
-                </tr>
-              </thead>
+                Search
+              </button>
+            </div>
+          </div>
 
-              <tbody>
-                <tr
+          <!-- Export -->
+          <div
+                  th:if="${pageContact.totalElements > 0}"
+                  class="flex flex-col sm:flex-row gap-3 xl:justify-end"
+          >
+            <a
+                    data-th-href="@{/user/contacts/export/excel}"
+                    class="px-5 py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl text-sm font-medium text-center transition-all duration-200"
+            >
+              <i class="fa-solid fa-file-excel mr-2"></i>
+              Export Excel
+            </a>
+
+            <a
+                    data-th-href="@{/user/contacts/export/pdf}"
+                    class="px-5 py-3 bg-red-600 hover:bg-red-700 text-white rounded-xl text-sm font-medium text-center transition-all duration-200"
+            >
+              <i class="fa-solid fa-file-pdf mr-2"></i>
+              Export PDF
+            </a>
+          </div>
+        </div>
+      </form>
+
+      <!-- Table -->
+      <div class="overflow-x-auto">
+        <table
+                class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+        >
+          <thead
+                  class="text-xs uppercase bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300"
+          >
+          <tr>
+            <th class="px-6 py-4">Name</th>
+            <th class="px-6 py-4">Phone</th>
+            <th class="px-6 py-4">Links</th>
+            <th class="px-6 py-4">Action</th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr
                   data-th-object="${c}"
                   data-th-each="c : ${pageContact.content}"
                   class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-blue-50 dark:hover:bg-gray-700 transition-all duration-200"
-                >
-                  <!-- Name -->
-                  <th class="flex items-center px-6 py-4 whitespace-nowrap">
-                    <img
+          >
+            <!-- Name -->
+            <th class="flex items-center px-6 py-4 whitespace-nowrap">
+              <img
                       class="w-12 h-12 rounded-full object-cover border"
                       onerror="
                         this.src =
@@ -170,118 +181,131 @@
                       "
                       data-th-src="@{*{picture}}"
                       alt="Profile"
-                    />
+              />
 
-                    <div class="pl-4">
-                      <div
+              <div class="pl-4">
+                <div
                         class="text-base font-semibold text-gray-900 dark:text-white"
                         data-th-text="*{name}"
-                      ></div>
+                ></div>
 
-                      <div
+                <div
                         class="text-sm text-gray-500 mb-1"
                         data-th-text="*{email}"
-                      ></div>
+                ></div>
 
-                      <span
+                <span
                         class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-blue-100 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-400"
                         data-th-text="*{category != null ? category : 'General'}"
-                      >
+                >
                         General
                       </span>
-                    </div>
-                  </th>
+              </div>
+            </th>
 
-                  <!-- Phone -->
-                  <td class="px-6 py-4">
-                    <div class="flex items-center gap-2">
-                      <i class="fa-solid fa-phone text-gray-400"></i>
+            <!-- Phone -->
+            <td class="px-6 py-4">
+              <div class="flex items-center gap-2">
+                <i class="fa-solid fa-phone text-gray-400"></i>
 
-                      <span data-th-text="*{phoneNumber}"></span>
-                    </div>
-                  </td>
+                <span data-th-text="*{phoneNumber}"></span>
+              </div>
+            </td>
 
-                  <!-- Links -->
-                  <td class="px-6 py-4">
-                    <div class="flex items-center gap-4 text-lg">
-                      <i class="fa-solid fa-star text-yellow-400"></i>
+            <!-- Links -->
+            <td class="px-6 py-4">
+              <div class="flex items-center gap-4 text-lg">
+                <i class="fa-solid fa-star text-yellow-400"></i>
 
-                      <i class="fa-solid fa-link text-blue-500"></i>
+                <i class="fa-solid fa-link text-blue-500"></i>
 
-                      <i class="fa-brands fa-linkedin text-blue-600"></i>
-                    </div>
-                  </td>
+                <i class="fa-brands fa-linkedin text-blue-600"></i>
+              </div>
+            </td>
 
-                  <!-- Actions -->
-                  <td class="px-6 py-4">
-                    <div class="flex items-center gap-4 text-lg">
-                      <i
-                        class="fa-solid fa-trash text-red-500 hover:text-red-700 cursor-pointer"
-                      ></i>
 
-                      <i
-                        class="fa-solid fa-pen text-gray-600 hover:text-black dark:text-gray-300 cursor-pointer"
-                      ></i>
-
-                      <i
-                        class="fa-solid fa-eye text-blue-500 hover:text-blue-700 cursor-pointer"
-                      ></i>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- Pagination -->
-          <div
-            th:if="${pageContact.totalPages > 0}"
-            class="p-6 flex justify-center"
-          >
-            <nav>
-              <ul class="flex items-center gap-2 flex-wrap">
-                <!-- Previous -->
-                <li data-th-unless="${pageContact.first}">
-                  <a
-                    data-th-href="@{'/user/contacts/search'(page=${pageContact.number - 1}, size=${pageContact.size}, field=${contactSearchForm.field}, value=${contactSearchForm.value})}"
-                    class="px-4 py-2 rounded-xl border bg-white hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
-                  >
-                    Previous
-                  </a>
-                </li>
-
-                <!-- Pages -->
-                <li
-                  data-th-each="index : ${#numbers.sequence(0, pageContact.totalPages-1)}"
+            <!-- Actions -->
+            <td class="px-6 py-4">
+              <div class="flex items-center gap-4 text-lg">
+                <!-- Delete -->
+                <button
+                        type="button"
+                        th:onclick="deleteContact([[*{id}]], [[${pageContact.number}]], [[${pageContact.size}]])"
                 >
-                  <a
-                    data-th-href="@{'/user/contacts/search'(page=${index}, size=${pageContact.size}, field=${contactSearchForm.field}, value=${contactSearchForm.value})}"
-                    class="px-4 py-2 rounded-xl border transition-all duration-200"
-                    th:classappend="${index == pageContact.number} ? 'bg-blue-600 text-white border-blue-600' : 'bg-white dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700'"
-                  >
-                    <span data-th-text="${index + 1}"></span>
-                  </a>
-                </li>
+                  <i
+                          class="fa-solid fa-trash text-red-500 hover:text-red-700"
+                  ></i>
+                </button>
 
-                <!-- Next -->
-                <li data-th-unless="${pageContact.last}">
-                  <a
-                    data-th-href="@{'/user/contacts/search'(page=${pageContact.number + 1}, size=${pageContact.size}, field=${contactSearchForm.field}, value=${contactSearchForm.value})}"
-                    class="px-4 py-2 rounded-xl border bg-white hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
-                  >
-                    Next
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
+                <!-- Edit -->
+                <a data-th-href="@{'/user/contacts/view/' + *{id}}">
+                  <i
+                          class="fa-solid fa-pen text-gray-600 hover:text-black dark:text-gray-300"
+                  ></i>
+                </a>
 
-        <!-- Modal -->
-        <div data-th-replace="~{user/contact_modals::contact}"></div>
+                <!-- View -->
+                <button data-th-onclick="loadContactData([[${c.id}]])">
+                  <i
+                          class="fa-solid fa-eye text-blue-500 hover:text-blue-700"
+                  ></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <div
+              th:if="${pageContact.totalPages > 0}"
+              class="p-6 flex justify-center"
+      >
+        <nav>
+          <ul class="flex items-center gap-2 flex-wrap">
+            <!-- Previous -->
+            <li data-th-unless="${pageContact.first}">
+              <a
+                      data-th-href="@{'/user/contacts/search'(page=${pageContact.number - 1}, size=${pageContact.size}, field=${contactSearchForm.field}, value=${contactSearchForm.value}, type=${selectedType})}"
+                      class="px-4 py-2 rounded-xl border bg-white hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+              >
+                Previous
+              </a>
+            </li>
+
+            <!-- Pages -->
+            <li
+                    data-th-each="index : ${#numbers.sequence(0, pageContact.totalPages-1)}"
+            >
+              <a
+                      data-th-href="@{'/user/contacts/search'(page=${index}, size=${pageContact.size}, field=${contactSearchForm.field}, value=${contactSearchForm.value}, type=${selectedType})}"
+                      class="px-4 py-2 rounded-xl border transition-all duration-200"
+                      th:classappend="${index == pageContact.number} ? 'bg-blue-600 text-white border-blue-600' : 'bg-white dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700'"
+              >
+                <span data-th-text="${index + 1}"></span>
+              </a>
+            </li>
+
+            <!-- Next -->
+            <li data-th-unless="${pageContact.last}">
+              <a
+                      data-th-href="@{'/user/contacts/search'(page=${pageContact.number + 1}, size=${pageContact.size}, field=${contactSearchForm.field}, value=${contactSearchForm.value}, type=${selectedType})}"
+                      class="px-4 py-2 rounded-xl border bg-white hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+              >
+                Next
+              </a>
+            </li>
+          </ul>
+        </nav>
       </div>
     </div>
 
-    <script data-th-src="@{'/js/contact.js'}"></script>
-  </body>
+    <!-- Modal -->
+    <div data-th-replace="~{user/contact_modals::contact}"></div>
+  </div>
+</div>
+
+<script data-th-src="@{/js/contact.js(v=${#dates.createNow().time})}"></script>
+</body>
 </html>
