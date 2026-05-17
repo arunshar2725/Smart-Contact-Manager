@@ -403,6 +403,10 @@
       </div>
     </div>
 
+    <script th:inline="javascript">
+      const baseURl = /*[[${@environment.getProperty('app.base-url')}]]*/ "http://localhost:8081";
+    </script>
+
     <script data-th-src="@{/js/contact.js}"></script>
   </body>
 </html>
