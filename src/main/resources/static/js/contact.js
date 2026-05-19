@@ -202,3 +202,57 @@ document.addEventListener("DOMContentLoaded", () => {
     .querySelectorAll("form[data-contact-search-form]")
     .forEach(setupContactSearchForm);
 });
+
+
+/**
+ * Generic function to download any file (PDF/Excel) via AJAX/Fetch
+ * and display custom Tailwind alerts.
+ */
+function downloadFile(url, fileName, fileType) {
+  const messageArea = document.getElementById('exportMessageArea');
+
+  // Safety check: अगर किसी पेज पर message container न हो तो एरर न आए
+  if (!messageArea) {
+    console.warn("Element #exportMessageArea not found on this page.");
+  } else {
+    messageArea.innerHTML = `
+            <div class="p-4 mb-4 text-sm text-blue-800 rounded-2xl bg-blue-50 dark:bg-gray-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                <i class="fa-solid fa-spinner fa-spin mr-2"></i> Generating ${fileType}... Please wait.
+            </div>`;
+  }
+
+  fetch(url)
+      .then(response => {
+        if (!response.ok) throw new Error('Network response error');
+        return response.blob();
+      })
+      .then(blob => {
+        // invisible link बनाकर डाउनलोड ट्रिगर करना
+        const windowUrl = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = windowUrl;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(windowUrl);
+        document.body.removeChild(a);
+
+        if (messageArea) {
+          messageArea.innerHTML = `
+                    <div class="p-4 mb-4 text-sm text-green-800 rounded-2xl bg-green-50 dark:bg-gray-700 dark:text-green-300 border border-green-200 dark:border-green-800">
+                        <span class="font-bold">Success!</span> ${fileType} Exported Successfully !!
+                    </div>`;
+          setTimeout(() => messageArea.innerHTML = '', 5000);
+        }
+      })
+      .catch(error => {
+        console.error('Error during file download:', error);
+        if (messageArea) {
+          messageArea.innerHTML = `
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-2xl bg-red-50 dark:bg-gray-700 dark:text-red-300 border border-red-200 dark:border-red-800">
+                        <span class="font-bold">Error!</span> Failed to export ${fileType}.
+                    </div>`;
+        }
+      });
+}

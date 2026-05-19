@@ -101,31 +101,32 @@
                 </div>
               </div>
 
-              <!-- Right Controls -->
               <div
-                th:if="${pageContact.totalElements > 0}"
-                class="flex flex-col sm:flex-row gap-3 xl:justify-end"
+                      th:if="${pageContact.totalElements > 0}"
+                      class="flex flex-col sm:flex-row gap-3 xl:justify-end"
               >
-                <!-- Excel -->
-                <a
-                  data-th-href="@{/user/contacts/export/excel}"
-                  class="px-5 py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl text-sm font-medium text-center transition-all duration-200"
+                <button
+                        type="button"
+                        onclick="downloadFile('/user/contacts/export/excel', 'contacts.xlsx', 'Excel')"
+                        class="px-5 py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl text-sm font-medium text-center transition-all duration-200"
                 >
                   <i class="fa-solid fa-file-excel mr-2"></i>
                   Export Excel
-                </a>
+                </button>
 
-                <!-- PDF -->
-                <a
-                  data-th-href="@{/user/contacts/export/pdf}"
-                  class="px-5 py-3 bg-red-600 hover:bg-red-700 text-white rounded-xl text-sm font-medium text-center transition-all duration-200"
+                <button
+                        type="button"
+                        onclick="downloadFile('/user/contacts/export/pdf', 'contacts.pdf', 'PDF')"
+                        class="px-5 py-3 bg-red-600 hover:bg-red-700 text-white rounded-xl text-sm font-medium text-center transition-all duration-200"
                 >
                   <i class="fa-solid fa-file-pdf mr-2"></i>
                   Export PDF
-                </a>
+                </button>
               </div>
             </div>
           </form>
+
+          <div id="exportMessageArea" class="px-5 pt-4"></div>
 
           <!-- Message -->
           <div id="message-box" class="px-5 pb-2">
