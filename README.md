@@ -17,6 +17,8 @@ ContactSphere is a full-stack contact management application that helps users se
 * Responsive UI with Tailwind CSS and Flowbite
 * Dark mode support
 * Cloud deployment using AWS Elastic Beanstalk and Amazon RDS
+*  PDF export functionality
+* Excel export functionality
 
 ## Tech Stack
 
@@ -111,7 +113,7 @@ The application is deployed on AWS Elastic Beanstalk and uses Amazon RDS as the 
                                                       
                                                       Feedback Page
                                                       
-<img width="427" height="761" alt="image" src="https://github.com/user-attachments/assets/96ca8310-e1a8-40a0-924d-076c04471fdd" />
+<img width="427" class='item-centre' height="761" alt="image" src="https://github.com/user-attachments/assets/96ca8310-e1a8-40a0-924d-076c04471fdd" />
                                                      
                                                      Mobile Responsive
                                                      
