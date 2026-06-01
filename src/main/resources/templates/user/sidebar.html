@@ -8,7 +8,7 @@
     class="h-full pt-16 px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800"
   >
     <a
-      href="https://flowbite.com/"
+            data-th-href="@{'/user/profile'}"
       class="flex flex-col items-center ps-2.5 mb-8"
     >
       <img
@@ -26,7 +26,7 @@
       <span class="text-gray-500" data-th-text="${loggedInUser.name}"></span>
       <span
         class="self-center text-xl font-semibold whitespace-nowrap text-gray-700 dark:text-white"
-        >Welcome to SCM</span
+        >Welcome</span
       >
     </a>
     <ul class="space-y-2 font-medium">

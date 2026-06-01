@@ -1,6 +1,5 @@
 
-const defaultContactPicture =
-  "https://imgs.search.brave.com/jHDp_R14w-tbRDiYsyiOCGDeCSPE4WqsVfFwiXVDyow/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzExLzY4LzUwLzU3/LzM2MF9GXzExNjg1/MDU3OTRfSUJDRWlhZnNJckhGSjA5ZTY1UDJ2aDUxMTVDMVhJN2UuanBn";
+const defaultContactPicture = "/images/default-profile.jpg";
 
 console.log("This is contact Modal page");
 

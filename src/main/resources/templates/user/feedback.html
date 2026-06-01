@@ -4,7 +4,7 @@
   th:replace="~{base::parent(~{::#content},~{::title},~{::script})}"
 >
   <head>
-    <title>Feedback & Support | SCM 2.0</title>
+    <title>Feedback & Support | Contact Sphere 2.0</title>
   </head>
   <body>
     <div id="content">
@@ -50,7 +50,7 @@
                 Help us shape
                 <span
                   class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-500 dark:from-blue-400 dark:to-purple-400"
-                  >the future of SCM.</span
+                  >the future of Contact Sphere.</span
                 >
               </h1>
               <p
@@ -278,7 +278,9 @@
                           >
                             Direct Email
                           </p>
-                          <p class="text-xs text-gray-500">support@scm2.com</p>
+                          <p class="text-xs text-gray-500">
+                            arunshar2725@gmail.com
+                          </p>
                         </div>
                       </a>
                     </li>
@@ -307,82 +309,13 @@
                     </li>
                   </ul>
                 </div>
-
-                <div
-                  class="bg-white/70 dark:bg-gray-900/50 backdrop-blur-xl border border-gray-200 dark:border-gray-800 rounded-2xl p-6"
-                >
-                  <h3
-                    class="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider mb-4"
-                  >
-                    Your Submissions
-                  </h3>
-
-                  <div
-                    th:if="${loggedInUser}"
-                    class="space-y-4 relative border-l border-gray-200 dark:border-gray-700 ml-2"
-                  >
-                    <div class="relative pl-4">
-                      <div
-                        class="absolute w-2 h-2 bg-green-500 rounded-full -left-[4.5px] top-1.5 ring-4 ring-white dark:ring-gray-900"
-                      ></div>
-                      <p
-                        class="text-xs font-bold text-gray-900 dark:text-white"
-                      >
-                        Export to PDF feature
-                      </p>
-                      <p class="text-[10px] text-gray-500 mt-0.5">
-                        Status:
-                        <span class="text-green-500 font-semibold"
-                          >Resolved</span
-                        >
-                      </p>
-                    </div>
-                    <div class="relative pl-4">
-                      <div
-                        class="absolute w-2 h-2 bg-yellow-500 rounded-full -left-[4.5px] top-1.5 ring-4 ring-white dark:ring-gray-900"
-                      ></div>
-                      <p
-                        class="text-xs font-bold text-gray-900 dark:text-white"
-                      >
-                        Dark mode toggle bug
-                      </p>
-                      <p class="text-[10px] text-gray-500 mt-0.5">
-                        Status:
-                        <span class="text-yellow-500 font-semibold"
-                          >Under Review</span
-                        >
-                      </p>
-                    </div>
-                    <a
-                      th:href="@{/user/profile}"
-                      class="block mt-4 text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline pl-4"
-                      >View all tickets &rarr;</a
-                    >
-                  </div>
-
-                  <div th:unless="${loggedInUser}" class="text-center py-4">
-                    <div
-                      class="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-3 text-gray-400"
-                    >
-                      <i class="fa-solid fa-lock"></i>
-                    </div>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">
-                      Log in to track your feedback status and feature requests.
-                    </p>
-                    <a
-                      th:href="@{/login}"
-                      class="inline-block px-4 py-2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-xs font-bold rounded-lg hover:scale-105 transition-transform"
-                      >Sign In to Track</a
-                    >
-                  </div>
-                </div>
               </div>
             </div>
           </div>
         </section>
 
         <section
-          class="py-20 px-6 border-y border-gray-200 dark:border-gray-800/50 bg-gray-100/50 dark:bg-gray-900/30"
+          class="px-6 border-y border-gray-200 dark:border-gray-800/50 bg-gray-100/50 dark:bg-gray-900/30"
         >
           <div class="max-w-3xl mx-auto">
             <h2 class="text-2xl font-bold mb-8 text-center">
@@ -473,8 +406,9 @@
                 Build alongside us.
               </h2>
               <p class="text-lg text-indigo-400 mb-10 max-w-xl mx-auto">
-                SCM 2.0 exists because of community feedback. Check out our
-                open-source repositories or join the developer discussion.
+                Contact Sphere 2.0 exists because of community feedback. Check
+                out our open-source repositories or join the developer
+                discussion.
               </p>
               <a
                 href="https://github.com/arunshar2725"

@@ -5,29 +5,22 @@
   <div
     class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
   >
-    <!-- brand  -->
-    <a
-      data-th-href="@{'/'}"
-      class="flex items-center space-x-3 rtl:space-x-reverse"
-    >
+    <a data-th-href="@{'/'}" class="flex items-center">
       <img
-        data-th-src="@{'/images/telephone.png'}"
-        class="h-7"
-        alt="Flowbite Logo"
+        data-th-src="@{'/images/CSLogo.png'}"
+        class="block dark:hidden h-10 w-auto sm:h-12 md:h-14 object-contain transition-all duration-300"
+        alt="ContactSphere Logo"
       />
-      <span
-        class="self-center text-xl text-heading font-semibold whitespace-nowrap"
-        >SCM</span
-      >
+
+      <img
+        data-th-src="@{'/images/DarkCSLogo.png'}"
+        class="hidden dark:block h-10 w-auto sm:h-12 md:h-14 object-contain mix-blend-screen contrast-125 transition-all duration-300"
+        alt="ContactSphere Dark Logo"
+      />
     </a>
-    <!-- end of brand logo -->
-
-    <!-- Login Signup -->
-
     <div
-      class="inline-flex gap-2 md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse"
+      class="flex items-center gap-2 md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse"
     >
-      <!-- dark light theme -->
       <button
         id="theme_change_button"
         class="bg-gray-200 px-3 py-2 rounded dark:text-white dark:bg-gray-600"
@@ -35,23 +28,24 @@
         <i class="fa-solid fa-circle-half-stroke"></i>
         <span>Light</span>
       </button>
-      <a
-        data-th-href="@{'/login'}"
-        type="button"
-        class="text-white bg-green-600 hover:bg-green-700 box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-3 py-2 focus:outline-none"
-      >
-        Login
-      </a>
 
-      <a
-        data-th-href="@{'/register'}"
-        type="button"
-        class="text-white bg-blue-600 hover:bg-blue-700 box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-3 py-2 focus:outline-none"
-      >
-        Sign up
-      </a>
+      <div class="hidden md:flex items-center gap-2">
+        <a
+          data-th-href="@{'/login'}"
+          type="button"
+          class="text-white bg-green-600 hover:bg-green-700 box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-3 py-2 focus:outline-none"
+        >
+          Login
+        </a>
 
-      <!-- icon to open menu on small screen -->
+        <a
+          data-th-href="@{'/register'}"
+          type="button"
+          class="text-white bg-blue-600 hover:bg-blue-700 box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-3 py-2 focus:outline-none"
+        >
+          Sign up
+        </a>
+      </div>
 
       <button
         data-collapse-toggle="navbar-cta"
@@ -78,13 +72,7 @@
           />
         </svg>
       </button>
-      <!--  -->
     </div>
-
-    <!-- ending of Login Signup -->
-
-    <!-- Menu  -->
-
     <div
       class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
       id="navbar-cta"
@@ -120,6 +108,23 @@
             class="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent"
             >Contact</a
           >
+        </li>
+
+        <li
+          class="md:hidden mt-2 pt-3 border-t border-gray-300 dark:border-gray-600 flex flex-col gap-2"
+        >
+          <a
+            data-th-href="@{'/login'}"
+            class="w-full text-center text-white bg-green-600 hover:bg-green-700 box-border border border-transparent shadow-xs font-medium leading-5 rounded-base text-sm px-3 py-2"
+          >
+            Login
+          </a>
+          <a
+            data-th-href="@{'/register'}"
+            class="w-full text-center text-white bg-blue-600 hover:bg-blue-700 box-border border border-transparent shadow-xs font-medium leading-5 rounded-base text-sm px-3 py-2"
+          >
+            Sign up
+          </a>
         </li>
       </ul>
     </div>

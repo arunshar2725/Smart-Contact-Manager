@@ -102,22 +102,34 @@
               </div>
 
               <div
-                      th:if="${pageContact.totalElements > 0}"
-                      class="flex flex-col sm:flex-row gap-3 xl:justify-end"
+                th:if="${pageContact.totalElements > 0}"
+                class="flex flex-col sm:flex-row gap-3 xl:justify-end"
               >
                 <button
-                        type="button"
-                        onclick="downloadFile('/user/contacts/export/excel', 'contacts.xlsx', 'Excel')"
-                        class="px-5 py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl text-sm font-medium text-center transition-all duration-200"
+                  type="button"
+                  onclick="
+                    downloadFile(
+                      '/user/contacts/export/excel',
+                      'contacts.xlsx',
+                      'Excel',
+                    )
+                  "
+                  class="px-5 py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl text-sm font-medium text-center transition-all duration-200"
                 >
                   <i class="fa-solid fa-file-excel mr-2"></i>
                   Export Excel
                 </button>
 
                 <button
-                        type="button"
-                        onclick="downloadFile('/user/contacts/export/pdf', 'contacts.pdf', 'PDF')"
-                        class="px-5 py-3 bg-red-600 hover:bg-red-700 text-white rounded-xl text-sm font-medium text-center transition-all duration-200"
+                  type="button"
+                  onclick="
+                    downloadFile(
+                      '/user/contacts/export/pdf',
+                      'contacts.pdf',
+                      'PDF',
+                    )
+                  "
+                  class="px-5 py-3 bg-red-600 hover:bg-red-700 text-white rounded-xl text-sm font-medium text-center transition-all duration-200"
                 >
                   <i class="fa-solid fa-file-pdf mr-2"></i>
                   Export PDF
@@ -189,13 +201,10 @@
                   <!-- Name -->
                   <th class="flex items-center px-6 py-4 whitespace-nowrap">
                     <img
-                      class="w-12 h-12 rounded-full object-cover border"
-                      onerror="
-                        this.src =
-                          'https://imgs.search.brave.com/jHDp_R14w-tbRDiYsyiOCGDeCSPE4WqsVfFwiXVDyow/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzExLzY4LzUwLzU3/LzM2MF9GXzExNjg1/MDU3OTRfSUJDRWlh/ZnNJckhGSjA5ZTY1/UDJ2aDUxMTVDMVhJ/N2UuanBn'
-                      "
-                      data-th-src="@{*{picture}}"
-                      alt="Profile"
+                            class="w-12 h-12 rounded-full object-cover border"
+                            data-th-src="@{*{picture}}"
+                            onerror="this.onerror=null; this.src='/images/default-profile.jpg';"
+                            alt="Profile"
                     />
 
                     <div class="pl-4">
@@ -405,7 +414,8 @@
     </div>
 
     <script th:inline="javascript">
-      const baseURl = /*[[${@environment.getProperty('app.base-url')}]]*/ "http://localhost:8081";
+      const baseURl =
+        /*[[${@environment.getProperty('app.base-url')}]]*/ "http://localhost:8081";
     </script>
 
     <script data-th-src="@{/js/contact.js}"></script>
