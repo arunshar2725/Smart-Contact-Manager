@@ -84,21 +84,37 @@ The application is deployed on AWS Elastic Beanstalk and uses Amazon RDS as the 
 ## Screenshots
 
 <img width="1910" height="874" alt="image" src="https://github.com/user-attachments/assets/f0e08f4e-a782-4691-9090-b6550fb5059f" />
-Login Page 
+
+                                                        Login Page 
+
 <img width="1886" height="870" alt="image" src="https://github.com/user-attachments/assets/745c72f9-59bb-4733-b4c4-f27104eb2a66" />
-Signup Page
+                                                        
+                                                        Signup Page
+                                                        
 <img width="1889" height="872" alt="image" src="https://github.com/user-attachments/assets/6d551a4c-d76f-4594-8251-502e00f4fe50" />
-Fully Dark Mode Supported
+
+                                                  Fully Dark Mode Supported
+
 <img width="1897" height="878" alt="Screenshot 2026-06-01 150110" src="https://github.com/user-attachments/assets/493f2e64-28df-4a1d-ab4b-84b96430ac33" />
-Profile Page
+                                                       
+                                                       Profile Page
+                                                       
 <img width="1886" height="870" alt="Screenshot 2026-06-01 150125" src="https://github.com/user-attachments/assets/9509a4f3-bd08-4172-b6a3-a4f503b7278d" />
-Dashboard Page
+                                                       
+                                                       Dashboard Page
+                                                       
 <img width="1889" height="868" alt="image" src="https://github.com/user-attachments/assets/31e2828e-28de-4892-a372-056557d8b18c" />
-Contact Page with PDF/Excel Export
+                                              
+                                              Contact Page with PDF/Excel Export
+                                              
 <img width="1885" height="872" alt="image" src="https://github.com/user-attachments/assets/10c6b972-87aa-4c2b-9ae8-4a472708c24c" />
-Feedback Page
+                                                      
+                                                      Feedback Page
+                                                      
 <img width="427" height="761" alt="image" src="https://github.com/user-attachments/assets/96ca8310-e1a8-40a0-924d-076c04471fdd" />
-Mobile Responsive
+                                                     
+                                                     Mobile Responsive
+                                                     
 
 ## Author
 
