@@ -1,0 +1,96 @@
+<!doctype html>
+<html
+  lang="en"
+  data-th-replace="~{base :: parent(~{::#content},~{::title},~{::script})}"
+>
+  <head>
+    <title>All Users | Admin</title>
+  </head>
+  <body>
+    <div
+      id="content"
+      class="pt-20 bg-gray-50 dark:bg-gray-900 min-h-screen pb-10"
+    >
+      <div class="p-4 md:p-6 max-w-7xl mx-auto space-y-6">
+        <div
+          class="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm"
+        >
+          <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
+            All System Users
+          </h1>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+            Full registry of registered users.
+          </p>
+        </div>
+
+        <div
+          class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden"
+        >
+          <div class="overflow-x-auto">
+            <table
+              class="w-full text-sm text-left text-gray-500 dark:text-gray-400 whitespace-nowrap"
+            >
+              <thead
+                class="text-xs text-gray-500 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+              >
+                <tr>
+                  <th scope="col" class="px-6 py-4">User Details</th>
+                  <th scope="col" class="px-6 py-4">Role</th>
+                  <th scope="col" class="px-6 py-4">Status</th>
+                  <th scope="col" class="px-6 py-4 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  data-th-each="user : ${users}"
+                  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50"
+                >
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-3">
+                      <img
+                        class="w-10 h-10 rounded-full"
+                        data-th-src="${user.profilePic}"
+                        alt="avatar"
+                      />
+                      <div>
+                        <div class="font-semibold" data-th-text="${user.name}">
+                          Name
+                        </div>
+                        <div
+                          class="text-xs text-gray-500"
+                          data-th-text="${user.email}"
+                        >
+                          Email
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4" data-th-text="${user.role}">Role</td>
+                  <td class="px-6 py-4">
+                    <span
+                      data-th-text="${user.enabled ? 'Active' : 'Blocked'}"
+                      data-th-classappend="${user.enabled ? 'text-green-600' : 'text-red-600'}"
+                      class="font-semibold"
+                    ></span>
+                  </td>
+                  <td class="px-6 py-4 text-right">
+                    <a
+                      data-th-href="@{'/admin/users/view/' + ${user.id}}"
+                      class="text-blue-600 hover:underline mr-3"
+                      >View</a
+                    >
+                    <a
+                      data-th-href="@{'/admin/users/delete/' + ${user.id}}"
+                      class="text-red-600 hover:underline"
+                      >Delete</a
+                    >
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

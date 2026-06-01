@@ -1,0 +1,410 @@
+<!doctype html>
+<html
+  lang="en"
+  data-th-replace="~{base :: parent(~{::#content},~{::title},~{::script})}"
+>
+  <head>
+    <title>Admin Dashboard | Contact Sphere</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="pt-20 bg-gray-50 dark:bg-gray-900 min-h-screen pb-10">
+        <div class="p-4 md:p-6 max-w-7xl mx-auto space-y-6">
+          <div
+            class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm"
+          >
+            <div>
+              <h1
+                class="text-2xl font-bold text-gray-900 dark:text-white tracking-tight flex items-center gap-2"
+              >
+                Dashboard
+                <span
+                  class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
+                  >ADMIN</span
+                >
+              </h1>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                Manage system users, contacts, and access controls.
+              </p>
+            </div>
+            <div>
+              <button
+                type="button"
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 shadow-sm transition-all"
+              >
+                <i class="fa-solid fa-plus mr-2"></i> Add New User
+              </button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div
+              class="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow"
+            >
+              <div class="flex items-center justify-between">
+                <p class="text-sm font-medium text-gray-500 dark:text-gray-400">
+                  Total Users
+                </p>
+                <i
+                  class="fa-solid fa-users bg-blue-50 dark:bg-gray-700 p-4 rounded-lg"
+                ></i>
+              </div>
+              <h3
+                class="text-3xl font-bold text-gray-900 dark:text-white mt-3"
+                data-th-text="${totalUsers}"
+              >
+                0
+              </h3>
+            </div>
+
+            <div
+              class="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow"
+            >
+              <div class="flex items-center justify-between">
+                <p class="text-sm font-medium text-gray-500 dark:text-gray-400">
+                  Total Contacts
+                </p>
+                <i
+                  class="fa-solid fa-address-book bg-emerald-50 dark:bg-gray-700 p-4 rounded-lg"
+                ></i>
+              </div>
+              <h3
+                class="text-3xl font-bold text-gray-900 dark:text-white mt-3"
+                data-th-text="${totalContacts}"
+              >
+                0
+              </h3>
+            </div>
+
+            <div
+              class="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow"
+            >
+              <div class="flex items-center justify-between">
+                <p class="text-sm font-medium text-gray-500 dark:text-gray-400">
+                  Active Accounts
+                </p>
+                <i
+                  class="fa-solid fa-user-check bg-indigo-50 dark:bg-gray-700 p-4 rounded-lg"
+                ></i>
+              </div>
+              <h3
+                class="text-3xl font-bold text-gray-900 dark:text-white mt-3"
+                data-th-text="${activeUsers}"
+              >
+                0
+              </h3>
+            </div>
+
+            <div
+              class="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow"
+            >
+              <div class="flex items-center justify-between">
+                <p class="text-sm font-medium text-gray-500 dark:text-gray-400">
+                  OAuth Logins
+                </p>
+                <i
+                  class="fa-brands fa-google bg-rose-50 dark:bg-gray-700 p-4 rounded-lg"
+                ></i>
+              </div>
+              <h3
+                class="text-3xl font-bold text-gray-900 dark:text-white mt-3"
+                data-th-text="${oauthUsers}"
+              >
+                0
+              </h3>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+            <div
+              class="xl:col-span-2 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm"
+            >
+              <div
+                class="p-5 border-b border-gray-100 dark:border-gray-700 flex flex-col sm:flex-row items-center justify-between gap-4"
+              >
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
+                  User Registry
+                </h2>
+                <div class="flex gap-2 w-full sm:w-auto">
+                  <div class="relative w-full sm:w-64">
+                    <div
+                      class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+                    ></div>
+                    <input
+                      type="text"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                      placeholder="Search users..."
+                    />
+                  </div>
+                  <button
+                    class="px-3 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors text-gray-600 dark:text-gray-300"
+                  >
+                    <i class="fa-solid fa-filter"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="overflow-x-auto">
+                <table
+                  class="w-full text-sm text-left text-gray-500 dark:text-gray-400 whitespace-nowrap"
+                >
+                  <thead
+                    class="text-xs text-gray-500 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+                  >
+                    <tr>
+                      <th scope="col" class="px-6 py-4">User Details</th>
+                      <th scope="col" class="px-6 py-4">Auth / Role</th>
+                      <th scope="col" class="px-6 py-4">Status</th>
+                      <th scope="col" class="px-6 py-4 text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr data-th-if="${users == null or users.isEmpty()}">
+                      <td
+                        colspan="4"
+                        class="px-6 py-10 text-center text-gray-500 dark:text-gray-400"
+                      >
+                        No users found in the system.
+                      </td>
+                    </tr>
+
+                    <tr
+                      data-th-each="user : ${users}"
+                      class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+                    >
+                      <td
+                        class="px-6 py-4 font-medium text-gray-900 dark:text-white"
+                      >
+                        <div class="flex items-center gap-3">
+                          <img
+                            class="w-10 h-10 rounded-full object-cover ring-2 ring-gray-100 dark:ring-gray-600"
+                            data-th-src="${user.profilePic}"
+                            alt="User avatar"
+                          />
+                          <div>
+                            <div
+                              class="font-semibold text-gray-900 dark:text-white"
+                              data-th-text="${user.name}"
+                            >
+                              Name
+                            </div>
+                            <div
+                              class="text-xs text-gray-500 dark:text-gray-400"
+                              data-th-text="${user.email}"
+                            >
+                              Email
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4">
+                        <div class="flex flex-col gap-1 items-start">
+                          <span
+                            class="text-xs font-mono bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300 px-2 py-0.5 rounded"
+                            data-th-text="${user.provider}"
+                            >SELF</span
+                          >
+                          <span
+                            class="text-xs font-semibold"
+                            data-th-classappend="${user.role == 'ADMIN'} ? 'text-purple-600 dark:text-purple-400' : 'text-blue-600 dark:text-blue-400'"
+                            data-th-text="${user.role}"
+                            >USER</span
+                          >
+                        </div>
+                      </td>
+                      <td class="px-6 py-4">
+                        <div class="flex items-center gap-1.5">
+                          <div
+                            class="w-2.5 h-2.5 rounded-full"
+                            data-th-classappend="${user.enabled} ? 'bg-emerald-500' : 'bg-red-500'"
+                          ></div>
+                          <span
+                            data-th-text="${user.enabled} ? 'Active' : 'Blocked'"
+                            >Status</span
+                          >
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 text-right">
+                        <div class="flex justify-end gap-2">
+                          <a
+                            data-th-href="@{'/admin/users/view/' + ${user.id}}"
+                            title="View Details"
+                            class="text-gray-400 hover:text-blue-600 transition-colors p-1.5"
+                          >
+                            <i class="fa-solid fa-eye"></i>
+                          </a>
+
+                          <a
+                            data-th-href="@{'/admin/users/toggle-status/' + ${user.id}}"
+                            data-th-title="${user.enabled} ? 'Block User' : 'Unblock User'"
+                            class="transition-colors p-1.5 inline-block cursor-pointer"
+                            data-th-classappend="${user.enabled} ? 'text-gray-400 hover:text-orange-500' : 'text-orange-500 hover:text-emerald-500'"
+                          >
+                            <i
+                              class="fa-solid"
+                              data-th-classappend="${user.enabled} ? 'fa-ban' : 'fa-unlock'"
+                            ></i>
+                          </a>
+
+                          <a
+                            data-th-href="@{'/admin/users/delete/' + ${user.id}}"
+                            onclick="
+                              return confirm(
+                                'Are you sure you want to permanently delete this user? All their contacts will also be deleted.',
+                              );
+                            "
+                            title="Delete User"
+                            class="text-gray-400 hover:text-red-600 transition-colors p-1.5 inline-block cursor-pointer"
+                          >
+                            <i class="fa-solid fa-trash"></i>
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div
+                class="p-4 border-t border-gray-100 dark:border-gray-700 flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 bg-gray-50/50 dark:bg-gray-800 rounded-b-2xl"
+              >
+                <span>Showing Top Records</span>
+                <div class="flex gap-2">
+                  <button
+                    class="px-3 py-1 rounded bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 shadow-sm"
+                  >
+                    Prev
+                  </button>
+                  <button
+                    class="px-3 py-1 rounded bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 shadow-sm"
+                  >
+                    Next
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="space-y-6">
+              <div
+                class="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm"
+              >
+                <h2
+                  class="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider mb-4"
+                >
+                  Quick Actions
+                </h2>
+                <div class="space-y-3">
+                  <a
+                    data-th-href="@{/admin/users/export}"
+                    class="flex items-center justify-between p-3 rounded-xl border border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors group"
+                  >
+                    <div class="flex items-center gap-3">
+                      <div
+                        class="bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 p-2 rounded-lg"
+                      >
+                        <i class="fa-solid fa-file-export w-4 text-center"></i>
+                      </div>
+                      <span
+                        class="text-sm font-medium text-gray-700 dark:text-gray-300"
+                        >Export All Users (CSV)</span
+                      >
+                    </div>
+                    <i
+                      class="fa-solid fa-chevron-right text-gray-400 group-hover:text-blue-500 transition-colors text-xs"
+                    ></i>
+                  </a>
+                  <a
+                    href="#"
+                    class="flex items-center justify-between p-3 rounded-xl border border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors group"
+                  >
+                    <div class="flex items-center gap-3">
+                      <div
+                        class="bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 p-2 rounded-lg"
+                      >
+                        <i
+                          class="fa-solid fa-shield-halved w-4 text-center"
+                        ></i>
+                      </div>
+                      <span
+                        class="text-sm font-medium text-gray-700 dark:text-gray-300"
+                        >Security Audit Logs</span
+                      >
+                    </div>
+                    <i
+                      class="fa-solid fa-chevron-right text-gray-400 group-hover:text-emerald-500 transition-colors text-xs"
+                    ></i>
+                  </a>
+                </div>
+              </div>
+
+              <div
+                class="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm"
+              >
+                <div class="flex justify-between items-center mb-4">
+                  <h2
+                    class="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider"
+                  >
+                    New Signups
+                  </h2>
+                  <a
+                    data-th-href="@{/admin/users}"
+                    class="text-xs text-blue-600 hover:underline"
+                    >View All</a
+                  >
+                </div>
+                <div class="space-y-4">
+                  <div
+                    data-th-each="rUser : ${recentUsers}"
+                    class="flex items-center justify-between"
+                  >
+                    <div class="flex items-center gap-3">
+                      <img
+                        class="w-8 h-8 rounded-full object-cover"
+                        data-th-src="${rUser.profilePic}"
+                        alt="Pic"
+                      />
+                      <div>
+                        <p
+                          class="text-sm font-semibold text-gray-900 dark:text-white leading-none"
+                          data-th-text="${rUser.name}"
+                        >
+                          Name
+                        </p>
+                        <p
+                          class="text-xs text-gray-500 dark:text-gray-400 mt-1"
+                          data-th-text="${rUser.email}"
+                        >
+                          Email
+                        </p>
+                      </div>
+                    </div>
+                    <span
+                      class="text-[10px] bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-2 py-0.5 rounded font-mono uppercase"
+                      data-th-text="${rUser.provider}"
+                    ></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Search Bar Logic
+      const searchInput = document.querySelector(
+        'input[placeholder="Search users..."]',
+      );
+      searchInput.addEventListener("keyup", function () {
+        const filter = this.value.toLowerCase();
+        const rows = document.querySelectorAll("tbody tr");
+
+        rows.forEach((row) => {
+          const text = row.innerText.toLowerCase();
+          row.style.display = text.includes(filter) ? "" : "none";
+        });
+      });
+    </script>
+  </body>
+</html>
