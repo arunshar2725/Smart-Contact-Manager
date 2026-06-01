@@ -1,24 +1,105 @@
-# Smart-Contact-Manager
-Contact Sphere 2.0 is a comprehensive, full-stack web application designed to revolutionize how individuals manage their professional and personal connections. In an era where networking is key, this project provides a secure, scalable, and user-friendly platform to store, organize, and access contact information from anywhere. The application is built using the Spring Boot framework, leveraging the power of Java for robust backend logic and Tailwind CSS for a modern, responsive frontend experience.
+# ContactSphere
 
-# Core Functionality & Technical Architecture
-The heart of Contact Sphere 2.0 lies in its sophisticated data management. I implemented a Relational Database Schema using MySQL, where a strict One-to-Many relationship is maintained between Users and their Contacts. To ensure data integrity, I utilized Spring Data JPA with advanced mapping techniques like mappedBy and CascadeType.ALL, ensuring that contact data is always synchronized with the parent user.
+ContactSphere is a full-stack contact management application that helps users securely store, organize, search, and manage their personal and professional contacts. The application provides authentication, profile management, contact management, image uploads, and cloud deployment support.
 
-For handling large text data such as "User Bios" or "Contact Descriptions," I utilized the @Lob annotation and defined columns as TEXT types. This architectural choice prevents common database limitations and ensures the application can handle extensive user input without performance degradation.
+## Features
 
-# Security & Authentication
-Security is a top priority for Contact Sphere 2.0. The system integrates Spring Security to handle authentication and authorization. Beyond standard form-based login, the project supports OAuth2 integration, allowing users to sign in seamlessly via Google and GitHub. This not only enhances security but also improves user onboarding.
+* User registration and login
+* Email verification
+* OAuth2 login with Google and GitHub
+* Spring Security based authentication and authorization
+* Role-based access control
+* Contact CRUD operations (Create, Read, Update, Delete)
+* Contact search and filtering
+* Pagination for contact listings
+* User profile management
+* Contact image upload using Cloudinary
+* Responsive UI with Tailwind CSS and Flowbite
+* Dark mode support
+* Cloud deployment using AWS Elastic Beanstalk and Amazon RDS
 
-# UI/UX Strategy
-The frontend is crafted using Thymeleaf and Tailwind CSS, supplemented by the Flowbite component library. By choosing a utility-first CSS approach, I ensured that the application is:
+## Tech Stack
 
-Fully Responsive: Optimized for desktops, tablets, and mobile devices.
+### Backend
 
-Accessible: Adhering to WAI-ARIA standards to ensure usability for everyone.
+* Java
+* Spring Boot
+* Spring Security
+* Spring Data JPA
+* Hibernate
+* OAuth2
 
-Performance-Oriented: Using Tailwind's JIT (Just-In-Time) engine to keep the CSS bundle size minimal.
+### Frontend
 
-Theme-Ready: Featuring a native Dark Mode toggle that adapts to user preferences.
+* Thymeleaf
+* Tailwind CSS
+* Flowbite
+* JavaScript
 
-# Why I Built This
-This project was developed with a "Product-First" mindset. Instead of reinventing standard UI components, I leveraged professional libraries like Flowbite to focus my energy on solving complex backend challenges, such as database normalization, secure API design, and OAuth2 workflows. It stands as a testament to my ability to build production-ready applications that balance aesthetic design with technical excellence.
+### Database
+
+* MySQL
+
+### Cloud & Storage
+
+* AWS Elastic Beanstalk
+* Amazon RDS
+* Cloudinary
+
+## Database Design
+
+The application follows a one-to-many relationship between Users and Contacts.
+
+* One User can manage multiple Contacts.
+* Each Contact belongs to a single User.
+* Hibernate and JPA are used for object-relational mapping.
+* Cascade operations are configured to maintain data consistency.
+
+## Security
+
+Security is implemented using Spring Security.
+
+* BCrypt password encryption
+* Session-based authentication
+* OAuth2 login with Google and GitHub
+* Protected routes based on user authentication
+* Email verification during account registration
+
+## Key Learning Outcomes
+
+Through this project, I gained practical experience with:
+
+* Spring Boot application development
+* Authentication and authorization using Spring Security
+* OAuth2 integration
+* Database design using MySQL and JPA
+* Cloud deployment on AWS
+* Image storage using Cloudinary
+* Building responsive user interfaces with Tailwind CSS and Thymeleaf
+
+## Deployment
+
+The application is deployed on AWS Elastic Beanstalk and uses Amazon RDS as the managed MySQL database.
+
+## Screenshots
+
+<img width="1910" height="874" alt="image" src="https://github.com/user-attachments/assets/f0e08f4e-a782-4691-9090-b6550fb5059f" />
+Login Page 
+<img width="1886" height="870" alt="image" src="https://github.com/user-attachments/assets/745c72f9-59bb-4733-b4c4-f27104eb2a66" />
+Signup Page
+<img width="1889" height="872" alt="image" src="https://github.com/user-attachments/assets/6d551a4c-d76f-4594-8251-502e00f4fe50" />
+Fully Dark Mode Supported
+<img width="1897" height="878" alt="Screenshot 2026-06-01 150110" src="https://github.com/user-attachments/assets/493f2e64-28df-4a1d-ab4b-84b96430ac33" />
+Profile Page
+<img width="1886" height="870" alt="Screenshot 2026-06-01 150125" src="https://github.com/user-attachments/assets/9509a4f3-bd08-4172-b6a3-a4f503b7278d" />
+Dashboard Page
+<img width="1889" height="868" alt="image" src="https://github.com/user-attachments/assets/31e2828e-28de-4892-a372-056557d8b18c" />
+Contact Page with PDF/Excel Export
+<img width="1885" height="872" alt="image" src="https://github.com/user-attachments/assets/10c6b972-87aa-4c2b-9ae8-4a472708c24c" />
+Feedback Page
+<img width="427" height="761" alt="image" src="https://github.com/user-attachments/assets/96ca8310-e1a8-40a0-924d-076c04471fdd" />
+Mobile Responsive
+
+## Author
+
+Arun Sharma
